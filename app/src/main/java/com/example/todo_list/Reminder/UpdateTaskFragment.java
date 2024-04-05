@@ -134,7 +134,7 @@ public class UpdateTaskFragment extends Fragment {
 
     // Declare variables to store selected date and time
     private int year, month, day, hour, minute;
-   private String selectedDateStr;
+   private String selectedDateStr,selectedTimeStr;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle updatedInstanceState) {
@@ -257,7 +257,7 @@ public class UpdateTaskFragment extends Fragment {
                             UpdateTaskFragment.this.minute = minute;
 
                             // Display the selected time
-                            String selectedTimeStr = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                          selectedTimeStr = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                             timeTextView.setText(selectedTimeStr);
                         } else {
                             // The selected datetime is in the past or too close to the current datetime
@@ -298,19 +298,30 @@ public class UpdateTaskFragment extends Fragment {
                         // Get the selected date and time
                         Calendar selectedDateTime = Calendar.getInstance();
                         selectedDateTime.set(year, month, day, hour, minute);
+                       //compare current date
+                        boolean isCurrentDate = selectedDateTime.get(Calendar.YEAR) == currentTime.get(Calendar.YEAR) &&
+                                selectedDateTime.get(Calendar.MONTH) == currentTime.get(Calendar.MONTH) &&
+                                selectedDateTime.get(Calendar.DAY_OF_MONTH) == currentTime.get(Calendar.DAY_OF_MONTH);
+
+
+
+
 
                         // Calculate the time difference between the selected time and current time
                         long timeDifferenceInMillis = selectedDateTime.getTimeInMillis() - currentTime.getTimeInMillis();
                         int timeDifferenceInMinutes = (int) (timeDifferenceInMillis / (60 * 1000));
 
-                        // Check if the selected time is at least two minutes later
-                        if (timeDifferenceInMinutes < 2) {
-                            // Show an error message to the user
-                            Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // update the task to Firebase
-                            updateTaskToFirebase(taskId,title, date, time, content);
-                        }
+
+                            // Check if the selected time is at least two minutes later
+                            if (isCurrentDate && timeDifferenceInMinutes < 2) {
+                                // Show an error message to the user
+                                Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // update the task to Firebase
+                                updateTaskToFirebase(taskId, title, date, time, content);
+                            }
+
+
                     }
                 }
             }
@@ -373,6 +384,23 @@ public class UpdateTaskFragment extends Fragment {
             userTasksRef.child(taskId).setValue(task);
             Toast.makeText(getActivity(), "Task updated locally. No internet connection.", Toast.LENGTH_SHORT).show();
             navigateToHomeFragment();
+        }
+
+        if(dateText != null && selectedDateStr==null) {
+            String[] dateParts = dateText.split("/");
+            Log.e("dateParts", "onDateSet: " + dateText);
+            UpdateTaskFragment.this.day = Integer.parseInt(dateParts[0]);
+            UpdateTaskFragment.this.month = Integer.parseInt(dateParts[1]) - 1; // Subtracting 1 bcz Calendar months are zero-based
+            UpdateTaskFragment.this.year = Integer.parseInt(dateParts[2]);
+
+        }
+
+        if(timeText!=null && selectedTimeStr==null){
+            String[] timeparts = timeText.split(":");
+                            Log.e("timeParts", "onTimeset: " + timeText);
+
+            UpdateTaskFragment.this.hour = Integer.parseInt(timeparts[0]);
+            UpdateTaskFragment.this.minute = Integer.parseInt(timeparts[1]);
         }
         // For the reminder...
         // Create a Calendar object with the selected date and time
