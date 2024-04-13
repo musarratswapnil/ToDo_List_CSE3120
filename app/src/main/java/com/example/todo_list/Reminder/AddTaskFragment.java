@@ -273,10 +273,10 @@ public class AddTaskFragment extends Fragment {
                         long timeDifferenceInMillis = selectedDateTime.getTimeInMillis() - currentTime.getTimeInMillis();
                         int timeDifferenceInMinutes = (int) (timeDifferenceInMillis / (60 * 1000));
 
-                        // Check if the selected time is at least six minutes later
+                        // Check if the selected time is at least two minutes later
                         if (timeDifferenceInMinutes < 2) {
                             // Show an error message to the user
-                            Toast.makeText(getActivity(), "Please select a time at least six minutes later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
                         } else {
                             // Save the task to Firebase
                             saveTaskToFirebase(title, date, time, content);
