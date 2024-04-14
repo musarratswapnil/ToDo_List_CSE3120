@@ -33,13 +33,17 @@ interface Command {
  */
 class NavigateToFragmentCommand implements Command {
     private Context context;
-
+    private Fragment fragment;
     /**
      * Constructs a new command for activity navigation.
-     * @param context The context from which the navigation is initiated.
+     * @param context The context from which the navigation is initiated
+     * @param fragment The fragment I wanna navigate
      */
-    NavigateToFragmentCommand(Context context) {
+    NavigateToFragmentCommand(Context context,Fragment fragment) {
+
         this.context = context;
+        this.fragment = fragment;
+
     }
 
     /**
@@ -47,7 +51,6 @@ class NavigateToFragmentCommand implements Command {
      */
     @Override
     public void execute() {
-        Fragment fragment = new HomeFragment();
         ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
@@ -140,8 +143,7 @@ class CommandInvoker {
         remainderCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Set fragment command and go to next fragment
-                invoker.setCommand(new NavigateToFragmentCommand(getActivity()));
+                invoker.setCommand(new NavigateToFragmentCommand(getActivity(),new HomeFragment()));
                 invoker.executeCommand();
             }
         });

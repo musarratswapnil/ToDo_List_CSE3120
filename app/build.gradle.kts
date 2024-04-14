@@ -56,6 +56,11 @@ dependencies {
 // Use "+" to automatically fetch the latest version
 //    implementation ("com.android.support:design:+") // Use "+" to automatically fetch the latest version
     implementation ("com.google.android.material:material:1.6.1")
-
+    // JUnit for unit tests
+    testImplementation ("junit:junit:4.13.2")
+    // AndroidX Test-Instrumented testing
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:core:1.4.0")
 
 }
