@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.todo_list.App_Options.HelpFragment;
 import com.example.todo_list.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -133,7 +134,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out ToDo Code: https://github.com/shaykashipra/ToDo-List");
             startActivity(Intent.createChooser(shareIntent, "Share App"));
         } else if (itemId == R.id.nav_help) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
         } else if (itemId == R.id.nav_account) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccountFragment()).commit();
         } else if (itemId == R.id.nav_about) {
