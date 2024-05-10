@@ -50,4 +50,27 @@
     <string name="add_task_button">Add Task Floating Action Button (FAB)</string>
 
 
+<!--    <string name="app_name">Clock</string>-->
+
+
+
+    <string name="stop_watch">Stopwatch</string>
+    <string name="timer">Timer</string>
+
+    <string name="seconds">Seconds</string>
+    <string name="minutes">Minutes</string>
+    <string name="hours">Hours</string>
+
+    <string name="timeIsUP">Time is up</string>
+
+
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="resume">Resume</string>
+    <string name="reset">Reset</string>
+
+
+    <string name="wrongInputForTimer">Please enter appropriate values !!</string>
+
+
 </resources>

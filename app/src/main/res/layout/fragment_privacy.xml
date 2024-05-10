@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrivacyFragment"
+    tools:context=".DashBoard_Option.DashboardActivity"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_marginBottom="8dp">
@@ -176,7 +176,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_below="@+id/PrivacyPolicyItems"
-        android:text="Effective from May 2023"
+        android:text="Effective from May 2024"
         android:textStyle="italic"
         android:textAlignment="textEnd"
         android:textColor="@color/muted_black"/>

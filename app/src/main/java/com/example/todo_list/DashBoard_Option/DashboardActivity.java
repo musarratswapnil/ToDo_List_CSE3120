@@ -16,6 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todo_list.App_Options.HelpFragment;
+import com.example.todo_list.App_Options.AboutFragment;
+import com.example.todo_list.App_Options.PrivacyFragment;
+import com.example.todo_list.App_Options.SettingsFragment;
+
 import com.example.todo_list.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -125,7 +129,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (itemId == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OptionFragment()).commit();
         } else if (itemId == R.id.nav_settings) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (itemId == R.id.nav_share) {
             // Show sharing options
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -138,11 +142,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_account) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccountFragment()).commit();
         } else if (itemId == R.id.nav_about) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
         } else if (itemId == R.id.nav_privacy) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
             // Handle the logout activity
             // Perform logout
