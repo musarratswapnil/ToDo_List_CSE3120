@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.android.material.navigation.NavigationView;
@@ -146,6 +145,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_logout) {
             // Handle the logout activity
             // Perform logout
+
                FirebaseAuth.getInstance().signOut();
 
             // Redirect to login or splash screen
