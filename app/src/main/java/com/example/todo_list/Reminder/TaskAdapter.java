@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo_list.R;
+import com.example.todo_list.Reminder.Sort.SortByDateStrategy;
+import com.example.todo_list.Reminder.Sort.SortingStrategy;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.Calendar;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -23,6 +30,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private Context context;
 
     private FragmentManager fragmentManager;
+    private SortingStrategy sortingStrategy;
+
 
 
     public TaskAdapter(List<Task> taskList, DatabaseReference tasksRef, Context context,FragmentManager fragmentManager) {
@@ -30,12 +39,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.tasksRef = tasksRef;
         this.context = context;
         this.fragmentManager = fragmentManager;
+//        this.sortingStrategy = new SortByDateStrategy(); // Default sorting strategy
+        refreshList();
 
     }
 
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new TaskViewHolder(view);
     }
@@ -45,6 +57,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         int reversedPosition = getItemCount() - 1 - position;
         Task task = taskList.get(reversedPosition);
         holder.bind(task);
+
+        if (task.isOverdue()) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.red));
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+        }
+
 //click on delete icon
         holder.deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +112,29 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
     private void deleteTask(Task task) {
-        tasksRef.child(task.getKey()).removeValue();
+
+//        tasksRef.child(task.getKey()).removeValue();
+        tasksRef.child(task.getKey()).removeValue().addOnSuccessListener(aVoid -> {
+            int index = taskList.indexOf(task);
+//            if (index != -1) {
+//                taskList.remove(index);
+//                refreshList();
+//                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
+//            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(context, "Failed to delete task: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        });
+    }
+    public void setSortingStrategy(SortingStrategy strategy) {
+        this.sortingStrategy = strategy;
+        refreshList();
+    }
+
+    private void refreshList() {
+        if (sortingStrategy != null) {
+            sortingStrategy.sort(taskList);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -138,7 +179,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             titleTextView.setText(task.getTitle());
             contentTextView.setText(task.getContent());
             timeTextView.setText(task.getTime());
+
+
         }
+
 
         private String getMonthString(int month) {
             String[] monthArray = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
@@ -148,5 +192,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 return "";
             }
         }
+
+
     }
 }
