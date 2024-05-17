@@ -1,3 +1,4 @@
+
 package com.example.todo_list.LoginSignup;
 
 
@@ -30,6 +31,10 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,13 +50,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private BeginSignInRequest signInRequest;
     private static final int REQ_ONE_TAP = 100;
-    private Button loginWithGoogle,loginWithFacebook;
+    private Button loginWithGoogle;
     private EditText editTextPassword;
     private TextView forgotPasswordTextView;
     private FirebaseAuth mAuth;
+
+    GoogleSignInClient gsc;
+    GoogleSignInOptions gso;
     private PasswordResetHelper passwordResetHelper;
     private boolean isNetworkAvailable = true;
     private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +74,25 @@ public class LoginActivity extends AppCompatActivity {
         ImageView imageViewLogin = findViewById(R.id.imageView5);
         TextView registerTextView = findViewById(R.id.textView5);
         loginWithGoogle=findViewById(R.id.button3);
-        loginWithFacebook=findViewById(R.id.button4);
+
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken("393767222391-0t9mjomvm2ddc6e71rifcvbk937cer9m.apps.googleusercontent.com") // replace with your actual server client ID
+                .build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
+
+
+        loginWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
+        /*
+
         oneTapClient = Identity.getSignInClient(this);
 
         signInRequest = BeginSignInRequest.builder()
@@ -95,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setAutoSelectEnabled(true)
 
                 .build();
-
+*/
         imageViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +157,49 @@ public class LoginActivity extends AppCompatActivity {
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
+
+    void signIn() {
+        // Sign out from the current account
+        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                // After signing out, revoke all tokens
+                gsc.revokeAccess().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // After revoking access, start the sign in process
+                        Intent signInIntent = gsc.getSignInIntent();
+                        startActivityForResult(signInIntent, 1000);
+                    }
+                });
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                // Continue with processing the signed-in user
+                navigateToSecondActivity();
+            } catch (ApiException e) {
+                Log.e(TAG, "Sign in failed", e);
+                Toast.makeText(getApplicationContext(), "Sign in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    void navigateToSecondActivity(){
+        finish();
+        Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+        startActivity(intent);
+    }
+    /*
     public void buttonGoogleSignIn(View view){
         oneTapClient.beginSignIn(signInRequest)
 
@@ -223,7 +293,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
     @Override
     protected void onDestroy() {
         super.onDestroy();
