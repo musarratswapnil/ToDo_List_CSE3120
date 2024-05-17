@@ -14,6 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.example.todo_list.App_Options.ContactFragment;
+
 import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.android.material.navigation.NavigationView;
@@ -139,7 +143,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_about) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
         } else if (itemId == R.id.nav_privacy) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {

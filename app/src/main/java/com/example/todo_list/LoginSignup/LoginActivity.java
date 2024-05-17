@@ -40,9 +40,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
@@ -159,7 +167,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    void signIn() {
+
+
+
+    public void signIn() {
         // Sign out from the current account
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -185,16 +196,67 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                // Continue with processing the signed-in user
-                navigateToSecondActivity();
+                firebaseAuthWithGoogle(account);  // Authenticate with Firebase using the Google account
             } catch (ApiException e) {
-                Log.e(TAG, "Sign in failed", e);
-                Toast.makeText(getApplicationContext(), "Sign in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Google sign in failed", e);
+                Toast.makeText(getApplicationContext(), "Google sign in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    void navigateToSecondActivity(){
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateFirebaseWithGoogleAccount(acct);  // Call the method to update Firebase Database
+                            navigateToSecondActivity();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    private void updateFirebaseWithGoogleAccount(GoogleSignInAccount account) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser(); // Get the authenticated Firebase user
+        if (firebaseUser != null) {
+            String googleId = account.getId(); // Google ID
+            String email = account.getEmail(); // Google email
+            String name = account.getDisplayName(); // User's name
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+            Map<String, Object> userUpdates = new HashMap<>();
+            userUpdates.put("googleId", googleId);
+            userUpdates.put("email", email);
+            userUpdates.put("name", name);
+
+            databaseReference.child(firebaseUser.getUid()).updateChildren(userUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Firebase updated with Google info", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Failed to update Firebase", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+
+
+    public void navigateToSecondActivity(){
         finish();
         Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
         startActivity(intent);
