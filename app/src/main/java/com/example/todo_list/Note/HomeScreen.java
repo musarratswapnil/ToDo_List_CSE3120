@@ -6,12 +6,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.todo_list.Note.Sort.SortByNameStrategy;
+import com.example.todo_list.Note.Sort.SortingStrategy;
 import com.example.todo_list.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -24,55 +33,169 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
-    RecyclerView recyclerView;
-    FirebaseDatabase firebaseDatabase;
+    private RecyclerView recyclerView;
+    private Toolbar toolbar;
+//    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<Listdata>list =new ArrayList<>();
-    Context context;
+    private  Context context;
+    private SortingStrategy sortingStrategy;
+    private Spinner sortSpinner;
+    private FloatingActionButton fab;
+    //    private SortByDateStrategy sortByDateStrategy;
+    private static final int MENU_ADD_NOTE = 1;
+    private static final int MENU_ADD_CHECKLIST = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        recyclerView=findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(HomeScreen.this);
-        recyclerView.setLayoutManager(layoutManager);
 
-        final NotesAdapter notesAdapter=new NotesAdapter(list,this);
-        recyclerView.setAdapter(notesAdapter);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference().child("users").child("1").child("notes");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        initializeView();
+        setupSortingOptions();
+        setupToolbar();
+        setupRecyclerView();
+        setupFabButton();
+        setupDatabaseListener();
+
+
+    }
+
+    private void initializeView() {
+         toolbar = findViewById(R.id.toolbar);
+        recyclerView = findViewById(R.id.recyclerview);
+         fab = findViewById(R.id.fab);
+
+         sortingStrategy = new SortByNameStrategy();
+         sortSpinner = findViewById(R.id.sortSpinner);
+
+    }
+
+    private void setupSortingOptions() {
+        String[] sortingOptions = {"Sort by Name", "Sort by Date"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sortingOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(adapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        setSortingStrategy(sortingStrategy = new SortByNameStrategy());
+                       break;
+                    case 1:
 
-                Log.d("HomeScreen", "DataSnapshot count: " + dataSnapshot.getChildrenCount());
-
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
-                {
-
-                    Listdata listdata=dataSnapshot1.getValue(Listdata.class);
-                    Log.d("HomeScreen", "Listdata: " + listdata.toString());
-
-                    list.add(listdata);
+                        break;
+                    default:
+                        setSortingStrategy(sortingStrategy = new SortByNameStrategy());
+                        break;
                 }
-                notesAdapter.notifyDataSetChanged();
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(HomeScreen.this, "Selected Invalid option", Toast.LENGTH_SHORT).show();
 
-            }
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(getApplicationContext(), NoteMainActivity.class));
             }
         });
     }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+    }
+
+
+    private void setupRecyclerView() {
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void setupFabButton() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(view);
+            }
+        });
+
+
+    }
+
+    private void setupDatabaseListener() {
+        databaseReference = FirebaseDatabaseSingleton.getInstance().getReference().child("users").child("1").child("notes");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                handleData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //will use Toast Later if have time
+            }
+        });
+    }
+
+    private void handleData(DataSnapshot dataSnapshot) {
+        Log.d("HomeScreen", "DataSnapshot count: " + dataSnapshot.getChildrenCount());
+        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+            Listdata listdata = dataSnapshot1.getValue(Listdata.class);
+            Log.d("HomeScreen", "Listdata: " + listdata.toString());
+            list.add(0, listdata);
+        }
+        sortList();
+    }
+
+    private void updateRecyclerView() {
+        NotesAdapter notesAdapter = new NotesAdapter(list, this);
+        recyclerView.setAdapter(notesAdapter);
+        notesAdapter.notifyDataSetChanged();
+    }
+    private void sortList() {
+        if (sortingStrategy != null) {
+            sortingStrategy.sort(list);
+            updateRecyclerView();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    //                Different Type of Sorting Type
+    //                Strategy Pattern Body
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    public void setSortingStrategy(SortingStrategy sortingStrategy) {
+        this.sortingStrategy = sortingStrategy;
+        sortList();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    //    Float Menu option
+    /////////////////////////////////////////////////////////////////////////////////////
+    private void showPopupMenu(View view) {
+
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.float_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                int itemId = menuItem.getItemId();
+                if (itemId==R.id.menu_add_note) {
+                    startActivity(new Intent(getApplicationContext(), NoteMainActivity.class));
+                    return true;
+                } else if (itemId == R.id.menu_add_checklist) {
+                    // startActivity(new Intent(getApplicationContext(), AddChecklistActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
+    }
+
 }
