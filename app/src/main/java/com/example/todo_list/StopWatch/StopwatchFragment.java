@@ -12,20 +12,15 @@ import android.widget.TextView;
 
 import com.example.todo_list.R;
 
-/**
- * Created by eloy on 4/13/18.
- *
- * @author Eloy (Elyas Hadizadeh Tasbiti)
- */
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
     private static final byte STATE_INITIAL = 0;
     private static final byte STATE_START = 1;
     private static final byte STATE_STOP = 2;
     private static final byte STATE_FINISHED = 3;
 
-    private final static long TIMER_HAS_NOT_STARTED_YET = -1;
+    protected final static long TIMER_HAS_NOT_STARTED_YET = -1;
     private final static long LONG_DURATION_FOR_TIMER = 3_660_099; // milli seconds equal to 59:59:99
-    private long tenMilliSecondsRemaining = TIMER_HAS_NOT_STARTED_YET;
+    protected long tenMilliSecondsRemaining = TIMER_HAS_NOT_STARTED_YET;
 
     private byte stopWatchState = STATE_INITIAL;
 
@@ -39,6 +34,15 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     TextView textViewStopWatchMinutes;
 
     CountDownTimer countDownTimer;
+
+    private static StopwatchFragment instance;
+
+    public static StopwatchFragment getInstance() {
+        if (instance == null) {
+            instance = new StopwatchFragment();
+        }
+        return instance;
+    }
 
     @Nullable
     @Override
@@ -91,7 +95,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void countDownTimerCombine(long remainingSecondsStatus) {
+    protected void countDownTimerCombine(long remainingSecondsStatus) {
         long duration = LONG_DURATION_FOR_TIMER;
         if (remainingSecondsStatus != TIMER_HAS_NOT_STARTED_YET)
             duration = remainingSecondsStatus;
@@ -104,6 +108,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void onFinish() {
+                stopWatchState = STATE_FINISHED;
             }
         };
         countDownTimer.start();
@@ -138,7 +143,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         calculateRemainingTime(tenMilliSecondsRemaining);
     }
 
-    private void calculateRemainingTime(long remainingTime) {
+    protected void calculateRemainingTime(long remainingTime) {
         long mSeconds = (LONG_DURATION_FOR_TIMER - remainingTime) / 10;
         textViewStopWatchTenSeconds.setText(String.format("%02d", mSeconds % 100));
 
@@ -153,30 +158,18 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-
-        if (view.getId() == R.id.button_start_stop_watch){
+        if (view.getId() == R.id.button_start_stop_watch) {
             countDownTimerCombine(tenMilliSecondsRemaining);
-        configStartState();
-    }
-
-        else if(view.getId() == R.id.button_stop_stop_watch)
-
-    {
-        countDownTimer.cancel();
-        configStopState();
-    }
-    else if(view.getId() == R.id.button_reset_stop_watch){
+            configStartState();
+        } else if (view.getId() == R.id.button_stop_stop_watch) {
             countDownTimer.cancel();
-
-    configInitialState();
-}
-
-        else if(view.getId()==R.id.button_resume_stop_watch)
-
-    {
-        countDownTimerCombine(tenMilliSecondsRemaining);
-        configStartState();
-    }
-
+            configStopState();
+        } else if (view.getId() == R.id.button_reset_stop_watch) {
+            countDownTimer.cancel();
+            configInitialState();
+        } else if (view.getId() == R.id.button_resume_stop_watch) {
+            countDownTimerCombine(tenMilliSecondsRemaining);
+            configStartState();
+        }
     }
 }

@@ -27,73 +27,41 @@ public class SettingsFragment extends Fragment {
         LinearLayout helpButton = rootView.findViewById(R.id.helpButton);
         LinearLayout aboutButton = rootView.findViewById(R.id.aboutButton);
 
-        SwitchCompat darkModeSwitch = rootView.findViewById(R.id.switch1);
-        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Set the phone to dark mode
-                    int nightModeFlags = rootView.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                    if (nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        // Optional: Restart the activity for changes to take effect immediately
-                    }
-                } else {
-                    // Set the phone to light mode
-                    int nightModeFlags = rootView.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                    if (nightModeFlags != Configuration.UI_MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        // Optional: Restart the activity for changes to take effect immediately
-                    }
-                }
-            }
-        });
-
-//        accountButton.setOnClickListener(new View.OnClickListener() {
+//        SwitchCompat darkModeSwitch = rootView.findViewById(R.id.switch1);
+//        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
-//            public void onClick(View v) {
-//                AccountFragment fragment = new AccountFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                // Toggle dark mode
+////                toggleDarkMode(rootView, isChecked);
 //            }
 //        });
 
-        privacyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PrivacyFragment fragment = new PrivacyFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HelpFragment fragment = new HelpFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
-        aboutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AboutFragment fragment = new AboutFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+        setupButtonListeners(accountButton, "account");
+        setupButtonListeners(privacyButton, "privacy");
+        setupButtonListeners(helpButton, "help");
+        setupButtonListeners(aboutButton, "about");
 
         return rootView;
     }
-}
 
+//    private void toggleDarkMode(View rootView, boolean isChecked) {
+//        int nightModeFlags = rootView.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+//        if (isChecked && nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        } else if (!isChecked && nightModeFlags != Configuration.UI_MODE_NIGHT_NO) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
+//    }
+
+    private void setupButtonListeners(LinearLayout button, String fragmentType) {
+        button.setOnClickListener(v -> {
+            Fragment fragment = FragmentFactory.getFragment(fragmentType);
+            if (fragment != null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+    }
+}

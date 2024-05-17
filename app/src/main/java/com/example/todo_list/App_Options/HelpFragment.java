@@ -37,30 +37,31 @@ public class HelpFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerviewItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        helpRef = FirebaseDatabase.getInstance().getReference().child("help");
+        helpRef = FirebaseDatabaseHelper.getInstance().getHelpReference();
+
         helpRef.addValueEventListener(new ValueEventListener() {
             int i=0;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                i++;
+                    i++;
 
-                String question = dataSnapshot.child(Integer.toString(i)).child("question").getValue(String.class);
-                String answer = dataSnapshot.child(Integer.toString(i)).child("answer").getValue(String.class);
-                Help help = new Help(question, answer);
+                    String question = dataSnapshot.child(Integer.toString(i)).child("question").getValue(String.class);
+                    String answer = dataSnapshot.child(Integer.toString(i)).child("answer").getValue(String.class);
+                    Help help = new Help(question, answer);
 
-                // Assuming Help is a simple model class that holds question and answer
+                    // Assuming Help is a simple model class that holds question and answer
 //                helpList.clear();
-                helpList.add(help);
+                    helpList.add(help);
 
-                // Initialize adapter if null, otherwise just notify data changed
-                if (helpAdapter == null) {
-                    helpAdapter = new HelpAdapter(helpList);
-                    recyclerView.setAdapter(helpAdapter);
-                } else {
-                    helpAdapter.notifyDataSetChanged();
+                    // Initialize adapter if null, otherwise just notify data changed
+                    if (helpAdapter == null) {
+                        helpAdapter = new HelpAdapter(helpList);
+                        recyclerView.setAdapter(helpAdapter);
+                    } else {
+                        helpAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
             }
 
             @Override

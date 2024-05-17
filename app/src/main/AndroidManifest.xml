@@ -21,15 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDo_List"
+
+
+
         tools:targetApi="31" >
+
+
         <activity
             android:name=".StopWatch.StopWatchHomeActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Note.NoteMainActivity"
@@ -66,9 +67,13 @@
 
         <activity
             android:name=".DashBoard_Option.DashboardActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Base.Theme.ToDo_List" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

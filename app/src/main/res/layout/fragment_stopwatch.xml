@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Black"
+    android:background="@color/white"
     android:animateLayoutChanges="true">
 
     <!-- Stopwatch Minutes -->
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="00:"
         android:textSize="50sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/textView_stopwatch_s"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="00:"
         android:textSize="50sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintTop_toTopOf="@id/textView_stopwatch_m"
         app:layout_constraintStart_toEndOf="@id/textView_stopwatch_m"
         app:layout_constraintEnd_toStartOf="@id/textView_stopwatch_10ms" />
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="00"
         android:textSize="50sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintTop_toTopOf="@id/textView_stopwatch_s"
         app:layout_constraintStart_toEndOf="@id/textView_stopwatch_s"
         app:layout_constraintEnd_toEndOf="parent"

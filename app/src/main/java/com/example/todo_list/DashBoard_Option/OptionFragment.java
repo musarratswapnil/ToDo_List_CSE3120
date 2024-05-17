@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.todo_list.Reminder.HomeFragment;
 import com.example.todo_list.Note.HomeScreen;
 import com.example.todo_list.R;
+import com.example.todo_list.StopWatch.StopWatchHomeActivity;
 import com.google.android.material.card.MaterialCardView;
 
 /**
@@ -131,6 +132,7 @@ class CommandInvoker {
          */
         MaterialCardView remainderCard = view.findViewById(R.id.RemainderCard);
         MaterialCardView noteCard = view.findViewById(R.id.NoteCard);
+        MaterialCardView stopwatchCard = view.findViewById(R.id.StopWatchCard);
         /**
          * Create command invoker
          */
@@ -162,6 +164,22 @@ class CommandInvoker {
                 invoker.executeCommand();
             }
         });
+
+        /**
+         * Add 3rd option
+         *Set click listener for the RemainderCard
+         */
+        stopwatchCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Set fragment command and execute
+                 */
+                invoker.setCommand(new NavigateToActivityCommand(getActivity(), StopWatchHomeActivity.class));
+                invoker.executeCommand();
+            }
+        });
+
 
         return view;
     }

@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.List;
 
 public class Help {
-   private String question,answer;
+    private String question,answer;
     public Help(String question,String answer) {
         this.question = question;
         this.answer = answer;

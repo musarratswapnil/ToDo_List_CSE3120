@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.todo_list.App_Options.FragmentFactory;
 import com.example.todo_list.R;
 
 public class StopWatchHomeActivity extends AppCompatActivity {
@@ -20,55 +21,43 @@ public class StopWatchHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_watch_home);
         configure();
-
     }
 
-    private void configure()
-    {
+    private void configure() {
         findViewsById();
         setOnClickListeners();
         initializing();
     }
 
-    private void findViewsById()
-    {
+    private void findViewsById() {
         buttonOpenStopWatchFragment = findViewById(R.id.button_open_stop_watch);
         buttonOpenTimerFragment = findViewById(R.id.button_open_timer);
     }
 
-    private void setOnClickListeners()
-    {
-        buttonOpenStopWatchFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container2, stopwatchFragment)
-                        .commit();
-            }
+    private void setOnClickListeners() {
+        buttonOpenStopWatchFragment.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container2, stopwatchFragment)
+                    .commit();
+            fragmentStatus = STATUS_STOP_WATCH;
         });
-        buttonOpenTimerFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timerFragment=new TimerFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container2, timerFragment)
-                        .commit();
-            }
+        buttonOpenTimerFragment.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container2, timerFragment)
+                    .commit();
+            fragmentStatus = STATUS_TIMER;
         });
     }
 
-    private void initializing()
-    {
-        stopwatchFragment = new StopwatchFragment();
-        timerFragment = new TimerFragment();
+    private void initializing() {
+        stopwatchFragment = (StopwatchFragment) FragmentFactory.createFragment(FragmentFactory.STATUS_STOP_WATCH);
+        timerFragment = (TimerFragment) FragmentFactory.createFragment(FragmentFactory.STATUS_TIMER);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container2,stopwatchFragment).commit();
-        buttonOpenTimerFragment.setTextColor(getResources().getColor(R.color.DarkRed));
-        fragmentStatus = STATUS_TIMER;
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container2, stopwatchFragment).commit();
+        fragmentStatus = STATUS_STOP_WATCH;
     }
+
 }
-
