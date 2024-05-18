@@ -20,6 +20,10 @@ import com.example.todo_list.App_Options.AboutFragment;
 import com.example.todo_list.App_Options.PrivacyFragment;
 import com.example.todo_list.App_Options.SettingsFragment;
 
+
+import com.example.todo_list.App_Options.ContactFragment;
+
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -144,19 +148,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_about) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
         } else if (itemId == R.id.nav_privacy) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
             // Handle the logout activity
             // Perform logout
-//            FirebaseAuth.getInstance().signOut();
+
+               FirebaseAuth.getInstance().signOut();
 
             // Redirect to login or splash screen
-//            Toast.makeText(this, "Logout Successfully!", Toast.LENGTH_SHORT).show();
-//            Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
-//            startActivity(loginIntent);
-//            finish(); // Optional: finish the current activity to prevent going back to it
+                Toast.makeText(this, "Logout Successfully!", Toast.LENGTH_SHORT).show();
+                Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+                finish(); // Optional: finish the current activity to prevent going back to it
         }
 
         // Minimize the side menu
