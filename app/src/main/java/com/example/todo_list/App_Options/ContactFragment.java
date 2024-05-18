@@ -34,7 +34,7 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap mMap;
-    private DatabaseReference usersRef;
+    DatabaseReference usersRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,15 +66,19 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
                 // Check if any of the EditText fields is empty
                 if (message.isEmpty() || emailAddress.isEmpty()) {
                     showToast("Please fill in all fields");
+                    if (message.isEmpty()) {
+                        messageEditText.setError("This field is required");
+                    }
+                    if (emailAddress.isEmpty()) {
+                        emailAddressEditText.setError("This field is required");
+                    }
                     return;
                 }
-
-                // Validate the email address
                 if (!isValidEmail(emailAddress)) {
                     showToast("Invalid email address");
+                    emailAddressEditText.setError("Invalid email address");
                     return;
                 }
-
                 // Generate the current datetime
                 String datetime = getCurrentDateTime();
 

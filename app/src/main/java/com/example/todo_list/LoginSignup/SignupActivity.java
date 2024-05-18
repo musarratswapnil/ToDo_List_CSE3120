@@ -31,7 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     private TextView loginTextView;
     private FirebaseAuth firebaseAuth;
     private boolean isNetworkAvailable = true;
-    private NetworkChangeReceiver networkChangeReceiver;
+    NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +39,15 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         firebaseAuth = FirebaseService.getInstance().getFirebaseAuth();
 
-//        Find views by ID
+        // Find views by ID
         editTextName = findViewById(R.id.editTextTextName);
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         editTextPassword2 = findViewById(R.id.editTextTextPassword2);
         imageViewSignUp = findViewById(R.id.imageView5);
-
         loginTextView = findViewById(R.id.textView5);
 
-        imageViewSignUp.setOnClickListener(new View.OnClickListener(){
+        imageViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUp();
@@ -57,7 +56,6 @@ public class SignupActivity extends AppCompatActivity {
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                handle login text click
                 Intent loginIntent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
             }
@@ -91,14 +89,39 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-//        Validate the input fields
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || password2.isEmpty()) {
+        // Validate the input fields
+        if (name.isEmpty()) {
+            editTextName.setError("Name is required");
             Toast.makeText(SignupActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email is required");
+            Toast.makeText(SignupActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            editTextPassword.setError("Password is required");
+            Toast.makeText(SignupActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (password2.isEmpty()) {
+            editTextPassword2.setError("Please confirm your password");
+            Toast.makeText(SignupActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6) {
+            editTextPassword.setError("Password must be at least 6 characters");
+            Toast.makeText(SignupActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!password.equals(password2)) {
-            Toast.makeText(SignupActivity.this, "Password do not match", Toast.LENGTH_SHORT).show();
+            editTextPassword2.setError("Passwords do not match");
+            Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -115,20 +138,20 @@ public class SignupActivity extends AppCompatActivity {
                             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
                             usersRef.child(userId).child("name").setValue(name);
 
-                            // sign-up process
+                            // Sign-up process
                             Toast.makeText(SignupActivity.this, "Sign-up successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-
-                            // I can add logic here, such as navigating to the home screen.
-                        }else {
+                        } else {
                             // Sign-up failed
-                            Toast.makeText(SignupActivity.this, "Sign-up Failed:" + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
+                            String errorMessage = "Sign-up failed: " + task.getException().getMessage();
+                            Toast.makeText(SignupActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            editTextEmail.setError(errorMessage);
                         }
                     }
                 });
     }
-    private class NetworkChangeReceiver extends BroadcastReceiver {
+
+    protected class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isNetworkAvailable()) {

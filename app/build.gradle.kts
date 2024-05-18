@@ -49,7 +49,7 @@ dependencies {
 
     // dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-   implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth")
 
 
     // the dependency for the Google Play services library and specify its version
@@ -65,5 +65,29 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:core:1.4.0")
+//    dependencies {
+    // Espresso core
+//        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Espresso intents
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
+
+    // JUnit
+//        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    }
+
+
+    // Unit testing dependencies
+
+    testImplementation("org.mockito:mockito-core:3.+")
+    androidTestImplementation("org.mockito:mockito-android:3.+")
+//    androidTestImplementation ("org.robolectric:robolectric:4.6.1")
+
+    // Mockito for Android
+    androidTestImplementation ("org.mockito:mockito-android:3.11.2")
+    androidTestImplementation ("org.mockito:mockito-android:3.3.3")
+
+
+
 
 }

@@ -15,15 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/top_background" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +27,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="100dp"
-                android:text="Create \nAccount"
+                android:text="Create Account"
                 android:textColor="@color/purple"
                 android:textSize="40sp"
                 android:textStyle="bold" />
@@ -126,6 +117,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/purple" />
         </LinearLayout>
-    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
