@@ -6,6 +6,7 @@
     android:layout_height="130dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
+    android:id="@+id/task_item"
     app:cardElevation="4dp">
 
     <LinearLayout

@@ -90,6 +90,37 @@
                 android:minLines="2"
                 android:maxLines="3"
                 android:scrollbars="vertical" />
+            <RadioGroup
+                android:id="@+id/notificationTypeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <RadioButton
+                    android:id="@+id/emailOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/alarmOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alarm"
+                    android:checked="true"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/notificationOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notification"
+                    android:textSize="16sp"/>
+            </RadioGroup>
+
         </com.google.android.material.textfield.TextInputLayout>
     </ScrollView>
 

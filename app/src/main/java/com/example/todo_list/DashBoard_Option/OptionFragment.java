@@ -88,7 +88,7 @@ class NavigateToActivityCommand implements Command {
  * Invoker class that executes commands on basis of setting specific command
  * Invoker is a basic part of command behavioural Design Pattern
  */
-class CommandInvoker {
+ class CommandInvoker {
     private Command command;
 
     /**
