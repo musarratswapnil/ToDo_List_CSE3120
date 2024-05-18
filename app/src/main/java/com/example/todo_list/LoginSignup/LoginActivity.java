@@ -54,10 +54,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
-    private SignInClient oneTapClient;
 
-    private BeginSignInRequest signInRequest;
-    private static final int REQ_ONE_TAP = 100;
     private Button loginWithGoogle;
     private EditText editTextPassword;
     private TextView forgotPasswordTextView;
@@ -66,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     GoogleSignInOptions gso;
     private PasswordResetHelper passwordResetHelper;
-    private boolean isNetworkAvailable = true;
+    public boolean isNetworkAvailable = true;
     private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
@@ -373,18 +370,31 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
             return;
         }
+        if(email.isEmpty() && password.isEmpty()){
+            editTextEmail.setError("Please fill in information to continue");
+            Toast.makeText(LoginActivity.this, "Please fill in information to continue", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (email.isEmpty()) {
-            editTextEmail.setError("Email is Required");
-            editTextEmail.requestFocus();
+            editTextEmail.setError("Email is required");
+            Toast.makeText(LoginActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (password.isEmpty()) {
-            editTextPassword.setError("Password is Required");
-            editTextPassword.requestFocus();
+            editTextPassword.setError("Password is required");
+            Toast.makeText(LoginActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (password.length() < 6) {
+            editTextPassword.setError("Password must be at least 6 characters");
+            Toast.makeText(LoginActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
