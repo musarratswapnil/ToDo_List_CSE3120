@@ -17,13 +17,13 @@ import androidx.fragment.app.Fragment;
 import com.example.todo_list.R;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
-    private static final int STATE_INITIAL = 0;
-    private static final int STATE_START = 1;
-    private static final int STATE_STOP = 2;
+    protected static final int STATE_INITIAL = 0;
+    protected static final int STATE_START = 1;
+    protected static final int STATE_STOP = 2;
     private static final int STATE_FINISHED = 3;
 
     long timerDuration = 0;
-    private int timerState = STATE_INITIAL;
+    protected int timerState = STATE_INITIAL;
 
     private static final int FRAGMENT_STATE_ON_RESUME = 1;
     private static final int FRAGMENT_STATE_ON_PAUSE = 2;

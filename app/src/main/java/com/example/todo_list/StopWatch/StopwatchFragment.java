@@ -29,9 +29,10 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     Button buttonResumeStopWatch;
     Button buttonResetStopWatch;
 
-    TextView textViewStopWatchTenSeconds;
-    TextView textViewStopWatchSeconds;
+    TextView textViewStopWatchHours;
     TextView textViewStopWatchMinutes;
+    TextView textViewStopWatchSeconds;
+    TextView textViewStopWatchTenSeconds;
 
     CountDownTimer countDownTimer;
 
@@ -67,9 +68,10 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         buttonResumeStopWatch = getView().findViewById(R.id.button_resume_stop_watch);
         buttonResetStopWatch = getView().findViewById(R.id.button_reset_stop_watch);
 
-        textViewStopWatchTenSeconds = getView().findViewById(R.id.textView_stopwatch_10ms);
-        textViewStopWatchSeconds = getView().findViewById(R.id.textView_stopwatch_s);
+        textViewStopWatchHours = getView().findViewById(R.id.textView_stopwatch_h);
         textViewStopWatchMinutes = getView().findViewById(R.id.textView_stopwatch_m);
+        textViewStopWatchSeconds = getView().findViewById(R.id.textView_stopwatch_s);
+        textViewStopWatchTenSeconds = getView().findViewById(R.id.textView_stopwatch_10ms);
     }
 
     private void setOnClickListeners() {
@@ -103,12 +105,13 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         countDownTimer = new CountDownTimer(duration, 10) {
             @Override
             public void onTick(long remainingTime) {
-                calculateRemainingTime(remainingTime);
+                updateTimerUI(remainingTime);
             }
 
             @Override
             public void onFinish() {
                 stopWatchState = STATE_FINISHED;
+                configInitialState();
             }
         };
         countDownTimer.start();
@@ -119,10 +122,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         buttonStopStopWatch.setVisibility(View.GONE);
         buttonResumeStopWatch.setVisibility(View.GONE);
         buttonResetStopWatch.setVisibility(View.GONE);
-        tenMilliSecondsRemaining = TIMER_HAS_NOT_STARTED_YET;
-        textViewStopWatchTenSeconds.setText("00");
-        textViewStopWatchSeconds.setText("00:");
+        tenMilliSecondsRemaining = StopwatchLogic.TIMER_HAS_NOT_STARTED_YET;
+        textViewStopWatchHours.setText("00:");
         textViewStopWatchMinutes.setText("00:");
+        textViewStopWatchSeconds.setText("00:");
+        textViewStopWatchTenSeconds.setText("00");
         stopWatchState = STATE_INITIAL;
     }
 
@@ -137,21 +141,21 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     private void configStopState() {
         buttonStartStopWatch.setVisibility(View.GONE);
         buttonStopStopWatch.setVisibility(View.GONE);
-
         buttonResumeStopWatch.setVisibility(View.VISIBLE);
+        buttonResetStopWatch.setVisibility(View.VISIBLE);
         stopWatchState = STATE_STOP;
-        calculateRemainingTime(tenMilliSecondsRemaining);
+        updateTimerUI(tenMilliSecondsRemaining);
     }
 
-    protected void calculateRemainingTime(long remainingTime) {
-        long mSeconds = (LONG_DURATION_FOR_TIMER - remainingTime) / 10;
-        textViewStopWatchTenSeconds.setText(String.format("%02d", mSeconds % 100));
+    protected void updateTimerUI(long remainingTime) {
+        long mSeconds = StopwatchLogic.calculateRemainingTime(StopwatchLogic.LONG_DURATION_FOR_TIMER, remainingTime);
+        String formattedTime = StopwatchLogic.formatTime(mSeconds);
+        String[] timeParts = formattedTime.split(":");
 
-        long seconds = mSeconds / 100;
-        textViewStopWatchSeconds.setText(String.format("%02d:", seconds % 60));
-
-        long minutes = seconds / 60;
-        textViewStopWatchMinutes.setText(String.format("%02d:", minutes));
+        textViewStopWatchHours.setText(timeParts[0] + ":");
+        textViewStopWatchMinutes.setText(timeParts[1] + ":");
+        textViewStopWatchSeconds.setText(timeParts[2] + ":");
+        textViewStopWatchTenSeconds.setText(timeParts[3]);
 
         tenMilliSecondsRemaining = remainingTime;
     }
