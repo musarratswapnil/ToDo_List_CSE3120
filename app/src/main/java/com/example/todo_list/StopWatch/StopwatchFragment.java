@@ -13,16 +13,16 @@ import android.widget.TextView;
 import com.example.todo_list.R;
 
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
-    private static final byte STATE_INITIAL = 0;
-    private static final byte STATE_START = 1;
-    private static final byte STATE_STOP = 2;
+    protected static final byte STATE_INITIAL = 0;
+    protected static final byte STATE_START = 1;
+    protected static final byte STATE_STOP = 2;
     private static final byte STATE_FINISHED = 3;
 
     protected final static long TIMER_HAS_NOT_STARTED_YET = -1;
     private final static long LONG_DURATION_FOR_TIMER = 3_660_099; // milli seconds equal to 59:59:99
     protected long tenMilliSecondsRemaining = TIMER_HAS_NOT_STARTED_YET;
 
-    private byte stopWatchState = STATE_INITIAL;
+    protected byte stopWatchState = STATE_INITIAL;
 
     Button buttonStartStopWatch;
     Button buttonStopStopWatch;
