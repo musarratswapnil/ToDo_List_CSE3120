@@ -5,6 +5,7 @@ import android.util.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Task {
@@ -26,6 +27,7 @@ public class Task {
     public Task() {
         // Required empty constructor for Firebase
     }
+
 
     public String getKey() {
         return key;
@@ -84,4 +86,16 @@ public class Task {
     public String getTime() {
         return time;
     }
+    public boolean isOverdue() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        try {
+            Date taskDate = sdf.parse(this.date + " " + this.time);
+            return taskDate != null && taskDate.before(new Date());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

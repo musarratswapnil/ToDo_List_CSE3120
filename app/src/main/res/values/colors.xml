@@ -6,6 +6,7 @@
     <color name="purple">#603A91</color>
     <color name="purple_500">#E4CCFF</color>
     <color name="gray_faded">#888888</color>
+
     <color name="DarkRed">#ffcc0000</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
@@ -13,5 +14,7 @@
     <color name="DarkGray">#919191</color>
     <color name="Black">#000000</color>
 
+
+    <color name="red">#F6B7B7</color>
 
 </resources>
