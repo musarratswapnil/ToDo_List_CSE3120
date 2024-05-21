@@ -21,7 +21,7 @@ import com.example.todo_list.App_Options.PrivacyFragment;
 import com.example.todo_list.App_Options.SettingsFragment;
 
 
-import com.example.todo_list.App_Options.ContactFragment;
+//import com.example.todo_list.App_Options.ContactFragment;
 
 import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
@@ -148,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_about) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
         } else if (itemId == R.id.nav_privacy) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {

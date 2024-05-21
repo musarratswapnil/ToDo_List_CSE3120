@@ -15,6 +15,10 @@ import com.example.todo_list.R;
 
 public class PrivacyFragment extends Fragment {
 
+//    public static boolean toggleSectionVisibility(boolean isCurrentlyVisible) {
+//        return !isCurrentlyVisible;
+//    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
