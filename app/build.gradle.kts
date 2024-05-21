@@ -57,7 +57,7 @@ dependencies {
 
 
 // Use "+" to automatically fetch the latest version
-//    implementation ("com.android.support:design:+") // Use "+" to automatically fetch the latest version
+//   implementation ("com.android.support:design:+") // Use "+" to automatically fetch the latest version
     implementation ("com.google.android.material:material:1.6.1")
     // JUnit for unit tests
     testImplementation ("junit:junit:4.13.2")
@@ -65,15 +65,40 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:core:1.4.0")
+
     androidTestImplementation ("androidx.fragment:fragment-testing:1.4.1")
     androidTestImplementation ("androidx.test:runner:1.4.0")
     androidTestImplementation ("androidx.test:rules:1.4.0")
     testImplementation ("org.robolectric:robolectric:4.6")
 
-//    androidTestImplementation 'androidx.fragment:fragment-testing:1.3.6'
-//    androidTestImplementation 'androidx.test:core:1.3.0'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//    androidTestImplementation ("androidx.fragment:fragment-testing:1.3.6")
+//    androidTestImplementation ("androidx.test:core:1.3.0")
+//    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+//    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+
+
+    // Espresso core
+//  androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+
+    // Espresso intents
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
+
+    // JUnit
+//  androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+//    
+
+
+    // Unit testing dependencies
+
+    testImplementation("org.mockito:mockito-core:3.+")
+    androidTestImplementation("org.mockito:mockito-android:3.+")
+//  androidTestImplementation ("org.robolectric:robolectric:4.6.1")
+
+    // Mockito for Android
+    androidTestImplementation ("org.mockito:mockito-android:3.11.2")
+    androidTestImplementation ("org.mockito:mockito-android:3.3.3")
+
+
 
 
 

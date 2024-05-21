@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" >
     <!-- Add the following permissions for internet access and location services -->
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- If you need access to FINE location, you must request both ACCESS_FINE_LOCATION and ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,16 +16,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.NOTIFICATION_POLICY_ACCESS_GRANTED" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" /> <!-- recently added -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- Added for sms -->
 
-    <!--    Added for sms -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+
     <uses-permission android:name="android.permission.SEND_SMS" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
 
     <application
         android:allowBackup="true"
@@ -44,6 +46,14 @@
             android:name=".StopWatch.StopWatchHomeActivity"
             android:exported="false" />
 
+
+        <activity
+            android:name=".App_Options.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Note.NoteMainActivity"
+            android:exported="false"></activity>
+
         <activity
             android:name=".LoginSignup.SignupActivity"
             android:exported="false" />
@@ -63,7 +73,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Note.NoteMainActivity"
             android:exported="true" />
