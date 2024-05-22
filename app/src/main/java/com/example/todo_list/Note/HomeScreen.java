@@ -1,11 +1,5 @@
 package com.example.todo_list.Note;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +13,19 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.Note.Sort.SortByNameStrategy;
 import com.example.todo_list.Note.Sort.SortingStrategy;
 import com.example.todo_list.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +45,9 @@ public class HomeScreen extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
     private Spinner sortSpinner;
     private FloatingActionButton fab;
+    FirebaseUser currentUser;
+    String userId;
+
     //    private SortByDateStrategy sortByDateStrategy;
     private static final int MENU_ADD_NOTE = 1;
     private static final int MENU_ADD_CHECKLIST = 2;
@@ -124,8 +130,18 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     private void setupDatabaseListener() {
-        databaseReference = FirebaseDatabaseSingleton.getInstance().getReference().child("users").child("1").child("notes");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getApplicationContext(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            return;
+        }
+        userId = currentUser.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(userId).child("notes")
+        .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 handleData(dataSnapshot);
