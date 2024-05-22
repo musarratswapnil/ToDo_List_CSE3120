@@ -9,7 +9,7 @@ import android.os.Handler;
 import com.example.todo_list.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final int SPLASH_TIMEOUT =  2000; // 2 seconds
+    protected static final int SPLASH_TIMEOUT =  2000; // 2 seconds
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
