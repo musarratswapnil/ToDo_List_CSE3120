@@ -182,4 +182,17 @@ public class StopWatchActivity extends AppCompatActivity implements View.OnClick
             configStartState();
         }
     }
+
+    // Helper method for testing purposes
+    public String getDisplayedTime() {
+        return textViewStopWatchHours.getText().toString() +
+                textViewStopWatchMinutes.getText().toString() +
+                textViewStopWatchSeconds.getText().toString() +
+                textViewStopWatchTenSeconds.getText().toString();
+    }
+
+    // Helper method for testing purposes
+    public void setDurationForTesting(long duration) {
+        tenMilliSecondsRemaining = duration;
+    }
 }
