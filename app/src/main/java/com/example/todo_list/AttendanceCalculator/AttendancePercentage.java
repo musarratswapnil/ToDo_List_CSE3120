@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.todo_list.R;
 
 public class AttendancePercentage extends AppCompatActivity {
@@ -14,14 +13,15 @@ public class AttendancePercentage extends AppCompatActivity {
     private EditText editTextTotalCredit, editTextTotalWeeks, editTextClassesAttended;
     private Button buttonCalculateAttendance;
     private TextView textViewAttendanceResult;
-    private AttendanceAdapter attendanceAdapter;
+    private AttendancePercentageLogic percentageLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_percentage);
 
-        attendanceAdapter = new AttendanceAdapter();
+        AttendanceAdapter attendanceAdapter = new AttendanceAdapter();
+        percentageLogic = new AttendancePercentageLogic(attendanceAdapter);
 
         editTextTotalCredit = findViewById(R.id.editTextTotalCredit);
         editTextTotalWeeks = findViewById(R.id.editTextTotalWeeks);
@@ -47,8 +47,7 @@ public class AttendancePercentage extends AppCompatActivity {
             int totalWeeks = Integer.parseInt(totalWeeksStr);
             int classesAttended = Integer.parseInt(classesAttendedStr);
 
-            int totalClasses = attendanceAdapter.calculateTotalClasses(totalCredit, totalWeeks);
-            double attendancePercentage = attendanceAdapter.calculateAttendancePercentage(classesAttended, totalClasses);
+            double attendancePercentage = percentageLogic.calculatePercentage(totalCredit, totalWeeks, classesAttended);
 
             textViewAttendanceResult.setText(String.format("Your attendance is %.2f%%", attendancePercentage));
         } else {

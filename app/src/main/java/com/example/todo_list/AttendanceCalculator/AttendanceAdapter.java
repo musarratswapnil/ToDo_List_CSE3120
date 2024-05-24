@@ -7,6 +7,11 @@ public class AttendanceAdapter {
         this.externalLibrary = new ExternalAttendanceLibrary();
     }
 
+    // Add this constructor for dependency injection
+    public AttendanceAdapter(ExternalAttendanceLibrary externalLibrary) {
+        this.externalLibrary = externalLibrary;
+    }
+
     public int calculateTotalClasses(int totalCredit, int totalWeeks) {
         return externalLibrary.computeTotalClasses(totalCredit, totalWeeks);
     }
@@ -23,4 +28,3 @@ public class AttendanceAdapter {
         return externalLibrary.computeRemainingClassesToAttend(neededClasses, classesAttended);
     }
 }
-
