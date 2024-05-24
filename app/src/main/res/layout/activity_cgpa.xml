@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <Spinner
+        android:id="@+id/semester_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/semester_array" />
+
+    <EditText
+        android:id="@+id/course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Name" />
+
+    <EditText
+        android:id="@+id/course_credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Credits"
+        android:inputType="numberDecimal" />
+
+    <Spinner
+        android:id="@+id/grade_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/grades_array" />
+
+    <Button
+        android:id="@+id/add_course_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Course" />
+
+    <ListView
+        android:id="@+id/course_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/calculate_gpa_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate GPA" />
+
+    <TextView
+        android:id="@+id/gpa_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GPA: "
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
+
+    <Button
+        android:id="@+id/save_semester_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Semester" />
+
+    <Button
+        android:id="@+id/show_semesters_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Semesters" />
+
+</LinearLayout>

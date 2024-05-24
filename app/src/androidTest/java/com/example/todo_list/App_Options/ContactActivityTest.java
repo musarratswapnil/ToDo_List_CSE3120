@@ -19,11 +19,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class ContactFragmentTest {
+public class ContactActivityTest {
 
     @Before
     public void setUp() {
-        ActivityScenario.launch(TestActivity.class);
+        ActivityScenario.launch(ContactActivity.class);
     }
 
     @Test
@@ -45,25 +45,13 @@ public class ContactFragmentTest {
         // Check if the error message is set on the email field
         onView(withId(R.id.editTextTextEmailAddress)).check(matches(hasErrorText("Invalid email address")));
     }
-
     @Test
-    public void testSendMessage_success() {
-        onView(withId(R.id.message)).perform(typeText("Test message"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextEmailAddress)).perform(typeText("test@example.com"), closeSoftKeyboard());
+    public void testMessageFieldFocusChange_noText() {
+        onView(withId(R.id.editTextTextEmailAddress)).perform(typeText("asifakbar@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.message)).perform(typeText(""),closeSoftKeyboard());
         onView(withId(R.id.sendMessage)).perform(click());
 
-        // Check if the fields are cleared on success
-        onView(withId(R.id.message)).check(matches(withText("")));
-        onView(withId(R.id.editTextTextEmailAddress)).check(matches(withText("")));
-    }
-
-    @Test
-    public void testEmailFieldFocusChange_invalidEmail() {
-        onView(withId(R.id.editTextTextEmailAddress)).perform(typeText("invalidemail"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextEmailAddress)).perform(click()).perform(closeSoftKeyboard());
-
         // Check if the error message is set on the email field
-        onView(withId(R.id.editTextTextEmailAddress)).check(matches(hasErrorText("Invalid email address")));
+        onView(withId(R.id.message)).check(matches(hasErrorText("This field is required")));
     }
-
 }

@@ -1,12 +1,15 @@
 package com.example.todo_list.LoginSignup;
 
+//import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
+//import androidx.test.rule.ActivityTestRule;
 import android.Manifest;
 import android.content.Intent;
 
-import androidx.test.rule.GrantPermissionRule;
+//import androidx.test.rule.GrantPermissionRule;
 
 import com.example.todo_list.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,12 +29,14 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+//import static androidx.test.espresso.intent.Intents.intended;
+//import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;
@@ -66,8 +71,8 @@ public class SignupActivityUITest {
     @Test
     public void testEmptyName() {
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextName)).check(matches(hasErrorText("Name is required")));
@@ -77,8 +82,8 @@ public class SignupActivityUITest {
     @Test
     public void testEmptyEmail() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextEmail)).check(matches(hasErrorText("Email is required")));
@@ -88,7 +93,7 @@ public class SignupActivityUITest {
     public void testEmptyPassword() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword)).check(matches(hasErrorText("Password is required")));
@@ -98,7 +103,7 @@ public class SignupActivityUITest {
     public void testEmptyPasswordConfirmation() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword2)).check(matches(hasErrorText("Please confirm your password")));
@@ -119,11 +124,23 @@ public class SignupActivityUITest {
     public void testPasswordsDoNotMatch() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("654321"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@654321"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword2)).check(matches(hasErrorText("Passwords do not match")));
+    }
+    @Test
+    public void invalidPassword(){
+        onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+
+        onView(withId(R.id.imageView5)).perform(click());
+        onView(withId(R.id.editTextTextPassword)).check(matches(hasErrorText("Password is not valid.Need alphabets,special characters")));
+
+
     }
 
     @Test

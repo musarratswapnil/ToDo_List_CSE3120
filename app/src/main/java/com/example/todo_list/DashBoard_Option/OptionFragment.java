@@ -17,6 +17,7 @@ import com.example.todo_list.Reminder.HomeFragment;
 import com.example.todo_list.Note.HomeScreen;
 import com.example.todo_list.R;
 import com.example.todo_list.StopWatch.StopWatchHomeActivity;
+import com.example.todo_list.CgpaCalculator.CgpaActivity;
 import com.google.android.material.card.MaterialCardView;
 
 /**
@@ -123,9 +124,16 @@ public class OptionFragment extends Fragment {
         MaterialCardView remainderCard = view.findViewById(R.id.RemainderCard);
         MaterialCardView noteCard = view.findViewById(R.id.NoteCard);
         MaterialCardView stopwatchCard = view.findViewById(R.id.StopWatchCard);
+
         MaterialCardView attendanceCalculator = view.findViewById(R.id.AttendanceCalculatorCard);
 
         // Create command invoker
+
+        MaterialCardView cgpaCalculatorCard = view.findViewById(R.id.CgpaCalculatorCard);
+        /**
+         * Create command invoker
+         */
+
         CommandInvoker invoker = new CommandInvoker();
 
         // Set click listener for the RemainderCard
@@ -155,6 +163,7 @@ public class OptionFragment extends Fragment {
             }
         });
 
+
         // Set click listener for the AttendanceCalculatorCard
         attendanceCalculator.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +172,17 @@ public class OptionFragment extends Fragment {
                 invoker.executeCommand();
             }
         });
+
+        // Set click listener for the CgpaCalculatorCard
+        cgpaCalculatorCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invoker.setCommand(new NavigateToActivityCommand(getActivity(), CgpaActivity.class));
+                invoker.executeCommand();
+            }
+        });
+
+
 
         return view;
     }

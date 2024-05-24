@@ -133,6 +133,32 @@
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
+            <!-- New CGPA Calculator Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/StopWatchCard"
+                android:id="@+id/CgpaCalculatorCard"
+                android:layout_marginTop="10dp"
+                app:strokeColor="#66788F"
+                android:elevation="2dp"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:id="@+id/CgpaCalculator"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

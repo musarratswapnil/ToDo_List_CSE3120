@@ -2,29 +2,14 @@ package com.example.todo_list.Reminder;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
-import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
-import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
-import com.example.todo_list.Reminder.Task;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,44 +22,26 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.todo_list.LoginSignup.LoginActivity;
+import com.example.todo_list.Note.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
+import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.example.todo_list.Reminder.TaskManager;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-
-// class SaveDBSingleton{
-//    private static volatile SaveDBSingleton instance=null;
-//    private DatabaseReference databaseReference;
-//
-//    private SaveDBSingleton() {
-//        databaseReference = FirebaseDatabase.getInstance().getReference();
-//    }
-//
-//    public static synchronized SaveDBSingleton getInstance() {
-//        if (instance == null) {
-//            synchronized (SaveDBSingleton.class){
-//                if(instance == null){
-//                    instance = new SaveDBSingleton();
-//                }
-//            }
-//        }
-//        return instance;
-//    }
-//
-//    public DatabaseReference getDatabaseReference() {
-//        return databaseReference;
-//    }
-//}
-
 
 public class AddTaskFragment extends Fragment {
     private TextInputEditText titleEditText;
@@ -89,24 +56,24 @@ public class AddTaskFragment extends Fragment {
     private ReminderInterface reminder;
     private RadioGroup notificationTypeGroup;
     private static final int SMS_PERMISSION_REQUEST_CODE = 100;
-
-
-    // Declare the necessary views and Firebase variables
     public class Task {
         private String title;
         private String content;
         private String date;
         private String time;
+        private int requestCode;
+        private String reminderType;
 
         public Task() {
-            // Default constructor required for Firebase
         }
 
-        public Task(String title, String date, String time, String content) {
+        public Task(String title, String date, String time, String content, String reminderType) {
             this.title = title;
             this.date = date;
             this.time = time;
             this.content = content;
+           this.requestCode = requestCode;
+            this.reminderType = reminderType;
         }
 
         public String getTitle() {
@@ -123,6 +90,13 @@ public class AddTaskFragment extends Fragment {
 
         public String getTime() {
             return time;
+        }
+        public int getRequestCode() {
+            return requestCode;
+        }
+
+        public String getReminderType() {
+            return reminderType;
         }
     }
 
@@ -150,31 +124,34 @@ public class AddTaskFragment extends Fragment {
     @SuppressLint("ScheduleExactAlarm")
     private void saveTaskToFirebase(String title, String date, String time, String content,String phone) {
         // Get the current user ID (assuming you have implemented Firebase Authentication)
-        // FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//       if (currentUser == null) {
-//            // User is not authenticated, handle accordingly
-//            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
-//            // Redirect to login page
-//            startActivity(new Intent(getActivity(), LoginActivity.class));
-//            return;
-//       }
-        //   String userId = currentUser.getUid();
+         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+       if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+       }
+           String userId = currentUser.getUid();
 
         // Create a reference to the user's tasks node
         DatabaseReference userTasksRef = FirebaseDatabaseSingleton.getInstance().getReference("users")
-                .child("1")
+                .child(userId)
                 .child("tasks");
 
         // Generate a unique key for the task
 
         // Create a Task object
-        Task task = new Task(title, date, time, content);
 
-        saveTaskToFirebase(userTasksRef, task);
+
         reminder = new ReminderFactory().getReminder(getSelectedReminderType());
-
         reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,phone);
 
+        Calendar calendar = Calendar.getInstance();
+        int requestCode=(int)(calendar.getTimeInMillis()% Integer.MAX_VALUE);
+
+        Task task = new Task(title, date, time, content, getSelectedReminderType());
+        saveTaskToFirebase(userTasksRef, task);
 
     }
 
@@ -291,14 +268,11 @@ public class AddTaskFragment extends Fragment {
                         // Calculate the time difference between the selected time and current time
                         long timeDifferenceInMillis = selectedDateTime.getTimeInMillis() - currentTime.getTimeInMillis();
                         int timeDifferenceInMinutes = (int) (timeDifferenceInMillis / (60 * 1000));
-
-                        // Check if the selected time is at least two minutes later
                         if (timeDifferenceInMinutes < 2) {
-                            // Show an error message to the user
                             Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
                         } else {
-                            // Save the task to Firebase
-                            saveTaskToFirebase(title, date, time, content,phoneNumber);
+
+                         saveTaskToFirebase(title, date, time, content,phoneNumber);
                         }
                     }
                 }
@@ -306,7 +280,10 @@ public class AddTaskFragment extends Fragment {
         });
     }
 
+
+
     private void setupDateClickListener() {
+
         clockImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,6 +313,7 @@ public class AddTaskFragment extends Fragment {
                             String selectedTimeStr = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                             timeTextView.setText(selectedTimeStr);
                         } else {
+
                             // The selected datetime is in the past or too close to the current datetime
                             Toast.makeText(getActivity(), "Please select a datetime in the future", Toast.LENGTH_SHORT).show();
                         }
