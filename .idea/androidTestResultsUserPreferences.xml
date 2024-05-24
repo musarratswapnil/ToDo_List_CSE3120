@@ -327,6 +327,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Google Pixel 8" value="120" />
                   <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
                   <entry key="Pixel_7_Edited_API_34" value="120" />
                   <entry key="Tests" value="360" />
