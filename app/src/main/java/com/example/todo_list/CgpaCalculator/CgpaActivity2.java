@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo_list.R;
@@ -29,7 +30,7 @@ public class CgpaActivity2 extends AppCompatActivity {
     private EditText expectedCgpaEditText;
     private Button calculateRequiredGpaButton;
     private SemesterAdapter adapter;
-    private ArrayList<CgpaActivity.Semester> semestersList = new ArrayList<>();
+    protected ArrayList<CgpaActivity.Semester> semestersList = new ArrayList<>();
 
     private GpaCalculator cgpaCalculator;
 
@@ -123,7 +124,7 @@ public class CgpaActivity2 extends AppCompatActivity {
         });
     }
 
-    private void sortSemesters() {
+    protected void sortSemesters() {
         HashMap<String, Integer> semesterOrder = new HashMap<>();
         semesterOrder.put("1-1", 1);
         semesterOrder.put("1-2", 2);
