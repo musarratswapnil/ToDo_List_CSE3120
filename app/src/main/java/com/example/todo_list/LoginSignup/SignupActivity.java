@@ -124,6 +124,11 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(!isValid(password)){
+            editTextPassword.setError("Password is not valid.Need alphabets,special characters");
+            Toast.makeText(SignupActivity.this, "Password is not valid.Need alphabets,special characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // Create a new user in Firebase Authentication
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -176,5 +181,36 @@ public class SignupActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
+    }
+    public static boolean isValid(String password) {
+        int f1 = 0, f2 = 0, f3 = 0;
+        if(password.length()<6){
+            return false;
+        }
+        else {
+
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isLetter(password.charAt(i))) {
+                    f1 = 1;
+                }
+            }
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isDigit(password.charAt(i))) {
+                    f2 = 1;
+                }
+            }
+            for (int i = 0; i < password.length(); i++) {
+                char c = password.charAt(i);
+                if (c >= 33 && c <= 46 || c == 64) {
+                    f3 = 1;
+                }
+            }
+            if (f1 == 1 && f2 == 1 && f3 == 1) {
+                return true;
+            }
+            return false;
+
+        }
+
     }
 }

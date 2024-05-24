@@ -16,6 +16,7 @@ import com.example.todo_list.Reminder.HomeFragment;
 import com.example.todo_list.Note.HomeScreen;
 import com.example.todo_list.R;
 import com.example.todo_list.StopWatch.StopWatchHomeActivity;
+import com.example.todo_list.CgpaCalculator.CgpaActivity;
 import com.google.android.material.card.MaterialCardView;
 
 /**
@@ -133,6 +134,7 @@ class NavigateToActivityCommand implements Command {
         MaterialCardView remainderCard = view.findViewById(R.id.RemainderCard);
         MaterialCardView noteCard = view.findViewById(R.id.NoteCard);
         MaterialCardView stopwatchCard = view.findViewById(R.id.StopWatchCard);
+        MaterialCardView cgpaCalculatorCard = view.findViewById(R.id.CgpaCalculatorCard);
         /**
          * Create command invoker
          */
@@ -176,6 +178,15 @@ class NavigateToActivityCommand implements Command {
                  * Set fragment command and execute
                  */
                 invoker.setCommand(new NavigateToActivityCommand(getActivity(), StopWatchHomeActivity.class));
+                invoker.executeCommand();
+            }
+        });
+
+        // Set click listener for the CgpaCalculatorCard
+        cgpaCalculatorCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invoker.setCommand(new NavigateToActivityCommand(getActivity(), CgpaActivity.class));
                 invoker.executeCommand();
             }
         });

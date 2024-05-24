@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".App_Options.ContactFragment">
+    tools:context=".App_Options.ContactActivity">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
@@ -106,6 +106,12 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="8dp"
             android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="TextView" />
 
 
     </LinearLayout>

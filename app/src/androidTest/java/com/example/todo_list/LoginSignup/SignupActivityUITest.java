@@ -66,8 +66,8 @@ public class SignupActivityUITest {
     @Test
     public void testEmptyName() {
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextName)).check(matches(hasErrorText("Name is required")));
@@ -77,8 +77,8 @@ public class SignupActivityUITest {
     @Test
     public void testEmptyEmail() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextEmail)).check(matches(hasErrorText("Email is required")));
@@ -88,7 +88,7 @@ public class SignupActivityUITest {
     public void testEmptyPassword() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword)).check(matches(hasErrorText("Password is required")));
@@ -98,7 +98,7 @@ public class SignupActivityUITest {
     public void testEmptyPasswordConfirmation() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword2)).check(matches(hasErrorText("Please confirm your password")));
@@ -119,11 +119,23 @@ public class SignupActivityUITest {
     public void testPasswordsDoNotMatch() {
         onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
         onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
-        onView(withId(R.id.editTextTextPassword2)).perform(typeText("654321"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("aa@123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("aa@654321"), closeSoftKeyboard());
 
         onView(withId(R.id.imageView5)).perform(click());
         onView(withId(R.id.editTextTextPassword2)).check(matches(hasErrorText("Passwords do not match")));
+    }
+    @Test
+    public void invalidPassword(){
+        onView(withId(R.id.editTextTextName)).perform(typeText("Test User"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword)).perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.editTextTextPassword2)).perform(typeText("123456"), closeSoftKeyboard());
+
+        onView(withId(R.id.imageView5)).perform(click());
+        onView(withId(R.id.editTextTextPassword)).check(matches(hasErrorText("Password is not valid.Need alphabets,special characters")));
+
+
     }
 
     @Test
