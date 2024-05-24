@@ -28,23 +28,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CgpaActivity extends AppCompatActivity {
-    private Spinner semesterSpinner, gradeSpinner;
-    private EditText courseNameEditText, courseCreditsEditText;
-    private Button addCourseButton, calculateGpaButton, saveSemesterButton, showSemestersButton;
-    private TextView gpaResultTextView;
-    private ListView courseListView;
+    protected Spinner semesterSpinner;
+    protected Spinner gradeSpinner;
+    protected EditText courseNameEditText, courseCreditsEditText;
+    protected Button addCourseButton, calculateGpaButton, saveSemesterButton, showSemestersButton;
+    protected TextView gpaResultTextView;
+    protected ListView courseListView;
 
-    private ArrayList<String> courses = new ArrayList<>();
-    private ArrayList<Double> credits = new ArrayList<>();
-    private ArrayList<Double> grades = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
-    private FirebaseDatabase database;
-    private DatabaseReference semestersRef;
+    protected ArrayList<String> courses = new ArrayList<>();
+    protected ArrayList<Double> credits = new ArrayList<>();
+    protected ArrayList<Double> grades = new ArrayList<>();
+    protected ArrayAdapter<String> adapter;
+    protected FirebaseDatabase database;
+    protected DatabaseReference semestersRef;
 
-    private GpaCalculator semesterGpaCalculator;
+    protected GpaCalculator semesterGpaCalculator;
 
-    private FirebaseAuth firebaseAuth;
-    private String userId;
+    protected FirebaseAuth firebaseAuth;
+    protected String userId;
+    private Cgpa cgpa=new Cgpa();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class CgpaActivity extends AppCompatActivity {
         gpaResultTextView = findViewById(R.id.gpa_result);
         courseListView = findViewById(R.id.course_list_view);
         database = FirebaseDatabase.getInstance();
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -127,7 +130,7 @@ public class CgpaActivity extends AppCompatActivity {
         });
     }
 
-    private void addCourse() {
+    protected void addCourse() {
         String courseName = courseNameEditText.getText().toString();
         String courseCreditsStr = courseCreditsEditText.getText().toString();
 
@@ -149,7 +152,7 @@ public class CgpaActivity extends AppCompatActivity {
         }
 
         String grade = gradeSpinner.getSelectedItem().toString();
-        double gradeValue = getGradeValue(grade);
+        double gradeValue = cgpa.getGradeValue(grade);
 
         courses.add(courseName);
         credits.add(courseCredits);
@@ -165,35 +168,14 @@ public class CgpaActivity extends AppCompatActivity {
         gradeSpinner.setSelection(0);
     }
 
-    private double getGradeValue(String grade) {
-        switch (grade) {
-            case "A+":
-                return 4.0;
-            case "A":
-                return 3.75;
-            case "A-":
-                return 3.5;
-            case "B+":
-                return 3.25;
-            case "B":
-                return 3.0;
-            case "B-":
-                return 2.75;
-            case "C":
-                return 2.5;
-            case "D":
-                return 2.25;
-            default:
-                return 0.0;
-        }
-    }
 
-    private void calculateGPA() {
+
+    protected void calculateGPA() {
         double gpa = semesterGpaCalculator.calculate(grades, credits);
         gpaResultTextView.setText("GPA: " + String.format("%.2f", gpa));
     }
 
-    private void saveSemester() {
+    protected void saveSemester() {
         final String semesterName = semesterSpinner.getSelectedItem().toString();
         if (semesterName.isEmpty()) {
             Toast.makeText(this, "Please select a semester.", Toast.LENGTH_SHORT).show();

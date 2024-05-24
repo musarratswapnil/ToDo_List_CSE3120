@@ -12,6 +12,9 @@ public class SemesterGpaCalculator implements GpaCalculator {
             totalGradePoints += grades.get(i) * credits.get(i);
             totalCredits += credits.get(i);
         }
+        if (totalCredits == 0) {
+            return 0.0;  // Handle division by zero
+        }
 
         return totalGradePoints / totalCredits;
     }
