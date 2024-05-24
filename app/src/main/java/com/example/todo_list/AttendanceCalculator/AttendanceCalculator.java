@@ -15,11 +15,14 @@ public class AttendanceCalculator extends AppCompatActivity {
     private EditText editTextTotalCredit, editTextTotalWeeks, editTextClassesAttended, editTextDesiredPercentage, editTextRemainingWeeks;
     private Button buttonCalculate, buttonReset, buttonNavigate;
     private TextView textViewClassesLeft, textViewClassesNeedToAttend, textViewResult;
+    private AttendanceCalculatorLogic calculatorLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_calculator);
+
+        calculatorLogic = new AttendanceCalculatorLogic();
 
         editTextTotalCredit = findViewById(R.id.editTextTotalCredit);
         editTextTotalWeeks = findViewById(R.id.editTextTotalWeeks);
@@ -70,24 +73,13 @@ public class AttendanceCalculator extends AppCompatActivity {
             double desiredPercentage = Double.parseDouble(desiredPercentageStr);
             int remainingWeeks = Integer.parseInt(remainingWeeksStr);
 
-            int totalClasses = totalCredit * totalWeeks;
-            int totalRemainingClasses = totalCredit * remainingWeeks;
-            int neededClasses = (int) Math.ceil((desiredPercentage / 100) * totalClasses);
-            int remainingClassesToAttend = neededClasses - classesAttended;
+            AttendanceCalculatorLogic.CalculationResult result = calculatorLogic.calculateNeededClasses(
+                    totalCredit, totalWeeks, classesAttended, desiredPercentage, remainingWeeks
+            );
 
-            textViewClassesLeft.setText(String.valueOf(totalRemainingClasses));
-
-            if (remainingClassesToAttend > totalRemainingClasses) {
-                textViewClassesNeedToAttend.setText("-");
-                textViewResult.setText(String.format("Sorry, you can't achieve %.2f%% attendance in %d weeks.", desiredPercentage, remainingWeeks));
-            } else if (remainingClassesToAttend > 0) {
-                textViewClassesNeedToAttend.setText(String.valueOf(remainingClassesToAttend));
-                textViewResult.setText(String.format("You need to attend %d more classes to achieve %.2f%% attendance.", remainingClassesToAttend, desiredPercentage));
-            } else {
-                int extraClasses = classesAttended - neededClasses;
-                textViewClassesNeedToAttend.setText("0");
-                textViewResult.setText(String.format("You have already achieved %.2f%% attendance and attended %d more classes than required.", desiredPercentage, extraClasses));
-            }
+            textViewClassesLeft.setText(String.valueOf(result.getTotalRemainingClasses()));
+            textViewClassesNeedToAttend.setText(result.getRemainingClassesToAttend());
+            textViewResult.setText(result.getMessage());
         } else {
             textViewResult.setText("Please enter all fields");
         }
