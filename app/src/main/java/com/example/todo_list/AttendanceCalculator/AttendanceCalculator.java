@@ -15,11 +15,14 @@ public class AttendanceCalculator extends AppCompatActivity {
     private EditText editTextTotalCredit, editTextTotalWeeks, editTextClassesAttended, editTextDesiredPercentage, editTextRemainingWeeks;
     private Button buttonCalculate, buttonReset, buttonNavigate;
     private TextView textViewClassesLeft, textViewClassesNeedToAttend, textViewResult;
+    private AttendanceAdapter attendanceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_calculator);
+
+        attendanceAdapter = new AttendanceAdapter();
 
         editTextTotalCredit = findViewById(R.id.editTextTotalCredit);
         editTextTotalWeeks = findViewById(R.id.editTextTotalWeeks);
@@ -70,10 +73,10 @@ public class AttendanceCalculator extends AppCompatActivity {
             double desiredPercentage = Double.parseDouble(desiredPercentageStr);
             int remainingWeeks = Integer.parseInt(remainingWeeksStr);
 
-            int totalClasses = totalCredit * totalWeeks;
-            int totalRemainingClasses = totalCredit * remainingWeeks;
-            int neededClasses = (int) Math.ceil((desiredPercentage / 100) * totalClasses);
-            int remainingClassesToAttend = neededClasses - classesAttended;
+            int totalClasses = attendanceAdapter.calculateTotalClasses(totalCredit, totalWeeks);
+            int totalRemainingClasses = attendanceAdapter.calculateTotalClasses(totalCredit, remainingWeeks);
+            int neededClasses = attendanceAdapter.calculateNeededClasses(totalClasses, desiredPercentage);
+            int remainingClassesToAttend = attendanceAdapter.calculateRemainingClassesToAttend(neededClasses, classesAttended);
 
             textViewClassesLeft.setText(String.valueOf(totalRemainingClasses));
 
