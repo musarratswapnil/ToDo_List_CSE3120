@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.todo_list.App_Options.AccountActivity;
+import com.example.todo_list.App_Options.ContactActivity;
 import com.example.todo_list.App_Options.HelpFragment;
 import com.example.todo_list.App_Options.AboutFragment;
 import com.example.todo_list.App_Options.PrivacyFragment;
@@ -144,11 +146,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_help) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
         } else if (itemId == R.id.nav_account) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccountFragment()).commit();
+            Intent intent=new Intent(DashboardActivity.this, AccountActivity.class);
+            startActivity(intent);
         } else if (itemId == R.id.nav_about) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
+            Intent intent=new Intent(DashboardActivity.this, ContactActivity.class);
+            startActivity(intent);
         } else if (itemId == R.id.nav_privacy) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
