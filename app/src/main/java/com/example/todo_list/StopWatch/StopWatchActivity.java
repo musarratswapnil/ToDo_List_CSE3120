@@ -39,6 +39,9 @@ public class StopWatchActivity extends AppCompatActivity implements View.OnClick
     private Button buttonOpenStopWatch;
     private Button buttonOpenTimer;
 
+    // Get instance of StopwatchLogic using the factory
+    private final StopwatchLogic stopwatchLogic = LogicFactory.getStopwatchLogic();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +59,6 @@ public class StopWatchActivity extends AppCompatActivity implements View.OnClick
             startActivity(new Intent(StopWatchActivity.this, TimerActivity.class));
         });
     }
-
-
 
     private void configure() {
         findViewByIds();
@@ -153,8 +154,8 @@ public class StopWatchActivity extends AppCompatActivity implements View.OnClick
     }
 
     protected void updateTimerUI(long remainingTime) {
-        long mSeconds = StopwatchLogic.calculateRemainingTime(StopwatchLogic.LONG_DURATION_FOR_TIMER, remainingTime);
-        String formattedTime = StopwatchLogic.formatTime(mSeconds);
+        long mSeconds = stopwatchLogic.calculateRemainingTime(StopwatchLogic.LONG_DURATION_FOR_TIMER, remainingTime);
+        String formattedTime = stopwatchLogic.formatTime(mSeconds);
         String[] timeParts = formattedTime.split(":");
 
         textViewStopWatchHours.setText(timeParts[0] + ":");

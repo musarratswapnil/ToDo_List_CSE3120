@@ -46,6 +46,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonOpenStopWatch;
     private Button buttonOpenTimer;
 
+    // Get instance of TimerLogic using the factory
+    private final TimerLogic timerLogic = LogicFactory.getTimerLogic();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +164,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         long seconds = numberPickerSeconds.getValue();
         long minutes = numberPickerMinutes.getValue();
         long hours = numberPickerHours.getValue();
-        timerDuration = TimerLogic.calculateTimerDuration(hours, minutes, seconds);
+        timerDuration = timerLogic.calculateTimerDuration(hours, minutes, seconds);
     }
 
     private void startOrResumeTimer() {
@@ -184,12 +187,12 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updateTimerDisplay(long remainingTime) {
-        String[] timeParts = TimerLogic.formatTime(remainingTime);
+        String[] timeParts = timerLogic.formatTime(remainingTime);
         textViewTimerHours.setText(timeParts[0]);
         textViewTimerMinutes.setText(timeParts[1]);
         textViewTimerSeconds.setText(timeParts[2]);
 
-        int color = TimerLogic.getColorForTime(remainingTime, 11000, getResources().getColor(R.color.DarkRed), getResources().getColor(R.color.DarkGray));
+        int color = timerLogic.getColorForTime(remainingTime, 11000, getResources().getColor(R.color.DarkRed), getResources().getColor(R.color.DarkGray));
         textViewTimerHours.setTextColor(color);
         textViewTimerMinutes.setTextColor(color);
         textViewTimerSeconds.setTextColor(color);
