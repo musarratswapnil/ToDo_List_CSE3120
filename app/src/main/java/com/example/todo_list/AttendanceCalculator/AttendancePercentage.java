@@ -14,14 +14,15 @@ public class AttendancePercentage extends AppCompatActivity {
     private Button buttonCalculateAttendance;
     private TextView textViewAttendanceResult;
     private AttendancePercentageLogic percentageLogic;
+    private AttendanceAdapter attendanceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_percentage);
 
-        AttendanceAdapter attendanceAdapter = new AttendanceAdapter();
-        percentageLogic = new AttendancePercentageLogic(attendanceAdapter);
+        percentageLogic = new AttendancePercentageLogic();
+        attendanceAdapter = new AttendanceAdapter();
 
         editTextTotalCredit = findViewById(R.id.editTextTotalCredit);
         editTextTotalWeeks = findViewById(R.id.editTextTotalWeeks);
@@ -47,7 +48,7 @@ public class AttendancePercentage extends AppCompatActivity {
             int totalWeeks = Integer.parseInt(totalWeeksStr);
             int classesAttended = Integer.parseInt(classesAttendedStr);
 
-            double attendancePercentage = percentageLogic.calculatePercentage(totalCredit, totalWeeks, classesAttended);
+            double attendancePercentage = attendanceAdapter.calculateAttendancePercentage(totalCredit, totalWeeks, classesAttended, percentageLogic);
 
             textViewAttendanceResult.setText(String.format("Your attendance is %.2f%%", attendancePercentage));
         } else {

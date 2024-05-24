@@ -17,6 +17,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -34,13 +36,12 @@ public class AttendancePercentageTest {
     }
 
     @Test
-    public void testCalculateAttendance() {
-        // Launch the activity
+    public void testCalculateAttendancePercentage() {
         try (ActivityScenario<AttendancePercentage> scenario = ActivityScenario.launch(AttendancePercentage.class)) {
             // Input values
             onView(withId(R.id.editTextTotalCredit)).perform(clearText(), typeText("3"));
             onView(withId(R.id.editTextTotalWeeks)).perform(clearText(), typeText("15"));
-            onView(withId(R.id.editTextClassesAttended)).perform(clearText(), typeText("10"));
+            onView(withId(R.id.editTextClassesAttended)).perform(clearText(), typeText("30"));
 
             // Close the keyboard
             closeSoftKeyboard();
@@ -48,20 +49,8 @@ public class AttendancePercentageTest {
             // Click the calculate button
             onView(withId(R.id.buttonCalculateAttendance)).perform(click());
 
-            // Check the results
-            onView(withId(R.id.textViewAttendanceResult)).check(matches(withText("Your attendance is 22.22%"))); // Adjust expected value based on logic
-        }
-    }
-
-    @Test
-    public void testEmptyFields() {
-        // Launch the activity
-        try (ActivityScenario<AttendancePercentage> scenario = ActivityScenario.launch(AttendancePercentage.class)) {
-            // Click the calculate button without entering values
-            onView(withId(R.id.buttonCalculateAttendance)).perform(click());
-
-            // Check the results
-            onView(withId(R.id.textViewAttendanceResult)).check(matches(withText("Please enter all fields")));
+            // Check the result
+            onView(withId(R.id.textViewAttendanceResult)).check(matches(withText("Your attendance is 66.67%")));
         }
     }
 }

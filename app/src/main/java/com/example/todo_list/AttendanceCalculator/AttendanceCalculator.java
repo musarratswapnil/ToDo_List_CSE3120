@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.todo_list.R;
 
 public class AttendanceCalculator extends AppCompatActivity {
@@ -16,6 +15,7 @@ public class AttendanceCalculator extends AppCompatActivity {
     private Button buttonCalculate, buttonReset, buttonNavigate;
     private TextView textViewClassesLeft, textViewClassesNeedToAttend, textViewResult;
     private AttendanceCalculatorLogic calculatorLogic;
+    private AttendanceAdapter attendanceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class AttendanceCalculator extends AppCompatActivity {
         setContentView(R.layout.activity_attendance_calculator);
 
         calculatorLogic = new AttendanceCalculatorLogic();
+        attendanceAdapter = new AttendanceAdapter();
 
         editTextTotalCredit = findViewById(R.id.editTextTotalCredit);
         editTextTotalWeeks = findViewById(R.id.editTextTotalWeeks);
@@ -73,13 +74,14 @@ public class AttendanceCalculator extends AppCompatActivity {
             double desiredPercentage = Double.parseDouble(desiredPercentageStr);
             int remainingWeeks = Integer.parseInt(remainingWeeksStr);
 
-            AttendanceCalculatorLogic.CalculationResult result = calculatorLogic.calculateNeededClasses(
-                    totalCredit, totalWeeks, classesAttended, desiredPercentage, remainingWeeks
-            );
+            int totalRemainingClasses = attendanceAdapter.getTotalRemainingClasses(totalCredit, remainingWeeks, calculatorLogic);
+            int remainingClassesToAttend = attendanceAdapter.getRemainingClassesToAttend(totalCredit, totalWeeks, classesAttended, desiredPercentage, calculatorLogic);
 
-            textViewClassesLeft.setText(String.valueOf(result.getTotalRemainingClasses()));
-            textViewClassesNeedToAttend.setText(result.getRemainingClassesToAttend());
-            textViewResult.setText(result.getMessage());
+            textViewClassesLeft.setText(String.valueOf(totalRemainingClasses));
+            textViewClassesNeedToAttend.setText(String.valueOf(remainingClassesToAttend));
+
+            String result = attendanceAdapter.getAttendanceResult(totalCredit, totalWeeks, classesAttended, desiredPercentage, remainingWeeks, calculatorLogic);
+            textViewResult.setText(result);
         } else {
             textViewResult.setText("Please enter all fields");
         }

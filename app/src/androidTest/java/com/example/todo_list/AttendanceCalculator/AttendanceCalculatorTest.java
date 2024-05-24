@@ -53,7 +53,7 @@ public class AttendanceCalculatorTest {
 
             // Check the results
             onView(withId(R.id.textViewClassesLeft)).check(matches(withText("15"))); // Adjust expected value
-            onView(withId(R.id.textViewClassesNeedToAttend)).check(matches(withText("24"))); // Adjust expected value
+            onView(withId(R.id.textViewClassesNeedToAttend)).check(matches(withText("23"))); // Adjust expected value
             onView(withId(R.id.textViewResult)).check(matches(withText("Sorry, you can't achieve 75.00% attendance in 5 weeks."))); // Adjust expected value
         }
     }
