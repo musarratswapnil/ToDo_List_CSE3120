@@ -4,15 +4,10 @@ package com.example.todo_list.LoginSignup;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.IntentSender;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -24,25 +19,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.todo_list.DashBoard_Option.DashboardActivity;
 import com.example.todo_list.R;
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInResult;
-import com.google.android.gms.auth.api.identity.Identity;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -78,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordTextView = findViewById(R.id.textView23);
         ImageView imageViewLogin = findViewById(R.id.imageView5);
         TextView registerTextView = findViewById(R.id.textView5);
-        loginWithGoogle=findViewById(R.id.button3);
+        loginWithGoogle = findViewById(R.id.button3);
 
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -86,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken("393767222391-0t9mjomvm2ddc6e71rifcvbk937cer9m.apps.googleusercontent.com") // replace with your actual server client ID
                 .build();
         gsc = GoogleSignIn.getClient(this, gso);
-
 
 
         loginWithGoogle.setOnClickListener(new View.OnClickListener() {
@@ -157,14 +146,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
         // Register network change receiver
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
-
-
-
 
 
     public void signIn() {
@@ -223,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void updateFirebaseWithGoogleAccount(GoogleSignInAccount account) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser(); // Get the authenticated Firebase user
         if (firebaseUser != null) {
@@ -252,12 +238,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-    public void navigateToSecondActivity(){
+    public void navigateToSecondActivity() {
         finish();
-        Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
         startActivity(intent);
     }
+
     /*
     public void buttonGoogleSignIn(View view){
         oneTapClient.beginSignIn(signInRequest)
@@ -370,30 +356,28 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
             return;
         }
-        if(email.isEmpty() && password.isEmpty()){
+        if (checkEmailEmpty(email) && checkPasswordEmpty(password)) {
             editTextEmail.setError("Please fill in information to continue");
             Toast.makeText(LoginActivity.this, "Please fill in information to continue", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (email.isEmpty()) {
+        if (checkEmailEmpty(email)) {
             editTextEmail.setError("Email is required");
             Toast.makeText(LoginActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (password.isEmpty()) {
+        if (checkPasswordEmpty(password)){
             editTextPassword.setError("Password is required");
             Toast.makeText(LoginActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (password.length() < 6) {
+        if (checkPasswordLength(password)) {
             editTextPassword.setError("Password must be at least 6 characters");
             Toast.makeText(LoginActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
 
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -433,4 +417,33 @@ public class LoginActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+
+    public static boolean checkEmailEmpty(String email) {
+
+        if(email.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public static boolean checkPasswordEmpty(String password){
+        if(password.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public static boolean checkPasswordLength(String password){
+        if(password.length()<6){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
 }

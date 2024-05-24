@@ -1,28 +1,33 @@
 package com.example.todo_list.Note;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.todo_list.Note.Operation.AddNoteCommand;
-import com.example.todo_list.Note.Operation.Command;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.Note.Operation.CommandInvoker;
 import com.example.todo_list.Note.Operation.DeleteNoteCommand;
 import com.example.todo_list.Note.Operation.UpdateNoteCommand;
 import com.example.todo_list.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Edit extends AppCompatActivity {
     EditText title,desc;
-    String titlesend,descsend,id;
+    String titlesend,descsend,id ,user;
     private DatabaseReference mDatabase;
     private Listdata listdata;
     Button updates,delete;
     private CommandInvoker invoker ;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class Edit extends AppCompatActivity {
          id=i.getStringExtra("id");
         title.setText(gettitle);
         desc.setText(getdesc);
-
+        setupIntentData();
 
 
     }
@@ -45,7 +50,7 @@ public class Edit extends AppCompatActivity {
         delete = findViewById(R.id.deletedbutton);
         title = findViewById(R.id.title);
         desc = findViewById(R.id.desc);
-        mDatabase = FirebaseDatabaseSingleton.getInstance().getReference().child("users").child("1");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         invoker= new CommandInvoker();
     }
     private void setupIntentData() {
@@ -55,16 +60,30 @@ public class Edit extends AppCompatActivity {
         String id = intent.getStringExtra("id");
         title.setText(gettitle);
         desc.setText(getdesc);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getApplicationContext(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            return;
+        }
+         user = currentUser.getUid();
+        Log.d("EditActivity", "User ID: " + user); // Add log to check user ID
+
     }
 
     public void UpdateNotes(View view){
         String titlesend = title.getText().toString();
         String descsend = desc.getText().toString();
-        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend));
+//        userId = currentUser.getUid();
+
+        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend,user));
         invoker.executeCommand();
     }
     public void DeleteNotes(View view){
-        invoker.setCommand( new DeleteNoteCommand(getApplicationContext(),mDatabase, id));
+        invoker.setCommand( new DeleteNoteCommand(getApplicationContext(),mDatabase, id,user));
         invoker.executeCommand();
     }
 

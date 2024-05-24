@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 public class SMSReminder implements ReminderInterface{
     public static final int SMS_PERMISSION_REQUEST_CODE = 100;
-
+    int requestCode;
     @Override
     public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
@@ -34,13 +34,8 @@ public class SMSReminder implements ReminderInterface{
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute);
         calendar.set(Calendar.SECOND, 0);
-
-
         long currentTimeMillis = System.currentTimeMillis();
-
         long timeDifference = calendar.getTimeInMillis()-currentTimeMillis;
-
-
         if (timeDifference > 0) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
                 // Request permission
@@ -48,7 +43,6 @@ public class SMSReminder implements ReminderInterface{
             } else {
                 setSMS(context, Phone,content, calendar.getTimeInMillis());
             }
-//            setSMS(context, Phone,content, calendar.getTimeInMillis());
         } else {
             throw new IllegalArgumentException("Alarm time must be in the future.");
         }
@@ -60,11 +54,9 @@ public class SMSReminder implements ReminderInterface{
         reminderIntent.putExtra("phoneNumber", phoneNumber);
         reminderIntent.putExtra("message", message);
         reminderIntent.putExtra("isSMS", true);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, reminderIntent, PendingIntent.FLAG_IMMUTABLE);
-
+         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
     }
-
-
 }

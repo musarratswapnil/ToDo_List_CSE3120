@@ -1,33 +1,24 @@
 package com.example.todo_list.Reminder;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.todo_list.DashBoard_Option.DashboardActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.todo_list.Note.FirebaseDatabaseSingleton;
-import com.example.todo_list.Note.NotesAdapter;
+import com.example.todo_list.R;
 import com.example.todo_list.Reminder.Sort.SortByDateStrategy;
 import com.example.todo_list.Reminder.Sort.SortByNameStrategy;
 import com.example.todo_list.Reminder.Sort.SortingStrategy;
-import com.example.todo_list.R;
-import com.example.todo_list.Reminder.AddTaskFragment;
-import com.example.todo_list.Reminder.Task;
-import com.example.todo_list.Reminder.TaskAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -59,12 +50,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 //        mAuth = FirebaseAuth.getInstance();
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        String userId = firebaseAuth.getCurrentUser().getUid();
+        firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getCurrentUser().getUid();
 
         // Create a reference to the tasks node in the Firebase database
         tasksRef = FirebaseDatabaseSingleton.getInstance().getReference("users")
-                .child("1") // Replace with your user ID or appropriate path
+                .child(userId) // Replace with your user ID or appropriate path
                 .child("tasks");
 
     }

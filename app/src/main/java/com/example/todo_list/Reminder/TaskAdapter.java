@@ -17,18 +17,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo_list.R;
-import com.example.todo_list.Reminder.Sort.SortByDateStrategy;
 import com.example.todo_list.Reminder.Sort.SortingStrategy;
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<Task> taskList;
     private DatabaseReference tasksRef;
     private Context context;
-
     private FragmentManager fragmentManager;
     private SortingStrategy sortingStrategy;
 
@@ -112,7 +109,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
     private void deleteTask(Task task) {
-
+//                cancelAlarm(task);
 //        tasksRef.child(task.getKey()).removeValue();
         tasksRef.child(task.getKey()).removeValue().addOnSuccessListener(aVoid -> {
             int index = taskList.indexOf(task);
@@ -129,6 +126,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.sortingStrategy = strategy;
         refreshList();
     }
+
+//    private void cancelAlarm(Task task) {
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, task.getKey().hashCode(), intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE);
+//        if (pendingIntent != null && alarmManager != null) {
+//            alarmManager.cancel(pendingIntent);
+//        }
+//    }
 
     private void refreshList() {
         if (sortingStrategy != null) {
@@ -182,8 +188,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
         }
-
-
         private String getMonthString(int month) {
             String[] monthArray = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
             if (month >= 1 && month <= 12) {

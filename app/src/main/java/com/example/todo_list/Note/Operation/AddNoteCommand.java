@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 
 import com.example.todo_list.Note.HomeScreen;
 import com.example.todo_list.Note.Listdata;
-import com.example.todo_list.Note.NoteMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -19,11 +18,13 @@ public class AddNoteCommand implements Command {
     private Context context;
     private String title;
     private String description;
-    public AddNoteCommand(Context context, DatabaseReference databaseReference,String titlesend, String descsend) {
+    private String userID;
+    public AddNoteCommand(Context context, DatabaseReference databaseReference,String titlesend, String descsend,String userID) {
         this.context = context;
         this.mDatabase = databaseReference;
         this.title=titlesend;
         this.description=descsend;
+        this.userID=userID;
     }
    @Override
     public void executeNote() {
@@ -34,7 +35,8 @@ public class AddNoteCommand implements Command {
        }
         String itemId = mDatabase.push().getKey();
         Listdata listdata = new Listdata(itemId, title, description);
-        mDatabase.child("notes").child(itemId).setValue(listdata)
+        mDatabase.child("users")
+                .child(userID).child("notes").child(itemId).setValue(listdata)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
