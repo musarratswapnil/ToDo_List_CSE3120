@@ -16,47 +16,6 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
-        <entry key="-2106304081">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
-                  <entry key="Tests" value="360" />
-                  <entry key="Xiaomi 21081111RG" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="-1869924250">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
-                  <entry key="Tests" value="360" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="-1833194962">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
-                  <entry key="Tests" value="360" />
-                  <entry key="Xiaomi 21081111RG" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
         <entry key="-1800839031">
           <value>
             <AndroidTestResultsTableState>
@@ -70,6 +29,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+
         <entry key="-1704681254">
           <value>
             <AndroidTestResultsTableState>
@@ -164,26 +124,28 @@
           </value>
         </entry>
         <entry key="-502227392">
+
+        <entry key="-966470377">
+
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
+                  <entry key="Shayka_Pixel_8_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
-                  <entry key="Xiaomi 21081111RG" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
           </value>
         </entry>
-        <entry key="-319011897">
+        <entry key="-418342786">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
+                  <entry key="Shayka" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -203,6 +165,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+
         <entry key="184811587">
           <value>
             <AndroidTestResultsTableState>
@@ -234,14 +197,16 @@
           </value>
         </entry>
         <entry key="301594467">
+
+        <entry key="79084128">
+
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
+                  <entry key="Shayka_Pixel_8_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
-                  <entry key="Xiaomi 21081111RG" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -260,6 +225,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+
         <entry key="641311070">
           <value>
             <AndroidTestResultsTableState>
@@ -316,6 +282,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+
         <entry key="1373285965">
           <value>
             <AndroidTestResultsTableState>
@@ -335,7 +302,6 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Google Pixel 8" value="120" />
                   <entry key="Shayka" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
@@ -343,27 +309,26 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
-        <entry key="1770370460">
+        <entry key="1677147735">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
+                  <entry key="Shayka_Pixel_8_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
           </value>
         </entry>
-        <entry key="1814921347">
+        <entry key="1778347171">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_Edited_1_API_34" value="120" />
-                  <entry key="Pixel_7_Edited_API_34" value="120" />
+                  <entry key="Shayka_Pixel_8_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>

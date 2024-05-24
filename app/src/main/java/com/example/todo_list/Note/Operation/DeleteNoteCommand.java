@@ -12,16 +12,20 @@ public class DeleteNoteCommand implements Command {
     private DatabaseReference databaseReference;
     private String id;
     private Context context;
+    private String userID;
 
-    public DeleteNoteCommand(Context context, DatabaseReference databaseReference, String id) {
+
+    public DeleteNoteCommand(Context context, DatabaseReference databaseReference, String id,String userID) {
         this.databaseReference = databaseReference;
         this.id = id;
         this.context = context;
+        this.userID=userID;
+
     }
 
     @Override
     public void executeNote() {
-        databaseReference.child("notes").child(id).removeValue()
+        databaseReference.child("users").child(userID).child("notes").child(id).removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -1,12 +1,12 @@
 package com.example.todo_list.LoginSignup;
 
-import androidx.test.espresso.intent.Intents;
+//import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+//import androidx.test.rule.ActivityTestRule;
 import android.Manifest;
 import android.content.Intent;
 
-import androidx.test.rule.GrantPermissionRule;
+//import androidx.test.rule.GrantPermissionRule;
 
 import com.example.todo_list.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,8 +30,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+//import static androidx.test.espresso.intent.Intents.intended;
+//import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;

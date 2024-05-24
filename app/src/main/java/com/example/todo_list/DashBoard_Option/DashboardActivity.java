@@ -1,12 +1,5 @@
 package com.example.todo_list.DashBoard_Option;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +17,14 @@ import com.example.todo_list.App_Options.SettingsFragment;
 
 
 //import com.example.todo_list.App_Options.ContactFragment;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 
 import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
@@ -44,6 +45,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +79,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
         // Retrieve the user's name from Firebase Realtime Database
-//        String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference userRef = databaseReference.child("users").child("1");
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference userRef = databaseReference.child("users").child(userId);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -135,7 +137,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (itemId == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OptionFragment()).commit();
         } else if (itemId == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (itemId == R.id.nav_share) {
             // Show sharing options
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -144,17 +146,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out ToDo Code: https://github.com/shaykashipra/ToDo-List");
             startActivity(Intent.createChooser(shareIntent, "Share App"));
         } else if (itemId == R.id.nav_help) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
         } else if (itemId == R.id.nav_account) {
             Intent intent=new Intent(DashboardActivity.this, AccountActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_about) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (itemId == R.id.nav_contact) {
             Intent intent=new Intent(DashboardActivity.this, ContactActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_privacy) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
             // Handle the logout activity
             // Perform logout
