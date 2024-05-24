@@ -2,11 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Add the following permissions for internet access and location services -->
-
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
-
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- If you need access to FINE location, you must request both ACCESS_FINE_LOCATION and ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -34,11 +32,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDo_List"
         tools:targetApi="31">
+
+        <activity
+            android:name=".AttendanceCalculator.AttendancePercentage"
+            android:exported="false" />
+        <activity
+            android:name=".AttendanceCalculator.AttendanceCalculator"
+            android:exported="false" />
+        <activity
+            android:name=".StopWatch.TimerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StopWatch.StopWatchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StopWatch.StopWatchHomeActivity"
+            android:exported="false" />
+
         <activity
             android:name=".CgpaCalculator.CgpaActivity2"
             android:exported="false" />
         <activity
             android:name=".CgpaCalculator.CgpaActivity"
+
             android:exported="false" />
         <activity
             android:name=".App_Options.ContactActivity"
@@ -46,9 +62,7 @@
         <activity
             android:name=".App_Options.AccountActivity"
             android:exported="false" />
-        <activity
-            android:name=".StopWatch.StopWatchHomeActivity"
-            android:exported="false" />
+        
         <activity
             android:name=".Note.NoteMainActivity"
             android:exported="false" />
@@ -103,8 +117,14 @@
 
         <activity
             android:name=".DashBoard_Option.DashboardActivity"
+
+            android:exported="false"
+            
+        </activity>
+
             android:exported="false"
             android:theme="@style/Base.Theme.ToDo_List" />
+
     </application>
 
 </manifest>
