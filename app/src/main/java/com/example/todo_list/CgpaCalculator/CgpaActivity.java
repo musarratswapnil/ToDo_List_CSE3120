@@ -10,13 +10,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -62,8 +69,9 @@ public class CgpaActivity extends AppCompatActivity {
             userId = currentUser.getUid();
             semestersRef = database.getReference("users").child(userId).child("semesters");
         } else {
-            // Handle case where user is not authenticated
-            // Redirect to login screen or show an error message
+            Intent intent=new Intent(CgpaActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 
@@ -102,7 +110,12 @@ public class CgpaActivity extends AppCompatActivity {
         saveSemesterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSemester();
+                if (courses.isEmpty() || credits.isEmpty() || grades.isEmpty()) {
+                    courseNameEditText.setError("Please provide all the information before saving the semester.");
+                    Toast.makeText(CgpaActivity.this, "Please provide all the information before saving the semester.", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveSemester();
+                }
             }
         });
 
@@ -119,7 +132,9 @@ public class CgpaActivity extends AppCompatActivity {
         String courseCreditsStr = courseCreditsEditText.getText().toString();
 
         if (courseName.isEmpty() || courseCreditsStr.isEmpty()) {
-            // Handle empty fields, maybe show a Toast or a Snackbar
+            Toast.makeText(CgpaActivity.this, "Give Necessary Information", Toast.LENGTH_SHORT).show();
+            courseNameEditText.setError("Name is required");
+            courseCreditsEditText.setError("Credits are reqired");
             return;
         }
 
@@ -127,7 +142,9 @@ public class CgpaActivity extends AppCompatActivity {
         try {
             courseCredits = Double.parseDouble(courseCreditsStr);
         } catch (NumberFormatException e) {
-            // Handle the exception, maybe show a Toast or a Snackbar
+            Toast.makeText(this, "Please enter valid credits.", Toast.LENGTH_SHORT).show();
+            courseCreditsEditText.setError("Please enter valid credits.");
+
             return;
         }
 
@@ -177,27 +194,51 @@ public class CgpaActivity extends AppCompatActivity {
     }
 
     private void saveSemester() {
-        String semesterName = semesterSpinner.getSelectedItem().toString();
+        final String semesterName = semesterSpinner.getSelectedItem().toString();
         if (semesterName.isEmpty()) {
-            // Handle empty semester name
+            Toast.makeText(this, "Please select a semester.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Create a new semester object
-        Semester semester = new Semester(semesterName, courses, credits, grades, gpaResultTextView.getText().toString());
+        // Load existing semester data
+        semestersRef.child(semesterName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Semester existingSemester = dataSnapshot.getValue(Semester.class);
 
-        // Save to Firebase
-        semestersRef.child(semesterName).setValue(semester);
+                if (existingSemester == null) {
+                    // No existing semester, create a new one
+                    existingSemester = new Semester(semesterName, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
+                }
 
-        // Clear the data for the next semester
-        courses.clear();
-        credits.clear();
-        grades.clear();
-        adapter.clear();
-        adapter.notifyDataSetChanged();
-        gpaResultTextView.setText("GPA: ");
+                // Add new courses to the existing semester data
+                existingSemester.courses.addAll(courses);
+                existingSemester.credits.addAll(credits);
+                existingSemester.grades.addAll(grades);
+
+                // Recalculate GPA with the combined courses and credits
+                double combinedGpa = semesterGpaCalculator.calculate(existingSemester.grades, existingSemester.credits);
+                existingSemester.gpa = String.format("%.2f", combinedGpa);
+
+                // Save updated semester data to Firebase
+                semestersRef.child(semesterName).setValue(existingSemester);
+
+                // Clear the data for the next semester
+                courses.clear();
+                credits.clear();
+                grades.clear();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
+                gpaResultTextView.setText("GPA: ");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+                Toast.makeText(CgpaActivity.this, "Failed to save semester. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
     public static class Semester {
         public String name;
         public ArrayList<String> courses;
