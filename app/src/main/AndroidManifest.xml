@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Add the following permissions for internet access and location services -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- If you need access to FINE location, you must request both ACCESS_FINE_LOCATION and ACCESS_COARSE_LOCATION -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.NOTIFICATION_POLICY_ACCESS_GRANTED" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" /> <!-- recently added -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- Added for sms -->
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -48,13 +45,11 @@
         <activity
             android:name=".StopWatch.StopWatchHomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".CgpaCalculator.CgpaActivity2"
             android:exported="false" />
         <activity
             android:name=".CgpaCalculator.CgpaActivity"
-
             android:exported="false" />
         <activity
             android:name=".App_Options.ContactActivity"
@@ -62,7 +57,6 @@
         <activity
             android:name=".App_Options.AccountActivity"
             android:exported="false" />
-        
         <activity
             android:name=".Note.NoteMainActivity"
             android:exported="false" />
@@ -80,11 +74,9 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Note.Edit"
             android:exported="false" />
@@ -94,10 +86,7 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" /> <!-- Google Maps API KEY -->
-        <!-- <meta-data -->
-        <!-- android:name="com.google.android.geo.API_KEY" -->
-        <!-- android:value="${MAPS_API_KEY}" /> &lt;!&ndash; Define the notification channel &ndash;&gt; -->
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDNBApw6GyYW7ASzpfQCCKdkjC80bt7uQI" />
@@ -106,7 +95,8 @@
             android:value="@string/default_notification_channel_id" />
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" /> <!-- Register the BroadcastReceiver -->
+            android:resource="@array/preloaded_fonts" />
+
         <receiver
             android:name=".Broadcast.ReminderBroadcastReceiver"
             android:exported="true">
@@ -117,14 +107,8 @@
 
         <activity
             android:name=".DashBoard_Option.DashboardActivity"
-
-            android:exported="false"
-            
-        </activity>
-
             android:exported="false"
             android:theme="@style/Base.Theme.ToDo_List" />
-
     </application>
 
 </manifest>
