@@ -98,6 +98,8 @@ dependencies {
     androidTestImplementation ("org.mockito:mockito-android:3.11.2")
     androidTestImplementation ("org.mockito:mockito-android:3.3.3")
 
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
 
 
 

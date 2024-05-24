@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import com.example.todo_list.App_Options.PrivacyFragment;
 import com.example.todo_list.App_Options.HelpFragment;
 import com.example.todo_list.App_Options.AboutFragment;
-import com.example.todo_list.StopWatch.StopwatchFragment;
-import com.example.todo_list.StopWatch.TimerFragment;
+//import com.example.todo_list.StopWatch.StopwatchFragment;
+//import com.example.todo_list.StopWatch.TimerFragment;
 
 public class FragmentFactory {
 
@@ -27,17 +27,17 @@ public class FragmentFactory {
     }
 
 
-    public static final byte STATUS_STOP_WATCH = 1;
-    public static final byte STATUS_TIMER = 2;
-
-    public static Fragment createFragment(byte status) {
-        switch (status) {
-            case STATUS_STOP_WATCH:
-                return new StopwatchFragment();
-            case STATUS_TIMER:
-                return new TimerFragment();
-            default:
-                throw new IllegalArgumentException("Invalid status");
-        }
-    }
+//    public static final byte STATUS_STOP_WATCH = 1;
+//    public static final byte STATUS_TIMER = 2;
+//
+//    public static Fragment createFragment(byte status) {
+//        switch (status) {
+//            case STATUS_STOP_WATCH:
+//                return new StopwatchFragment();
+//            case STATUS_TIMER:
+//                return new TimerFragment();
+//            default:
+//                throw new IllegalArgumentException("Invalid status");
+//        }
+//    }
 }
