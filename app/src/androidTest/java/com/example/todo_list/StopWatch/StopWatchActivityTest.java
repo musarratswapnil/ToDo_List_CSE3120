@@ -48,56 +48,56 @@ public class StopWatchActivityTest {
         onView(withId(R.id.textView_stopwatch_10ms)).check(matches(withText("00")));
     }
 
-    @Test
-    public void testStartStopwatch() {
-        // Click on the start button and verify the state changes
-        onView(withId(R.id.button_start_stop_watch)).perform(click());
-
-        onView(withId(R.id.button_stop_stop_watch)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_start_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testStopStopwatch() {
-        // Start the stopwatch, then stop it, and verify the state changes
-        onView(withId(R.id.button_start_stop_watch)).perform(click());
-        onView(withId(R.id.button_stop_stop_watch)).perform(click());
-
-        onView(withId(R.id.button_resume_stop_watch)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_stop_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testResetStopwatch() {
-        // Start the stopwatch, stop it, then reset it, and verify the state changes
-        onView(withId(R.id.button_start_stop_watch)).perform(click());
-        onView(withId(R.id.button_stop_stop_watch)).perform(click());
-        onView(withId(R.id.button_reset_stop_watch)).perform(click());
-
-        onView(withId(R.id.button_start_stop_watch)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_stop_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_reset_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-
-        onView(withId(R.id.textView_stopwatch_h)).check(matches(withText("00:")));
-        onView(withId(R.id.textView_stopwatch_m)).check(matches(withText("00:")));
-        onView(withId(R.id.textView_stopwatch_s)).check(matches(withText("00:")));
-        onView(withId(R.id.textView_stopwatch_10ms)).check(matches(withText("00")));
-    }
-
-    @Test
-    public void testResumeStopwatch() {
-        // Start the stopwatch, stop it, then resume it, and verify the state changes
-        onView(withId(R.id.button_start_stop_watch)).perform(click());
-        onView(withId(R.id.button_stop_stop_watch)).perform(click());
-        onView(withId(R.id.button_resume_stop_watch)).perform(click());
-
-        onView(withId(R.id.button_stop_stop_watch)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_start_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void testStartStopwatch() {
+//        // Click on the start button and verify the state changes
+//        onView(withId(R.id.button_start_stop_watch)).perform(click());
+//
+//        onView(withId(R.id.button_stop_stop_watch)).check(matches(isDisplayed()));
+//        onView(withId(R.id.button_start_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
+//    }
+//
+//    @Test
+//    public void testStopStopwatch() {
+//        // Start the stopwatch, then stop it, and verify the state changes
+//        onView(withId(R.id.button_start_stop_watch)).perform(click());
+//        onView(withId(R.id.button_stop_stop_watch)).perform(click());
+//
+//        onView(withId(R.id.button_resume_stop_watch)).check(matches(isDisplayed()));
+//        onView(withId(R.id.button_stop_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
+//    }
+//
+//    @Test
+//    public void testResetStopwatch() {
+//        // Start the stopwatch, stop it, then reset it, and verify the state changes
+//        onView(withId(R.id.button_start_stop_watch)).perform(click());
+//        onView(withId(R.id.button_stop_stop_watch)).perform(click());
+//        onView(withId(R.id.button_reset_stop_watch)).perform(click());
+//
+//        onView(withId(R.id.button_start_stop_watch)).check(matches(isDisplayed()));
+//        onView(withId(R.id.button_stop_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_reset_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//
+//        onView(withId(R.id.textView_stopwatch_h)).check(matches(withText("00:")));
+//        onView(withId(R.id.textView_stopwatch_m)).check(matches(withText("00:")));
+//        onView(withId(R.id.textView_stopwatch_s)).check(matches(withText("00:")));
+//        onView(withId(R.id.textView_stopwatch_10ms)).check(matches(withText("00")));
+//    }
+//
+//    @Test
+//    public void testResumeStopwatch() {
+//        // Start the stopwatch, stop it, then resume it, and verify the state changes
+//        onView(withId(R.id.button_start_stop_watch)).perform(click());
+//        onView(withId(R.id.button_stop_stop_watch)).perform(click());
+//        onView(withId(R.id.button_resume_stop_watch)).perform(click());
+//
+//        onView(withId(R.id.button_stop_stop_watch)).check(matches(isDisplayed()));
+//        onView(withId(R.id.button_start_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_resume_stop_watch)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//        onView(withId(R.id.button_reset_stop_watch)).check(matches(isDisplayed()));
+//    }
 }

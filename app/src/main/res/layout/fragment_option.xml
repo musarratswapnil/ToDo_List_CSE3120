@@ -6,21 +6,16 @@
     android:layout_width="match_parent"
     android:scrollbars="none"
     android:layout_height="match_parent"
-
     tools:context=".DashBoard_Option.DashboardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,18 +29,10 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/overpass_semibold"
-                    android:text="ToDo Tracker                            "
+                    android:text="ToDo Tracker"
                     android:textColor="#000"
                     android:textSize="25sp" />
 
-                <!--LogOut-->
-                <!--                        <ImageView-->
-                <!--                            android:id="@+id/logoutadmin"-->
-                <!--                            android:layout_marginTop="10dp"-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="30dp"-->
-
-                <!--                            android:src="@drawable/baseline_logout_24" />-->
             </LinearLayout>
 
             <View
@@ -56,8 +43,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/portalview"
-                android:layout_below="@+id/linear"
-                />
+                android:layout_below="@+id/linear" />
 
             <TextView
                 android:id="@+id/total"
@@ -68,11 +54,10 @@
                 android:background="@drawable/dynamic_dashboard_bg1"
                 android:fontFamily="@font/arbutus"
                 android:gravity="center"
-                android:text="Explore      "
+                android:text="Explore"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -85,8 +70,8 @@
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -99,8 +84,6 @@
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
-
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_marginLeft="10dp"
@@ -112,8 +95,8 @@
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -122,12 +105,9 @@
                         android:id="@+id/Note"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -140,8 +120,8 @@
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -150,14 +130,34 @@
                         android:id="@+id/StopWatch"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/StopWatchCard"
+                android:id="@+id/AttendanceCalculatorCard"
+                android:layout_marginTop="10dp"
+                app:strokeColor="#66788F"
+                android:elevation="2dp"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="wrap_content">
 
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:id="@+id/attendanceCalculator"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/app_name" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </RelativeLayout>
     </LinearLayout>
