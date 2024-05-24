@@ -1,52 +1,65 @@
 package com.example.todo_list.StopWatch;
 
-import androidx.fragment.app.Fragment;
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.espresso.matcher.ViewMatchers;
+import android.content.Intent;
+
+import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.intent.matcher.IntentMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.todo_list.R;
-import com.example.todo_list.StopWatch.StopWatchHomeActivity;
-import com.example.todo_list.StopWatch.StopwatchFragment;
-import com.example.todo_list.StopWatch.TimerFragment;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertTrue;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 public class StopWatchHomeActivityTest {
 
-    @Test
-    public void testOpenStopwatchFragment() {
-        try (ActivityScenario<StopWatchHomeActivity> scenario = ActivityScenario.launch(StopWatchHomeActivity.class)) {
-            // Perform click to open StopwatchFragment
-            Espresso.onView(ViewMatchers.withId(R.id.button_open_stop_watch))
-                    .perform(ViewActions.click());
+    @Rule
+    public ActivityScenarioRule<StopWatchHomeActivity> activityScenarioRule =
+            new ActivityScenarioRule<>(StopWatchHomeActivity.class);
 
-            // Verify that StopwatchFragment is displayed
-            scenario.onActivity(activity -> {
-                Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container2);
-                assertTrue(currentFragment instanceof StopwatchFragment);
-            });
-        }
+    @Before
+    public void setUp() {
+        Intents.init();
+    }
+
+    @After
+    public void tearDown() {
+        Intents.release();
     }
 
     @Test
-    public void testOpenTimerFragment() {
-        try (ActivityScenario<StopWatchHomeActivity> scenario = ActivityScenario.launch(StopWatchHomeActivity.class)) {
-            // Perform click to open TimerFragment
-            Espresso.onView(ViewMatchers.withId(R.id.button_open_timer))
-                    .perform(ViewActions.click());
+    public void testButtonsDisplayed() {
+        // Check if both buttons are displayed
+        onView(withId(R.id.button_open_stop_watch)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_open_timer)).check(matches(isDisplayed()));
+    }
 
-            // Verify that TimerFragment is displayed
-            scenario.onActivity(activity -> {
-                Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container2);
-                assertTrue(currentFragment instanceof TimerFragment);
-            });
-        }
+    @Test
+    public void testNavigateToStopWatchActivity() {
+        // Perform click on StopWatch button
+        onView(withId(R.id.button_open_stop_watch)).perform(click());
+
+        // Verify the intent to launch StopWatchActivity
+        Intents.intended(IntentMatchers.hasComponent(StopWatchActivity.class.getName()));
+    }
+
+    @Test
+    public void testNavigateToTimerActivity() {
+        // Perform click on Timer button
+        onView(withId(R.id.button_open_timer)).perform(click());
+
+        // Verify the intent to launch TimerActivity
+        Intents.intended(IntentMatchers.hasComponent(TimerActivity.class.getName()));
     }
 }
