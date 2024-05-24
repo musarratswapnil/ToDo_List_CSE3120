@@ -3,6 +3,7 @@ package com.example.todo_list.Note.Operation;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,20 +15,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
 
-    public class UpdateNoteCommand implements Command {
+public class UpdateNoteCommand implements Command {
         private DatabaseReference databaseReference;
         private String id;
         private String title;
         private String description;
         private Context context;
+        private String userID;
 
 
-        public UpdateNoteCommand(Context context,DatabaseReference databaseReference, String id, String title, String description) {
+        public UpdateNoteCommand(Context context,DatabaseReference databaseReference, String id, String title, String description,String userID) {
             this.databaseReference = databaseReference;
             this.id = id;
             this.title = title;
             this.description = description;
             this.context=context;
+            this.userID=userID;
         }
 
         @Override
@@ -37,12 +40,14 @@ import com.google.firebase.database.DatabaseReference;
 
                 return;
             }
+            Log.e("userID",userID);
+
             Listdata listdata = new Listdata(id, title, description);
-            databaseReference.child("notes").child(id).setValue(listdata)
+            databaseReference.child("users").child(userID).child("notes").child(id).setValue(listdata)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(context,"Note Deleted",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"Note Updated",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(context, HomeScreen.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);

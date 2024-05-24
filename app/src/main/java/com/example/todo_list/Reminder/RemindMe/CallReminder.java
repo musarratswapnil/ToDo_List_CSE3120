@@ -11,6 +11,7 @@ import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
 import java.util.Calendar;
 
 public class CallReminder implements ReminderInterface{
+    int requestCode;
     @Override
     public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
@@ -46,7 +47,9 @@ public class CallReminder implements ReminderInterface{
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("phoneNumber", phoneNumber);
         reminderIntent.putExtra("isCall", true);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, reminderIntent, PendingIntent.FLAG_IMMUTABLE);
+         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, reminderIntent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);

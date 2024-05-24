@@ -1,6 +1,6 @@
 package com.example.todo_list.App_Options;
 
-import androidx.fragment.app.testing.FragmentScenario;
+//import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
@@ -25,7 +25,7 @@ public class PrivacyFragmentTest {
     @Test
     public void testExpandCollapseFunctionality() {
         // Launching the fragment
-        FragmentScenario.launchInContainer(PrivacyFragment.class);
+//        FragmentScenario.launchInContainer(PrivacyFragment.class);
 
         // Initially, the answer should be GONE
         onView(withId(R.id.answer1))

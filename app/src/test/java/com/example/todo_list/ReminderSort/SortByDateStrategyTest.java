@@ -1,7 +1,8 @@
-package com.example.todo_list.Reminder.Sort;
+package com.example.todo_list.ReminderSort;
 
 import static org.junit.Assert.*;
 
+import com.example.todo_list.Reminder.Sort.SortByDateStrategy;
 import com.example.todo_list.Reminder.Task;
 
 import org.junit.Test;
@@ -82,10 +83,6 @@ public class SortByDateStrategyTest {
         assertEquals("t2",tasks.get(0).getTitle());
         assertEquals("t1",tasks.get(1).getTitle());
         assertEquals("t3",tasks.get(2).getTitle());
-
-
-
-
     }
 
     @Test
@@ -106,9 +103,6 @@ public class SortByDateStrategyTest {
         assertTrue(tasks.indexOf(task2)!=-1);
         assertTrue(tasks.indexOf(task3)!=-1);
         assertTrue(tasks.indexOf(task1)!=3);
-
-
-
     }
 
     @Test

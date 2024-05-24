@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/semesters_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/cgpa_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CGPA: "
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
+    <EditText
+        android:id="@+id/expected_cgpa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Expected CGPA"
+        android:inputType="numberDecimal"
+        android:paddingTop="16dp" />
+
+    <Button
+        android:id="@+id/calculate_required_gpa_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate Required GPA" />
+
+    <TextView
+        android:id="@+id/required_gpa_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Required GPA: "
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
+</LinearLayout>

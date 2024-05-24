@@ -1,17 +1,16 @@
 package com.example.todo_list.App_Options;
 
-import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Patterns;
-
 
 import com.example.todo_list.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,30 +29,33 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ContactFragment extends Fragment implements OnMapReadyCallback {
+public class ContactActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap mMap;
     DatabaseReference usersRef;
 
+    private TextView msg;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact);
 
         // Initialize the MapView
-        mapView = view.findViewById(R.id.map);
+        mapView = findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+        msg=findViewById(R.id.textView8);
 
         // Initialize the Firebase Realtime Database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("users");
 
         // Retrieve references to the views
-        final EditText messageEditText = view.findViewById(R.id.message);
-        final EditText emailAddressEditText = view.findViewById(R.id.editTextTextEmailAddress);
-        Button sendMessageButton = view.findViewById(R.id.sendMessage);
+        final EditText messageEditText = findViewById(R.id.message);
+        final EditText emailAddressEditText = findViewById(R.id.editTextTextEmailAddress);
+        Button sendMessageButton = findViewById(R.id.sendMessage);
 
         // Set click listener for the send message button
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +97,7 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
                             // Clear the EditText views
                             messageEditText.setText("");
                             emailAddressEditText.setText("");
+
                         } else {
                             // Error occurred while saving data
                             showToast("Error: " + error.getMessage());
@@ -120,8 +123,6 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-
-        return view;
     }
 
     private String getCurrentDateTime() {
@@ -134,7 +135,7 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(ContactActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,7 +162,6 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
         mapView.onLowMemory();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -183,5 +183,4 @@ public class ContactFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-
 }
