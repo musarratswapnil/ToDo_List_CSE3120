@@ -100,3 +100,5 @@ dependencies {
     androidTestImplementation ("org.powermock:powermock-module-junit4:2.0.9")
 
 }
+
+//apply plugin: 'com.google.gms.google-services'

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.todo_list.App_Options.AccountActivity;
 import com.example.todo_list.App_Options.ContactActivity;
+import com.example.todo_list.App_Options.HelpActivity;
 import com.example.todo_list.App_Options.HelpFragment;
 import com.example.todo_list.App_Options.AboutFragment;
 import com.example.todo_list.App_Options.PrivacyFragment;
@@ -137,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (itemId == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OptionFragment()).commit();
         } else if (itemId == R.id.nav_settings) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (itemId == R.id.nav_share) {
             // Show sharing options
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -146,7 +147,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out ToDo Code: https://github.com/shaykashipra/ToDo-List");
             startActivity(Intent.createChooser(shareIntent, "Share App"));
         } else if (itemId == R.id.nav_help) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
+            Intent intent=new Intent(DashboardActivity.this, HelpActivity.class);
+            startActivity(intent);
         } else if (itemId == R.id.nav_account) {
             Intent intent=new Intent(DashboardActivity.this, AccountActivity.class);
             startActivity(intent);

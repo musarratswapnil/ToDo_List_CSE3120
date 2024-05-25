@@ -3,14 +3,11 @@ package com.example.todo_list.App_Options;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +18,7 @@ import com.example.todo_list.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelpFragment extends Fragment {
+public class HelpActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private HelpAdapter helpAdapter;
@@ -29,15 +26,15 @@ public class HelpFragment extends Fragment {
     private List<Help> filteredList = new ArrayList<>();
     private EditText searchInput;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_help);
 
-        recyclerView = view.findViewById(R.id.recyclerviewItem);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = findViewById(R.id.recyclerviewItem);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        searchInput = view.findViewById(R.id.searchInput);
+        searchInput = findViewById(R.id.searchInput);
 
         helpAdapter = new HelpAdapter(filteredList);
         recyclerView.setAdapter(helpAdapter);
@@ -65,8 +62,6 @@ public class HelpFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        return view;
     }
 
     private void filter(String text) {

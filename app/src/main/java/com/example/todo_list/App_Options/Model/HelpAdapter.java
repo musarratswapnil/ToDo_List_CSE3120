@@ -8,16 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo_list.App_Options.Model.Help;
 import com.example.todo_list.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.HelpViewHolder> {
-    private List<Help> helpItems = new ArrayList<>();
+    private List<Help> helpItems;
 
-    // Constructor
     public HelpAdapter(List<Help> helpItems) {
         this.helpItems = helpItems;
     }
@@ -41,7 +38,6 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.HelpViewHolder
         return helpItems.size();
     }
 
-    // ViewHolder class
     static class HelpViewHolder extends RecyclerView.ViewHolder {
         TextView questionTextView, answerTextView;
 
@@ -51,7 +47,4 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.HelpViewHolder
             answerTextView = itemView.findViewById(R.id.answer);
         }
     }
-
-    // Helper class to hold question and answer
-
 }
