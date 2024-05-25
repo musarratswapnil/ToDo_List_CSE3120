@@ -61,7 +61,6 @@
                     android:hint="@string/help_search_placeholder"
                     android:inputType="text"
                     android:padding="8dp" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
@@ -82,41 +81,41 @@
             android:layout_marginHorizontal="32dp"
             android:orientation="vertical">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="64dp"-->
-<!--                android:background="@drawable/background_settings_tabs"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="64dp"-->
+            <!--                android:background="@drawable/background_settings_tabs"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="start|center"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    android:contentDescription="@string/view_more"-->
-<!--                    android:src="@drawable/settings_language"-->
-<!--                    app:tint="@color/purple" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="start|center"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    android:contentDescription="@string/view_more"-->
+            <!--                    android:src="@drawable/settings_language"-->
+            <!--                    app:tint="@color/purple" />-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView17"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_gravity="start|center"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    android:text="@string/settings_language"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="@color/muted_black" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/textView17"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:layout_gravity="start|center"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    android:text="@string/settings_language"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textColor="@color/muted_black" />-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center|right"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    android:contentDescription="@string/view_more"-->
-<!--                    android:src="@drawable/nav_settings_arrow"-->
-<!--                    app:tint="@color/purple" />-->
-<!--            </LinearLayout>-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center|right"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    android:contentDescription="@string/view_more"-->
+            <!--                    android:src="@drawable/nav_settings_arrow"-->
+            <!--                    app:tint="@color/purple" />-->
+            <!--            </LinearLayout>-->
 
             <View
                 android:id="@+id/divider4"
@@ -125,41 +124,41 @@
                 android:layout_height="1dp"
                 android:background="@color/purple_500" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="64dp"-->
-<!--                android:background="@drawable/background_settings_tabs"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="64dp"-->
+            <!--                android:background="@drawable/background_settings_tabs"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="start|center"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    android:contentDescription="@string/view_more"-->
-<!--                    android:src="@drawable/settings_dark_mode"-->
-<!--                    app:tint="@color/purple" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="start|center"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    android:contentDescription="@string/view_more"-->
+            <!--                    android:src="@drawable/settings_dark_mode"-->
+            <!--                    app:tint="@color/purple" />-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView18"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_gravity="start|center"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    android:text="@string/settings_dark_mode"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="@color/muted_black" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/textView18"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:layout_gravity="start|center"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    android:text="@string/settings_dark_mode"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textColor="@color/muted_black" />-->
 
-<!--                <androidx.appcompat.widget.SwitchCompat-->
-<!--                    android:id="@+id/switch1"-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:layout_gravity="center|end"-->
-<!--                    android:paddingHorizontal="8dp"-->
-<!--                    app:tint="@color/purple"-->
-<!--                    android:layout_weight="1"/>-->
-<!--            </LinearLayout>-->
+            <!--                <androidx.appcompat.widget.SwitchCompat-->
+            <!--                    android:id="@+id/switch1"-->
+            <!--                    android:layout_width="20dp"-->
+            <!--                    android:layout_height="48dp"-->
+            <!--                    android:layout_gravity="center|end"-->
+            <!--                    android:paddingHorizontal="8dp"-->
+            <!--                    app:tint="@color/purple"-->
+            <!--                    android:layout_weight="1"/>-->
+            <!--            </LinearLayout>-->
 
             <View
                 android:id="@+id/divider5"

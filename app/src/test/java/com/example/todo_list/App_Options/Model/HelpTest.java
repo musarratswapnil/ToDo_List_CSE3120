@@ -1,28 +1,41 @@
 package com.example.todo_list.App_Options.Model;
 
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class HelpTest {
-    private Help help;
 
-    @Before
-    public void setUp() {
-        // Initialize the Help object before each test
-        help = new Help("What is a todo list?", "A todo list is a list of tasks you need to complete.");
+    @Test
+    public void testNoArgConstructor() {
+        Help help = new Help();
+        assertNull(help.getQuestion());
+        assertNull(help.getAnswer());
     }
 
     @Test
-    public void testGetQuestion() {
-        // Test to ensure the getQuestion method returns the correct question
-        assertEquals("What is a todo list?", help.getQuestion());
+    public void testParameterizedConstructor() {
+        Help help = new Help("What is Android?", "Android is a mobile operating system.");
+        assertEquals("What is Android?", help.getQuestion());
+        assertEquals("Android is a mobile operating system.", help.getAnswer());
     }
 
     @Test
-    public void testGetAnswer() {
-        // Test to ensure the getAnswer method returns the correct answer
-        assertEquals("A todo list is a list of tasks you need to complete.", help.getAnswer());
+    public void testGettersAndSetters() {
+        Help help = new Help();
+        help.setQuestion("What is Kotlin?");
+        help.setAnswer("Kotlin is a programming language.");
+
+        assertEquals("What is Kotlin?", help.getQuestion());
+        assertEquals("Kotlin is a programming language.", help.getAnswer());
+    }
+
+    @Test
+    public void testSetters() {
+        Help help = new Help();
+        help.setQuestion("New Question");
+        help.setAnswer("New Answer");
+
+        assertEquals("New Question", help.getQuestion());
+        assertEquals("New Answer", help.getAnswer());
     }
 }
-        // Test to ensure
