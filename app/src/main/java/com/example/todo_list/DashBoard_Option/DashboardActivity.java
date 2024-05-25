@@ -8,16 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.todo_list.App_Options.AboutActivity;
 import com.example.todo_list.App_Options.AccountActivity;
 import com.example.todo_list.App_Options.ContactActivity;
 import com.example.todo_list.App_Options.HelpActivity;
-import com.example.todo_list.App_Options.HelpFragment;
-import com.example.todo_list.App_Options.AboutFragment;
-import com.example.todo_list.App_Options.PrivacyFragment;
-import com.example.todo_list.App_Options.SettingsFragment;
+import com.example.todo_list.App_Options.PrivacyActivity;
+import com.example.todo_list.App_Options.SettingsActivity;
 
-
-//import com.example.todo_list.App_Options.ContactFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -138,7 +135,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (itemId == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OptionFragment()).commit();
         } else if (itemId == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+           Intent intent=new Intent(DashboardActivity.this, SettingsActivity.class);
+              startActivity(intent);
         } else if (itemId == R.id.nav_share) {
             // Show sharing options
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -153,12 +151,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             Intent intent=new Intent(DashboardActivity.this, AccountActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_about) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+            Intent intent=new Intent(DashboardActivity.this, AboutActivity.class);
+            startActivity(intent);
+
         } else if (itemId == R.id.nav_contact) {
             Intent intent=new Intent(DashboardActivity.this, ContactActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_privacy) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
+            Intent intent=new Intent(DashboardActivity.this, PrivacyActivity.class);
+            startActivity(intent);
         } else if (itemId == R.id.nav_logout) {
             // Handle the logout activity
             // Perform logout

@@ -98,7 +98,7 @@ dependencies {
     testImplementation ("org.powermock:powermock-module-junit4:2.0.9")
     androidTestImplementation ("org.powermock:powermock-api-mockito2:2.0.9")
     androidTestImplementation ("org.powermock:powermock-module-junit4:2.0.9")
-    androidTestImplementation ("androidx.recyclerview:recyclerview:1.2.1")
+//    androidTestImplementation ("androidx.recyclerview:recyclerview:1.2.1")
     testImplementation ("org.mockito:mockito-core:4.2.0")
     testImplementation ("org.mockito:mockito-inline:4.2.0")
     testImplementation ("junit:junit:4.13.2")
