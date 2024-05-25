@@ -64,7 +64,7 @@ public class HelpActivity extends AppCompatActivity {
         });
     }
 
-    private void filter(String text) {
+    protected void filter(String text) {
         filteredList.clear();
         for (Help item : helpList) {
             if ((item.getQuestion() != null && item.getQuestion().toLowerCase().contains(text.toLowerCase())) ||

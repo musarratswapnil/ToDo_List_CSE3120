@@ -18,6 +18,11 @@ public class FirebaseDatabaseHelper {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
+    // Package-private constructor for testing
+    FirebaseDatabaseHelper(DatabaseReference databaseReference) {
+        this.databaseReference = databaseReference;
+    }
+
     public static synchronized FirebaseDatabaseHelper getInstance() {
         if (instance == null) {
             instance = new FirebaseDatabaseHelper();
