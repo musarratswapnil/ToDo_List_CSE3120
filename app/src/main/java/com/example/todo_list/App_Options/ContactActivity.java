@@ -28,6 +28,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+/**
+ * This activity provides a contact form for users to send messages.
+ * It also displays a map with a marker at the location of Khulna University of Engineering & Technology.
+ */
 
 public class ContactActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -36,7 +40,11 @@ public class ContactActivity extends AppCompatActivity implements OnMapReadyCall
     DatabaseReference usersRef;
 
     private TextView msg;
-
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down,
+     *                           this Bundle contains the most recent data supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,16 +132,26 @@ public class ContactActivity extends AppCompatActivity implements OnMapReadyCall
             }
         });
     }
-
+    /**
+     * Gets the current date and time in the format "yyyy-MM-dd HH:mm:ss".
+     * @return A string representing the current date and time.
+     */
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
-
+    /**
+     * Checks if the provided email address is valid.
+     * @param target The email address to validate.
+     * @return true if the email address is valid, false otherwise.
+     */
     private boolean isValidEmail(CharSequence target) {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
-
+    /**
+     * Displays a toast message.
+     * @param message The message to display in the toast.
+     */
     private void showToast(String message) {
         Toast.makeText(ContactActivity.this, message, Toast.LENGTH_SHORT).show();
     }
@@ -161,6 +179,10 @@ public class ContactActivity extends AppCompatActivity implements OnMapReadyCall
         super.onLowMemory();
         mapView.onLowMemory();
     }
+    /**
+     * Called when the map is ready to be used.
+     * @param googleMap The GoogleMap object representing the map.
+     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

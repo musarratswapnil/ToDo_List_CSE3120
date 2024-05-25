@@ -23,7 +23,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+/**
+ * SignupActivity handles user registration by taking user details such as name, email, and password,
+ * and creating a new user account in Firebase Authentication. It also manages network connectivity changes.
+ */
 public class SignupActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextEmail, editTextPassword, editTextPassword2;
@@ -32,6 +35,13 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private boolean isNetworkAvailable = true;
     NetworkChangeReceiver networkChangeReceiver;
+    /**
+     * Called when the activity is starting. This is where most initialization should go.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently supplied.
+     *                           Otherwise it is null.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +75,18 @@ public class SignupActivity extends AppCompatActivity {
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
-
+    /**
+     * Called when the activity is destroyed. Unregisters the network change receiver.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // Unregister network change receiver
         unregisterReceiver(networkChangeReceiver);
     }
-
+    /**
+     * Handles the sign-up process by validating user inputs and creating a new user in Firebase Authentication.
+     */
     private void signUp() {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
@@ -155,7 +169,9 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    /**
+     * BroadcastReceiver to monitor network connectivity changes.
+     */
     protected class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -176,12 +192,22 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Checks if network is available.
+     *
+     * @return true if network is available, false otherwise.
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+    /**
+     * Checks if the password is valid. A valid password must contain at least one letter, one digit, and one special character.
+     *
+     * @param password The password to check.
+     * @return true if the password is valid, false otherwise.
+     */
     public static boolean isValid(String password) {
         int f1 = 0, f2 = 0, f3 = 0;
         if(password.length()<6){

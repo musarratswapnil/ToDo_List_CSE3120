@@ -17,12 +17,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This activity displays the user's account information including their name and email.
+ * It also provides an option to change the password.
+ */
+
+
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView userNameTextView;
     private TextView userEmailTextView;
     private TextView emailTextView;
-
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down,
+     *                           this Bundle contains the most recent data supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +51,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
             userRef.addValueEventListener(new ValueEventListener() {
+                /**
+                 * This method is called once with the initial value and again whenever data at this location is updated.
+                 * @param dataSnapshot The data at this location.
+                 */
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -49,6 +63,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 }
 
+                /**
+                 * This method will be triggered in the event that this listener either failed at the server,
+                 * or is removed as a result of the security and Firebase Database rules.
+                 * @param databaseError A description of the error that occurred.
+                 */
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     // Handle database error
@@ -63,6 +82,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         passwordArrow.setOnClickListener(this);
         passwordLayout.setOnClickListener(this);
     }
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
 
     @Override
     public void onClick(View v) {

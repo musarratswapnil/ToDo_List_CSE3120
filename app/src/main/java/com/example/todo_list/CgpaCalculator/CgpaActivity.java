@@ -26,7 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+/**
+ * This activity handles the user interface for calculating CGPA.
+ */
 public class CgpaActivity extends AppCompatActivity {
     protected Spinner semesterSpinner;
     protected Spinner gradeSpinner;
@@ -47,6 +49,11 @@ public class CgpaActivity extends AppCompatActivity {
     protected FirebaseAuth firebaseAuth;
     protected String userId;
     private Cgpa cgpa=new Cgpa();
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down,
+     *                           this Bundle contains the most recent data supplied in onSaveInstanceState(Bundle).
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +136,9 @@ public class CgpaActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Adds a course to the list of courses for the current semester.
+     */
     protected void addCourse() {
         String courseName = courseNameEditText.getText().toString();
         String courseCreditsStr = courseCreditsEditText.getText().toString();
@@ -169,12 +178,16 @@ public class CgpaActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Calculates the GPA for the current list of courses.
+     */
     protected void calculateGPA() {
         double gpa = semesterGpaCalculator.calculate(grades, credits);
         gpaResultTextView.setText("GPA: " + String.format("%.2f", gpa));
     }
-
+    /**
+     * Saves the current semester's courses, credits, and grades to Firebase.
+     */
     protected void saveSemester() {
         final String semesterName = semesterSpinner.getSelectedItem().toString();
         if (semesterName.isEmpty()) {
@@ -221,17 +234,29 @@ public class CgpaActivity extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Represents a semester with its courses, credits, grades, and GPA.
+     */
     public static class Semester {
         public String name;
         public ArrayList<String> courses;
         public ArrayList<Double> credits;
         public ArrayList<Double> grades;
         public String gpa;
-
+        /**
+         * Default constructor required for calls to DataSnapshot.getValue(Semester.class).
+         */
         public Semester() {
             // Default constructor required for calls to DataSnapshot.getValue(Semester.class)
         }
-
+        /**
+         * Constructor to create a new Semester instance.
+         * @param name The name of the semester.
+         * @param courses A list of course names.
+         * @param credits A list of course credits.
+         * @param grades A list of course grades.
+         * @param gpa The GPA of the semester.
+         */
         public Semester(String name, ArrayList<String> courses, ArrayList<Double> credits, ArrayList<Double> grades, String gpa) {
             this.name = name;
             this.courses = courses;

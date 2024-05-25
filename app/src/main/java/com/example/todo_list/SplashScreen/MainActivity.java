@@ -13,11 +13,21 @@ import com.example.todo_list.LoginSignup.SignupActivity;
 import com.example.todo_list.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+/**
+ * MainActivity serves as the splash screen and initial entry point of the application.
+ * It checks if a user is already authenticated with Firebase and directs them to the appropriate activity.
+ */
 public class MainActivity extends AppCompatActivity {
     private AppCompatButton loginButton;
     private AppCompatButton signUpButton;
     @Override
+    /**
+     * Called when the activity is starting. This is where most initialization should go.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently supplied.
+     *                           Otherwise it is null.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
