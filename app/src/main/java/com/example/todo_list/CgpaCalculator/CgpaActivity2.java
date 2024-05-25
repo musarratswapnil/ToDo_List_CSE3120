@@ -39,6 +39,11 @@ public class CgpaActivity2 extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String userId;
 
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down,
+     *                           this Bundle contains the most recent data supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +86,9 @@ public class CgpaActivity2 extends AppCompatActivity {
             finish();
         }
     }
-
+    /**
+     * Loads the semesters from Firebase and calculates the CGPA.
+     */
     private void loadSemesters() {
         semestersRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,6 +111,7 @@ public class CgpaActivity2 extends AppCompatActivity {
                     }
                 }
 
+
                 // Sort the semesters
                 sortSemesters();
 
@@ -123,7 +131,9 @@ public class CgpaActivity2 extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Sorts the semesters in order based on predefined semester names.
+     */
     protected void sortSemesters() {
         HashMap<String, Integer> semesterOrder = new HashMap<>();
         semesterOrder.put("1-1", 1);
@@ -142,7 +152,9 @@ public class CgpaActivity2 extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Calculates the required GPA to achieve the expected CGPA for the remaining semesters.
+     */
     private void calculateRequiredGpa() {
         String expectedCgpaStr = expectedCgpaEditText.getText().toString();
         if (expectedCgpaStr.isEmpty()) {
