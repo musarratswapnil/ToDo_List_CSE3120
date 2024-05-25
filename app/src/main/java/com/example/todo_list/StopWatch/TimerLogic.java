@@ -5,26 +5,31 @@ package com.example.todo_list.StopWatch;
  */
 public class TimerLogic {
 
-    /**
-     * Calculates the total duration in milliseconds based on the given hours, minutes, and seconds.
-     *
-     * @param hours The number of hours.
-     * @param minutes The number of minutes.
-     * @param seconds The number of seconds.
-     * @return The total duration in milliseconds.
-     */
-    public static long calculateTimerDuration(long hours, long minutes, long seconds) {
+    // Single instance of TimerLogic
+    private static TimerLogic instance;
+
+    // Private constructor to prevent instantiation
+    private TimerLogic() {}
+
+    // Method to get the single instance of TimerLogic
+    public static TimerLogic getInstance() {
+        if (instance == null) {
+            synchronized (TimerLogic.class) {
+                if (instance == null) {
+                    instance = new TimerLogic();
+                }
+            }
+        }
+        return instance;
+    }
+
+    // Existing methods...
+    public long calculateTimerDuration(long hours, long minutes, long seconds) {
         long totalSeconds = hours * 3600 + minutes * 60 + seconds;
         return totalSeconds * 1000; // Convert to milliseconds
     }
 
-    /**
-     * Formats the given time in milliseconds to an array of strings representing hours, minutes, and seconds.
-     *
-     * @param millis The time in milliseconds.
-     * @return An array of strings in the format {"HH:", "MM:", "SS"}.
-     */
-    public static String[] formatTime(long millis) {
+    public String[] formatTime(long millis) {
         long seconds = millis / 1000;
         long minutes = seconds / 60;
         long hours = minutes / 60;
@@ -39,16 +44,7 @@ public class TimerLogic {
         };
     }
 
-    /**
-     * Determines the color for the timer based on the remaining time.
-     *
-     * @param millis The remaining time in milliseconds.
-     * @param threshold The threshold time in milliseconds.
-     * @param colorRed The color to use if the remaining time is below the threshold.
-     * @param colorGray The color to use if the remaining time is above the threshold.
-     * @return The color to use for the timer.
-     */
-    public static int getColorForTime(long millis, long threshold, int colorRed, int colorGray) {
+    public int getColorForTime(long millis, long threshold, int colorRed, int colorGray) {
         return millis < threshold ? colorRed : colorGray;
     }
 }

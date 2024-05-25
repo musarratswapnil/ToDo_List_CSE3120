@@ -79,8 +79,13 @@ dependencies {
     androidTestImplementation ("androidx.test:runner:1.3.0")
     androidTestImplementation ("androidx.test:rules:1.3.0")
 
+
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
+
     // Mockito for unit testing
     testImplementation ("org.mockito:mockito-core:4.6.1")
+
 
 //    testImplementation ("org.mockito:mockito-inline:4.6.1")
     androidTestImplementation ("org.mockito:mockito-android:4.6.1")
