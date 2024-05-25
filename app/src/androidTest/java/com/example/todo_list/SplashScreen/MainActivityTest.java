@@ -1,3 +1,4 @@
+
 package com.example.todo_list.SplashScreen;
 
 import android.content.Intent;
@@ -84,3 +85,4 @@ public class MainActivityTest {
         }
     }
 }
+

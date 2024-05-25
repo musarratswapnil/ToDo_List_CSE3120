@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo_list.R;
@@ -28,7 +30,7 @@ public class CgpaActivity2 extends AppCompatActivity {
     private EditText expectedCgpaEditText;
     private Button calculateRequiredGpaButton;
     private SemesterAdapter adapter;
-    private ArrayList<CgpaActivity.Semester> semestersList = new ArrayList<>();
+    protected ArrayList<CgpaActivity.Semester> semestersList = new ArrayList<>();
 
     private GpaCalculator cgpaCalculator;
 
@@ -74,7 +76,9 @@ public class CgpaActivity2 extends AppCompatActivity {
             });
         } else {
             // Handle case where user is not authenticated
-            // Redirect to login screen or show an error message
+            Toast.makeText(this, "User not authenticated. Please log in.", Toast.LENGTH_SHORT).show();
+            // Redirect to login screen or close the activity
+            finish();
         }
     }
 
@@ -88,10 +92,15 @@ public class CgpaActivity2 extends AppCompatActivity {
 
                 for (DataSnapshot semesterSnapshot : dataSnapshot.getChildren()) {
                     CgpaActivity.Semester semester = semesterSnapshot.getValue(CgpaActivity.Semester.class);
-                    if (semester != null) {
-                        semestersList.add(semester);
-                        totalGpa += Double.parseDouble(semester.gpa.split(": ")[1]);
-                        totalSemesters++;
+                    if (semester != null && semester.gpa != null && !semester.gpa.isEmpty()) {
+                        try {
+                            totalGpa += Double.parseDouble(semester.gpa);
+                            totalSemesters++;
+                            semestersList.add(semester);
+                        } catch (NumberFormatException e) {
+                            // Handle parsing error
+                            Toast.makeText(CgpaActivity2.this, "Error parsing GPA for " + semester.name, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
@@ -99,18 +108,23 @@ public class CgpaActivity2 extends AppCompatActivity {
                 sortSemesters();
 
                 adapter.notifyDataSetChanged();
-                double cgpa = totalGpa / totalSemesters;
-                cgpaResultTextView.setText("CGPA: " + String.format("%.2f", cgpa));
+                if (totalSemesters > 0) {
+                    double cgpa = totalGpa / totalSemesters;
+                    cgpaResultTextView.setText("CGPA: " + String.format("%.2f", cgpa));
+                } else {
+                    cgpaResultTextView.setText("CGPA: N/A");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle possible errors.
+                Toast.makeText(CgpaActivity2.this, "Failed to load semesters.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void sortSemesters() {
+    protected void sortSemesters() {
         HashMap<String, Integer> semesterOrder = new HashMap<>();
         semesterOrder.put("1-1", 1);
         semesterOrder.put("1-2", 2);
@@ -132,7 +146,6 @@ public class CgpaActivity2 extends AppCompatActivity {
     private void calculateRequiredGpa() {
         String expectedCgpaStr = expectedCgpaEditText.getText().toString();
         if (expectedCgpaStr.isEmpty()) {
-            // Handle empty input
             requiredGpaResultTextView.setText("Please enter an expected CGPA.");
             return;
         }
@@ -142,9 +155,19 @@ public class CgpaActivity2 extends AppCompatActivity {
         int totalSemesters = 8;
         int remainingSemesters = totalSemesters - totalSemestersCompleted;
 
+        if (remainingSemesters <= 0) {
+            requiredGpaResultTextView.setText("All semesters are already completed.");
+            return;
+        }
+
         double currentTotalGpa = 0;
         for (CgpaActivity.Semester semester : semestersList) {
-            currentTotalGpa += Double.parseDouble(semester.gpa.split(": ")[1]);
+            try {
+                currentTotalGpa += Double.parseDouble(semester.gpa);
+            } catch (NumberFormatException e) {
+                // Handle parsing error
+                Toast.makeText(CgpaActivity2.this, "Error parsing GPA for " + semester.name, Toast.LENGTH_SHORT).show();
+            }
         }
 
         double requiredTotalGpa = expectedCgpa * totalSemesters;
