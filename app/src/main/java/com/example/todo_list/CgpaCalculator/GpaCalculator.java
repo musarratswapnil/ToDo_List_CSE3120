@@ -1,8 +1,16 @@
 package com.example.todo_list.CgpaCalculator;
 
 import java.util.ArrayList;
-
+/**
+ * This interface defines the contract for GPA calculation.
+ */
 public interface GpaCalculator {
+    /**
+     * Calculates the GPA based on the provided grades and credits.
+     * @param grades A list of grade values for each course.
+     * @param credits A list of credit values for each course.
+     * @return The calculated GPA.
+     */
     double calculate(ArrayList<Double> grades, ArrayList<Double> credits);
 }
 /*package com.example.todo_list.CgpaCalculator;
