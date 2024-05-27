@@ -1,3 +1,6 @@
+/**
+ * The HelpActivity class represents the activity for displaying help items and providing search functionality.
+ */
 package com.example.todo_list.App_Options;
 
 import android.os.Bundle;
@@ -26,6 +29,12 @@ public class HelpActivity extends AppCompatActivity {
     private List<Help> filteredList = new ArrayList<>();
     private EditText searchInput;
 
+    /**
+     * Called when the activity is starting. Initializes the activity and sets its content view, RecyclerView, and search functionality.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     *                           Otherwise, it is null.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,11 @@ public class HelpActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Filters the help items based on the input text and updates the RecyclerView.
+     *
+     * @param text The text to filter help items by.
+     */
     protected void filter(String text) {
         filteredList.clear();
         for (Help item : helpList) {

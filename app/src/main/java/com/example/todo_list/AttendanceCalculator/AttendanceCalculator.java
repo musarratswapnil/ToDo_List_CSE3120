@@ -1,3 +1,6 @@
+/**
+ * The AttendanceCalculator class manages the user interface and functionality for calculating attendance-related information.
+ */
 package com.example.todo_list.AttendanceCalculator;
 
 import android.content.Intent;
@@ -17,6 +20,9 @@ public class AttendanceCalculator extends AppCompatActivity {
     private AttendanceCalculatorLogic calculatorLogic;
     private AttendanceAdapter attendanceAdapter;
 
+    /**
+     * Initializes the activity, sets up the UI elements, and defines button click listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +60,14 @@ public class AttendanceCalculator extends AppCompatActivity {
         buttonNavigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AttendanceCalculator.this, AttendancePercentage.class);
-                startActivity(intent);
+                navigateToAttendancePercentage();
             }
         });
     }
 
+    /**
+     * Calculates and displays the needed classes based on user input.
+     */
     private void calculateNeededClasses() {
         String totalCreditStr = editTextTotalCredit.getText().toString();
         String totalWeeksStr = editTextTotalWeeks.getText().toString();
@@ -87,6 +95,9 @@ public class AttendanceCalculator extends AppCompatActivity {
         }
     }
 
+    /**
+     * Resets all input fields and result displays.
+     */
     private void resetFields() {
         editTextTotalCredit.setText("");
         editTextTotalWeeks.setText("");
@@ -96,5 +107,13 @@ public class AttendanceCalculator extends AppCompatActivity {
         textViewClassesLeft.setText("");
         textViewClassesNeedToAttend.setText("");
         textViewResult.setText("");
+    }
+
+    /**
+     * Navigates to the AttendancePercentage activity.
+     */
+    private void navigateToAttendancePercentage() {
+        Intent intent = new Intent(AttendanceCalculator.this, AttendancePercentage.class);
+        startActivity(intent);
     }
 }
