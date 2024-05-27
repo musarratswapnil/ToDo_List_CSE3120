@@ -1,3 +1,4 @@
+
 package com.example.todo_list.SplashScreen;
 
 import android.content.Intent;
@@ -47,3 +48,4 @@ public class SplashActivityTest {
 //        intended(hasComponent(MainActivity.class.getName()));
     }
 }
+

@@ -41,7 +41,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * LoginActivity handles the user login process, including email/password login and Google Sign-In.
+ * It also manages network connectivity changes and password reset functionality.
+ */
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
 
@@ -55,7 +58,13 @@ public class LoginActivity extends AppCompatActivity {
     private PasswordResetHelper passwordResetHelper;
     public boolean isNetworkAvailable = true;
     private NetworkChangeReceiver networkChangeReceiver;
-
+    /**
+     * Called when the activity is starting. This is where most initialization should go.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently supplied.
+     *                           Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordTextView = findViewById(R.id.textView23);
         ImageView imageViewLogin = findViewById(R.id.imageView5);
         TextView registerTextView = findViewById(R.id.textView5);
-        loginWithGoogle=findViewById(R.id.button3);
+        loginWithGoogle = findViewById(R.id.button3);
 
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -76,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken("393767222391-0t9mjomvm2ddc6e71rifcvbk937cer9m.apps.googleusercontent.com") // replace with your actual server client ID
                 .build();
         gsc = GoogleSignIn.getClient(this, gso);
-
 
 
         loginWithGoogle.setOnClickListener(new View.OnClickListener() {
@@ -147,14 +155,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
         // Register network change receiver
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
-
-
-
+    /**
+     * Initiates the Google Sign-In process by signing out the current account, revoking all tokens,
+     * and starting the Google Sign-In intent.
+     */
 
 
     public void signIn() {
@@ -174,7 +182,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Handles the result from the Google Sign-In intent.
+     *
+     * @param requestCode The request code you passed to startActivityForResult().
+     * @param resultCode  The result code returned by the child activity.
+     * @param data        An Intent that carries the result data.
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -190,7 +204,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Authenticates with Firebase using the Google account.
+     *
+     * @param acct The Google Sign-In account.
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -213,6 +231,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+    /**
+     * Updates the Firebase database with the user's Google account information.
+     *
+     * @param account The Google Sign-In account.
+     */
     private void updateFirebaseWithGoogleAccount(GoogleSignInAccount account) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser(); // Get the authenticated Firebase user
         if (firebaseUser != null) {
@@ -240,14 +263,16 @@ public class LoginActivity extends AppCompatActivity {
                     });
         }
     }
+    /**
+     * Navigates to the DashboardActivity.
+     */
 
-
-
-    public void navigateToSecondActivity(){
+    public void navigateToSecondActivity() {
         finish();
-        Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
         startActivity(intent);
     }
+
     /*
     public void buttonGoogleSignIn(View view){
         oneTapClient.beginSignIn(signInRequest)
@@ -343,6 +368,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }*/
+    /**
+     * Unregisters the network change receiver when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -350,6 +378,9 @@ public class LoginActivity extends AppCompatActivity {
         unregisterReceiver(networkChangeReceiver);
     }
 
+    /**
+     * Handles the login process with email and password.
+     */
     private void login() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -360,30 +391,28 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
             return;
         }
-        if(email.isEmpty() && password.isEmpty()){
+        if (checkEmailEmpty(email) && checkPasswordEmpty(password)) {
             editTextEmail.setError("Please fill in information to continue");
             Toast.makeText(LoginActivity.this, "Please fill in information to continue", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (email.isEmpty()) {
+        if (checkEmailEmpty(email)) {
             editTextEmail.setError("Email is required");
             Toast.makeText(LoginActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (password.isEmpty()) {
+        if (checkPasswordEmpty(password)){
             editTextPassword.setError("Password is required");
             Toast.makeText(LoginActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (password.length() < 6) {
+        if (checkPasswordLength(password)) {
             editTextPassword.setError("Password must be at least 6 characters");
             Toast.makeText(LoginActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
 
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -400,7 +429,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    /**
+     * BroadcastReceiver to monitor network connectivity changes.
+     */
     private class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -417,10 +448,61 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Checks if network is available.
+     *
+     * @return true if network is available, false otherwise.
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+    /**
+     * Checks if the email field is empty.
+     *
+     * @param email The email input.
+     * @return true if email is empty, false otherwise.
+     */
+    public static boolean checkEmailEmpty(String email) {
+
+        if(email.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the password field is empty.
+     *
+     * @param password The password input.
+     * @return true if password is empty, false otherwise.
+     */
+    public static boolean checkPasswordEmpty(String password){
+        if(password.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    /**
+     * Checks if the password length is less than 6 characters.
+     *
+     * @param password The password input.
+     * @return true if password length is less than 6 characters, false otherwise.
+     */
+    public static boolean checkPasswordLength(String password){
+        if(password.length()<6){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
 }
