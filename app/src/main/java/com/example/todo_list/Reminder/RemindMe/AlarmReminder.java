@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class AlarmReminder implements ReminderInterface{
 
     int requestCode;
-private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute) {
+private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute,int requestCode) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute);
         calendar.set(Calendar.SECOND, 0);
@@ -25,17 +25,17 @@ private void scheduleReminder(Context context,String title, String content,int y
 
 
     if (timeDifference > 0) {
-        setAlarm(context, title, content, calendar.getTimeInMillis());
+        setAlarm(context, title, content, calendar.getTimeInMillis(),requestCode);
     } else {
         throw new IllegalArgumentException("Alarm time must be in the future.");
     }        }
-private void setAlarm(Context context, String title, String content, long triggerAtMillis) {
+private void setAlarm(Context context, String title, String content, long triggerAtMillis,int requestCode) {
         // Create an Intent to trigger the ReminderBroadcastReceiver
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("title", title);
         reminderIntent.putExtra("content", content);
         // Create a PendingIntent to wrap the reminderIntent
-     requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
+//     requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -55,14 +55,14 @@ private void setAlarm(Context context, String title, String content, long trigge
         }
 
     @Override
-    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone) {
+    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone,int requestCode) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("title", title);
         reminderIntent.putExtra("content", content);
         reminderIntent.putExtra("phoneNumber", Phone);
         reminderIntent.putExtra("isSMS", false);
         reminderIntent.putExtra("isCall", false);
-    scheduleReminder(context, title, content, year, month, day, hour, minute);
+    scheduleReminder(context, title, content, year, month, day, hour, minute,requestCode);
 
     }
 }

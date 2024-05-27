@@ -67,7 +67,7 @@ public class AddTaskFragment extends Fragment {
         public Task() {
         }
 
-        public Task(String title, String date, String time, String content, String reminderType) {
+        public Task(String title, String date, String time, String content, String reminderType,int requestCode) {
             this.title = title;
             this.date = date;
             this.time = time;
@@ -143,14 +143,16 @@ public class AddTaskFragment extends Fragment {
 
         // Create a Task object
 
-
-        reminder = new ReminderFactory().getReminder(getSelectedReminderType());
-        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,phone);
-
         Calendar calendar = Calendar.getInstance();
         int requestCode=(int)(calendar.getTimeInMillis()% Integer.MAX_VALUE);
 
-        Task task = new Task(title, date, time, content, getSelectedReminderType());
+        reminder = new ReminderFactory().getReminder(getSelectedReminderType());
+        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,phone,requestCode);
+
+//        Calendar calendar = Calendar.getInstance();
+//        int requestCode=(int)(calendar.getTimeInMillis()% Integer.MAX_VALUE);
+
+        Task task = new Task(title, date, time, content, getSelectedReminderType(),requestCode);
         saveTaskToFirebase(userTasksRef, task);
 
     }

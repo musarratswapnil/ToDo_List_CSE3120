@@ -11,12 +11,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,9 +24,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
 import com.example.todo_list.Note.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
-import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -156,7 +155,7 @@ public class UpdateTaskFragment extends Fragment {
         Task task = new Task(title, date, time, content);
         updateTaskToFirebase(taskId,userTasksRef,task);
         reminder = new ReminderFactory().getReminder(getSelectedReminderType());
-        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,"01626052742");
+        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,"01626052742",0);
     }
 
     private void HandleField(String taskId, String title, String date, String time, String content) {

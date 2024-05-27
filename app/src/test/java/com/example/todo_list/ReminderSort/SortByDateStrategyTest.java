@@ -31,9 +31,9 @@ public class SortByDateStrategyTest {
      */
     @Test
     public void sortTaskBydateandTime(){
-        Task task1=new Task("1","10/05/2024","t1","abcd","15:16");
-        Task task2=new Task("2","12/05/2024","t2","abcd","15:20");
-        Task task3=new Task("3","9/05/2024","t3","abcd","14:16");
+        Task task1=new Task("1","10/05/2024","t1","abcd","15:16",993498369);
+        Task task2=new Task("2","12/05/2024","t2","abcd","15:20",993498369);
+        Task task3=new Task("3","9/05/2024","t3","abcd","14:16",993498369);
 
         List<Task> tasks=new ArrayList<>();
         tasks.add(task1);
@@ -68,9 +68,9 @@ public class SortByDateStrategyTest {
     @Test
     public void sortTaskBySamedateandDiffTime(){
         //same date different time
-        Task task1=new Task("1","10/05/2024","t1","abcd","15:16");
-        Task task2=new Task("2","10/05/2024","t2","abcd","15:20");
-        Task task3=new Task("3","10/05/2024","t3","abcd","14:16");
+        Task task1=new Task("1","10/05/2024","t1","abcd","15:16",993498369);
+        Task task2=new Task("2","10/05/2024","t2","abcd","15:20",993498369);
+        Task task3=new Task("3","10/05/2024","t3","abcd","14:16",993498369);
 
         List<Task> tasks=new ArrayList<>();
         tasks.add(task1);
@@ -87,9 +87,9 @@ public class SortByDateStrategyTest {
 
     @Test
     public void sortIdenticalDatesAndTimes(){
-        Task task1=new Task("1","10/05/2024","t1","abcd","15:16");
-        Task task2=new Task("2","10/05/2024","t2","abcd","15:16");
-        Task task3=new Task("3","10/05/2024","t3","abcd","15:16");
+        Task task1=new Task("1","10/05/2024","t1","abcd","15:16",993498369);
+        Task task2=new Task("2","10/05/2024","t2","abcd","15:16",993498369);
+        Task task3=new Task("3","10/05/2024","t3","abcd","15:16",993498369);
 
         List<Task> tasks=new ArrayList<>();
         tasks.add(task1);
@@ -107,7 +107,7 @@ public class SortByDateStrategyTest {
 
     @Test
     public void sortSingleElementList(){
-       Task task1=new Task("2","10/05/2024","t1","Content","12:02");
+       Task task1=new Task("2","10/05/2024","t1","Content","12:02",993498369);
        List<Task> tasks=new ArrayList<>();
        tasks.add(task1);
 
@@ -152,7 +152,7 @@ public class SortByDateStrategyTest {
     public void sortLargeNumberOfTasks() {
         List<Task> tasks = new ArrayList<>();
         for (int i = 1000; i > 0; i--) {
-            tasks.add(new Task(String.valueOf(i), "10/05/" + (2024 + i), "t" + i, "Content " + i, "15:" + (i % 60)));
+            tasks.add(new Task(String.valueOf(i), "10/05/" + (2024 + i), "t" + i, "Content " + i, "15:" + (i % 60),993498369));
         }
 
         SortByDateStrategy sorting=new SortByDateStrategy();

@@ -18,9 +18,9 @@ public class SortByNameStrategyTest {
 
         List<Task> taskList=new ArrayList<>();
 
-        Task task1=new Task("1","10/05/2024","t1","abcd","15:16");
-        Task task2=new Task("2","10/05/2024","shipra","abcd","15:16");
-        Task task3=new Task("3","10/05/2024","Note","abcd","15:16");
+        Task task1=new Task("1","10/05/2024","t1","abcd","15:16",993498369);
+        Task task2=new Task("2","10/05/2024","shipra","abcd","15:16",993498369);
+        Task task3=new Task("3","10/05/2024","Note","abcd","15:16",993498369);
 
         taskList.add(task1);
         taskList.add(task2);
@@ -39,9 +39,9 @@ public class SortByNameStrategyTest {
     @Test
     public void alreadySortedListCheck() {
         List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("1", "10/05/2024", "cTask", "abcd", "15:16"));
-        taskList.add(new Task("2", "10/05/2024", "bTask", "abcd", "15:16"));
-        taskList.add(new Task("3", "10/05/2024", "aTask", "abcd", "15:16"));
+        taskList.add(new Task("1", "10/05/2024", "cTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("2", "10/05/2024", "bTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("3", "10/05/2024", "aTask", "abcd", "15:16",993498369));
 
         assertEquals("aTask", taskList.get(2).getTitle());
         assertEquals("bTask", taskList.get(1).getTitle());
@@ -59,9 +59,9 @@ public class SortByNameStrategyTest {
     @Test
     public void duplicateTitlesCheck() {
         List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("1", "10/05/2024", "aTask", "abcd", "15:16"));
-        taskList.add(new Task("2", "10/05/2024", "aTask", "abcd", "15:16"));
-        taskList.add(new Task("3", "10/05/2024", "bTask", "abcd", "15:16"));
+        taskList.add(new Task("1", "10/05/2024", "aTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("2", "10/05/2024", "aTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("3", "10/05/2024", "bTask", "abcd", "15:16",993498369));
 
         SortByNameStrategy sorting = new SortByNameStrategy();
         sorting.sort(taskList);
@@ -76,7 +76,7 @@ public class SortByNameStrategyTest {
         List<Task> taskList=new ArrayList<>();
 
         for(int i=0;i<101;i++){
-            taskList.add(new Task(String.valueOf(i), "10/05/2024", "Task"+String.valueOf(i), "abcd", "15:16"));
+            taskList.add(new Task(String.valueOf(i), "10/05/2024", "Task"+String.valueOf(i), "abcd", "15:16",993498369));
         }
 
         SortByNameStrategy sorting=new SortByNameStrategy();
@@ -100,9 +100,9 @@ public class SortByNameStrategyTest {
     @Test
     public void MixedCaseCheck() {
         List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("1", "10/05/2024", "BTask", "abcd", "15:16"));
-        taskList.add(new Task("2", "10/05/2024", "eTask", "abcd", "15:16"));
-        taskList.add(new Task("3", "10/05/2024", "aTask", "abcd", "15:16"));
+        taskList.add(new Task("1", "10/05/2024", "BTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("2", "10/05/2024", "eTask", "abcd", "15:16",993498369));
+        taskList.add(new Task("3", "10/05/2024", "aTask", "abcd", "15:16",993498369));
 
         SortByNameStrategy sorting = new SortByNameStrategy();
         sorting.sort(taskList);

@@ -13,18 +13,18 @@ import java.util.Calendar;
 public class CallReminder implements ReminderInterface{
     int requestCode;
     @Override
-    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone) {
+    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone,int requestCode) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("title", title);
         reminderIntent.putExtra("content", content);
         reminderIntent.putExtra("phoneNumber", Phone);
         reminderIntent.putExtra("isSMS", false);
         reminderIntent.putExtra("isCall", true);
-        scheduleReminder(context, title, content, year, month, day, hour, minute,Phone);
+        scheduleReminder(context, title, content, year, month, day, hour, minute,Phone,requestCode);
 
     }
 
-    private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute,String Phone) {
+    private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute,String Phone,int requestCode) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute);
         calendar.set(Calendar.SECOND, 0);
@@ -36,18 +36,18 @@ public class CallReminder implements ReminderInterface{
 
 
         if (timeDifference > 0) {
-            setCall(context, Phone, calendar.getTimeInMillis());
+            setCall(context, Phone, calendar.getTimeInMillis(),requestCode);
         } else {
             throw new IllegalArgumentException("Alarm time must be in the future.");
         }        }
 
 
     @SuppressLint("ScheduleExactAlarm")
-    private void setCall(Context context, String phoneNumber, long triggerAtMillis) {
+    private void setCall(Context context, String phoneNumber, long triggerAtMillis,int requestCode) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("phoneNumber", phoneNumber);
         reminderIntent.putExtra("isCall", true);
-         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
+//         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, reminderIntent, PendingIntent.FLAG_IMMUTABLE);
 
