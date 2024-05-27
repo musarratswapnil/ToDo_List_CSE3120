@@ -35,9 +35,6 @@
             android:name=".App_Options.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".App_Options.Model.AboutActivity"
-            android:exported="false" />
-        <activity
             android:name=".App_Options.PrivacyActivity"
             android:exported="false" />
         <activity
