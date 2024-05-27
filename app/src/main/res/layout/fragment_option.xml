@@ -70,7 +70,9 @@
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -80,6 +82,7 @@
                         android:id="@+id/Reminder"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/reminder"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -105,6 +108,7 @@
                         android:id="@+id/Note"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/note"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -130,6 +134,7 @@
                         android:id="@+id/StopWatch"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/stop_watch"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -156,6 +161,7 @@
                         android:id="@+id/attendanceCalculator"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/attendence_calculator"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -182,6 +188,7 @@
                         android:id="@+id/CgpaCalculator"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/cgpa_calculator"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
