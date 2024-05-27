@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.todo_list.AttendanceCalculator.AttendanceCalculator;
 import com.example.todo_list.Reminder.HomeFragment;
 import com.example.todo_list.Note.HomeScreen;
 import com.example.todo_list.R;
@@ -20,8 +21,8 @@ import com.example.todo_list.CgpaCalculator.CgpaActivity;
 import com.google.android.material.card.MaterialCardView;
 
 /**
- * Defines the command interface for executing navigation actions
- * It is implemented using Behavioural design pattern name 'Command'
+ * Defines the command interface for executing navigation actions.
+ * It is implemented using the Behavioral design pattern name 'Command'.
  */
 interface Command {
     /**
@@ -36,20 +37,19 @@ interface Command {
 class NavigateToFragmentCommand implements Command {
     private Context context;
     private Fragment fragment;
-    /**
-     * Constructs a new command for activity navigation.
-     * @param context The context from which the navigation is initiated
-     * @param fragment The fragment I wanna navigate
-     */
-    NavigateToFragmentCommand(Context context,Fragment fragment) {
 
+    /**
+     * Constructs a new command for fragment navigation.
+     * @param context The context from which the navigation is initiated.
+     * @param fragment The fragment to navigate to.
+     */
+    NavigateToFragmentCommand(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
-
     }
 
     /**
-     * Executes the command to launch the Activity we want
+     * Executes the command to replace the current fragment with the specified fragment.
      */
     @Override
     public void execute() {
@@ -57,8 +57,7 @@ class NavigateToFragmentCommand implements Command {
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
-
-    }
+}
 
 /**
  * Command for launching a new Activity.
@@ -66,6 +65,7 @@ class NavigateToFragmentCommand implements Command {
 class NavigateToActivityCommand implements Command {
     private Context context;
     private Class<? extends Activity> activityClass;
+
     /**
      * Constructs a new command for activity navigation.
      * @param context The context from which the navigation is initiated.
@@ -75,8 +75,9 @@ class NavigateToActivityCommand implements Command {
         this.context = context;
         this.activityClass = activityClass;
     }
+
     /**
-     * Executes the command to launch the Activity we want
+     * Executes the command to launch the specified activity.
      */
     @Override
     public void execute() {
@@ -86,10 +87,9 @@ class NavigateToActivityCommand implements Command {
 }
 
 /**
- * Invoker class that executes commands on basis of setting specific command
- * Invoker is a basic part of command behavioural Design Pattern
+ * Invoker class that executes commands based on the command pattern.
  */
- class CommandInvoker {
+class CommandInvoker {
     private Command command;
 
     /**
@@ -99,8 +99,9 @@ class NavigateToActivityCommand implements Command {
     public void setCommand(Command command) {
         this.command = command;
     }
+
     /**
-     * Executes the currently set dynamic command.
+     * Executes the currently set command.
      */
     public void executeCommand() {
         if (command != null) {
@@ -108,76 +109,66 @@ class NavigateToActivityCommand implements Command {
         }
     }
 }
-    public class OptionFragment extends Fragment {
 
-        /**
-         *
-         * @param inflater The LayoutInflater object that can be used to inflate
-         * any views in the fragment,
-         * @param container If non-null, this is the parent view that the fragment's
-         * UI should be attached to.  The fragment should not add the view itself,
-         * but this can be used to generate the LayoutParams of the view.
-         * @param savedInstanceState If non-null, this fragment is being re-constructed
-         * from a previous saved state as given here.
-         *
-         * @return Return the View for the fragment's UI
-         */
+/**
+ * OptionFragment class to handle the dashboard options.
+ */
+public class OptionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_option, container, false);
 
-        /**
-         *  Find the card views
-         */
+        // Find the card views
         MaterialCardView remainderCard = view.findViewById(R.id.RemainderCard);
         MaterialCardView noteCard = view.findViewById(R.id.NoteCard);
         MaterialCardView stopwatchCard = view.findViewById(R.id.StopWatchCard);
+
+        MaterialCardView attendanceCalculator = view.findViewById(R.id.AttendanceCalculatorCard);
+
+        // Create command invoker
+
         MaterialCardView cgpaCalculatorCard = view.findViewById(R.id.CgpaCalculatorCard);
         /**
          * Create command invoker
          */
+
         CommandInvoker invoker = new CommandInvoker();
 
-        /**
-         * Add 1st option
-         *Set click listener for the RemainderCard
-         */
+        // Set click listener for the RemainderCard
         remainderCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                invoker.setCommand(new NavigateToFragmentCommand(getActivity(),new HomeFragment()));
+                invoker.setCommand(new NavigateToFragmentCommand(getActivity(), new HomeFragment()));
                 invoker.executeCommand();
             }
         });
 
-        /**
-         * Add 2nd option
-         *Set click listener for the RemainderCard
-         */
+        // Set click listener for the NoteCard
         noteCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Set fragment command and execute
-                 */
                 invoker.setCommand(new NavigateToActivityCommand(getActivity(), HomeScreen.class));
                 invoker.executeCommand();
             }
         });
 
-        /**
-         * Add 3rd option
-         *Set click listener for the RemainderCard
-         */
+        // Set click listener for the StopWatchCard
         stopwatchCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Set fragment command and execute
-                 */
                 invoker.setCommand(new NavigateToActivityCommand(getActivity(), StopWatchHomeActivity.class));
+                invoker.executeCommand();
+            }
+        });
+
+
+        // Set click listener for the AttendanceCalculatorCard
+        attendanceCalculator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invoker.setCommand(new NavigateToActivityCommand(getActivity(), AttendanceCalculator.class));
                 invoker.executeCommand();
             }
         });
@@ -190,6 +181,7 @@ class NavigateToActivityCommand implements Command {
                 invoker.executeCommand();
             }
         });
+
 
 
         return view;

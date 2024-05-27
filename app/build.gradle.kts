@@ -61,9 +61,9 @@ dependencies {
 
     // Mockito for unit testing
     // Mockito dependencies for JDK 17 compatibility
-//    testImplementation("org.mockito:mockito-core:4.6.1")
-//    testImplementation("org.mockito:mockito-inline:4.6.1")
-//    androidTestImplementation("org.mockito:mockito-android:4.6.1")
+    testImplementation("org.mockito:mockito-core:4.6.1")
+    testImplementation("org.mockito:mockito-inline:4.6.1")
+    androidTestImplementation("org.mockito:mockito-android:4.6.1")
 //
 //    // Robolectric for unit testing
 //    testImplementation("org.robolectric:robolectric:4.6")
@@ -79,8 +79,13 @@ dependencies {
     androidTestImplementation ("androidx.test:runner:1.3.0")
     androidTestImplementation ("androidx.test:rules:1.3.0")
 
+
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
+
     // Mockito for unit testing
     testImplementation ("org.mockito:mockito-core:4.6.1")
+
 
 //    testImplementation ("org.mockito:mockito-inline:4.6.1")
     androidTestImplementation ("org.mockito:mockito-android:4.6.1")
@@ -93,5 +98,13 @@ dependencies {
     testImplementation ("org.powermock:powermock-module-junit4:2.0.9")
     androidTestImplementation ("org.powermock:powermock-api-mockito2:2.0.9")
     androidTestImplementation ("org.powermock:powermock-module-junit4:2.0.9")
+//    androidTestImplementation ("androidx.recyclerview:recyclerview:1.2.1")
+    testImplementation ("org.mockito:mockito-core:4.2.0")
+    testImplementation ("org.mockito:mockito-inline:4.2.0")
+    testImplementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0")
+
 
 }
+
+//apply plugin: 'com.google.gms.google-services'
