@@ -1,27 +1,32 @@
 package com.example.todo_list.App_Options.Model;
 
-import android.content.Context;
-
-import androidx.fragment.app.FragmentManager;
-
-import com.example.todo_list.Reminder.Task;
-import com.google.firebase.database.DatabaseReference;
-
-import java.util.List;
-
 public class Help {
-    private String question,answer;
-    public Help(String question,String answer) {
-        this.question = question;
-        this.answer = answer;
+    private String question;
+    private String answer;
 
+    // No-argument constructor
+    public Help() {
     }
 
-    public String getQuestion(){
+    // Parameterized constructor
+    public Help(String question, String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
+
+    public String getQuestion() {
         return question;
     }
 
-    public String getAnswer(){
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
         return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
