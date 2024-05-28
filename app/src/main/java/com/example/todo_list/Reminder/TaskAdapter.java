@@ -1,9 +1,13 @@
 package com.example.todo_list.Reminder;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.Sort.SortingStrategy;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +34,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private FragmentManager fragmentManager;
     private SortingStrategy sortingStrategy;
 
-
-
+//    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//    Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
+//    PendingIntent pendingIntent;
     public TaskAdapter(List<Task> taskList, DatabaseReference tasksRef, Context context,FragmentManager fragmentManager) {
         this.taskList = taskList;
         this.tasksRef = tasksRef;
@@ -53,6 +59,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         int reversedPosition = getItemCount() - 1 - position;
         Task task = taskList.get(reversedPosition);
+//         pendingIntent = PendingIntent.getBroadcast(context, task.getRequestCode(), intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_UPDATE_CURRENT);
+
         holder.bind(task);
 
         if (task.isOverdue()) {
@@ -98,7 +106,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteTask(task);
+                try {
+                    cancelAlarm(task, task.getRequestCode());
+
+                    // Proceed to delete the task from Firebase
+                    deleteTask(task);
+                } catch (Exception e) {
+                    // Log any exception
+                    Log.e("requestCodeAlarm11", "Exception occurred: " + e.getMessage(), e);
+                }
+
             }
         });
         builder.setNegativeButton("Cancel", null);
@@ -109,10 +126,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
     private void deleteTask(Task task) {
-//                cancelAlarm(task);
+
+
 //        tasksRef.child(task.getKey()).removeValue();
         tasksRef.child(task.getKey()).removeValue().addOnSuccessListener(aVoid -> {
             int index = taskList.indexOf(task);
+
 //            if (index != -1) {
 //                taskList.remove(index);
 //                refreshList();
@@ -121,6 +140,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }).addOnFailureListener(e -> {
             Toast.makeText(context, "Failed to delete task: " + e.getMessage(), Toast.LENGTH_LONG).show();
         });
+
+    }
+
+    private void cancelAlarm(Task task,int requestCode) {
+        Log.e("requestCodeAlarm1", "requestCode: " + requestCode);
+
+        // Get the AlarmManager service
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
+        Log.e("requestCodeAlarm6", "Created Intent for ReminderBroadcastReceiver");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent,    PendingIntent.FLAG_IMMUTABLE);
+
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+
     }
     public void setSortingStrategy(SortingStrategy strategy) {
         this.sortingStrategy = strategy;
