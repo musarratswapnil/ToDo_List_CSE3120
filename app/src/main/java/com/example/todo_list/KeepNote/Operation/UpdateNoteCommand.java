@@ -1,4 +1,4 @@
-package com.example.todo_list.Note.Operation;
+package com.example.todo_list.KeepNote.Operation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.todo_list.Note.HomeScreen;
-import com.example.todo_list.Note.Listdata;
+import com.example.todo_list.KeepNote.HomeScreen;
+import com.example.todo_list.KeepNote.Listdata;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;

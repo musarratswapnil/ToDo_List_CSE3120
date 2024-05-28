@@ -1,10 +1,10 @@
-package com.example.todo_list.Note.Operation;
+package com.example.todo_list.KeepNote.Operation;
 
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.todo_list.Note.HomeScreen;
+import com.example.todo_list.KeepNote.HomeScreen;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 

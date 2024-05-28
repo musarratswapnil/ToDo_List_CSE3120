@@ -1,4 +1,4 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.Operation.CommandInvoker;
-import com.example.todo_list.Note.Operation.DeleteNoteCommand;
-import com.example.todo_list.Note.Operation.UpdateNoteCommand;
+import com.example.todo_list.KeepNote.Operation.CommandInvoker;
+import com.example.todo_list.KeepNote.Operation.DeleteNoteCommand;
+import com.example.todo_list.KeepNote.Operation.UpdateNoteCommand;
 import com.example.todo_list.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

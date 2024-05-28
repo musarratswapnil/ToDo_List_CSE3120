@@ -1,4 +1,4 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.Sort.SortByNameStrategy;
-import com.example.todo_list.Note.Sort.SortingStrategy;
+import com.example.todo_list.KeepNote.Sort.SortByNameStrategy;
+import com.example.todo_list.KeepNote.Sort.SortingStrategy;
 import com.example.todo_list.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;

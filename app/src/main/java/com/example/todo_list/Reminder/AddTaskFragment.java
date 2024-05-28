@@ -30,7 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
+import com.example.todo_list.KeepNote.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;

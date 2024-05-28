@@ -8,7 +8,7 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import com.example.todo_list.Note.Operation.AddNoteCommand;
+import com.example.todo_list.KeepNote.Operation.AddNoteCommand;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

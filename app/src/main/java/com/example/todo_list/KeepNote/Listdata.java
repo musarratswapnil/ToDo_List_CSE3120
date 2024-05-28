@@ -1,5 +1,6 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
+//
 public class Listdata {
 
     public String id;
@@ -40,3 +41,26 @@ public class Listdata {
         this.id = id;
     }
 }
+//public class Listdata {
+//    private final Note note;
+//
+//    public Listdata(String id, String title, String desc) {
+//        this.note = new NoteProxy(id, title, desc);
+//    }
+//
+//    public String getTitle() {
+//        return note.getTitle();
+//    }
+//
+//    public String getDesc() {
+//        return note.getDesc();
+//    }
+//
+//    public void setDesc(String desc) {
+//        note.setDesc(desc);
+//    }
+//
+//    public String getId() {
+//        return note.getId();
+//    }
+//}

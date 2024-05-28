@@ -2,8 +2,8 @@ package com.example.todo_list.NoteSort;
 
 import static org.junit.Assert.assertEquals;
 
-import com.example.todo_list.Note.Listdata;
-import com.example.todo_list.Note.Sort.SortByNameStrategy;
+import com.example.todo_list.KeepNote.Listdata;
+import com.example.todo_list.KeepNote.Sort.SortByNameStrategy;
 
 import org.junit.Before;
 import org.junit.Test;

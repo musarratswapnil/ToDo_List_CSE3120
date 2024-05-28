@@ -1,6 +1,6 @@
-package com.example.todo_list.Note.Sort;
+package com.example.todo_list.KeepNote.Sort;
 
-import com.example.todo_list.Note.Listdata;
+import com.example.todo_list.KeepNote.Listdata;
 
 import java.util.Collections;
 import java.util.Comparator;

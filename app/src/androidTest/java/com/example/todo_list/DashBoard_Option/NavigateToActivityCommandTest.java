@@ -14,7 +14,7 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.todo_list.Note.NoteMainActivity;
+import com.example.todo_list.KeepNote.NoteMainActivity;
 
 import org.junit.After;
 import org.junit.Before;

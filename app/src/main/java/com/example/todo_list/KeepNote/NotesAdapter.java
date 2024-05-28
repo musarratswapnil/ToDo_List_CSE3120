@@ -1,4 +1,4 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
 
 import android.content.Context;
@@ -41,6 +41,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
         Listdata data=noteslist.get(position);
         myHolder.title.setText(data.getTitle());
         myHolder.desc.setText(data.getDesc());
+
     }
 
     @Override
@@ -56,13 +57,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
             title=itemView.findViewById(R.id.title);
             desc=itemView.findViewById(R.id.desc);
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     Listdata listdata=noteslist.get(getAdapterPosition());
                     Intent i=new Intent(context, Edit.class);
-                    i.putExtra("id",listdata.id);
-                    i.putExtra("title",listdata.title);
-                    i.putExtra("desc",listdata.desc);
+                    i.putExtra("id",listdata.getId());
+                    i.putExtra("title",listdata.getTitle());
+                    i.putExtra("desc",listdata.getDesc());
                     context.startActivity(i);
                 }
             });

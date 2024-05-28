@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.todo_list.AttendanceCalculator.AttendanceCalculator;
 import com.example.todo_list.Reminder.HomeFragment;
-import com.example.todo_list.Note.HomeScreen;
+import com.example.todo_list.KeepNote.HomeScreen;
 import com.example.todo_list.R;
 import com.example.todo_list.StopWatch.StopWatchHomeActivity;
 import com.example.todo_list.CgpaCalculator.CgpaActivity;

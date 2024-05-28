@@ -35,7 +35,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
+import com.example.todo_list.KeepNote.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
@@ -159,7 +159,7 @@ public class UpdateTaskFragment extends Fragment {
 
 
     @SuppressLint("ScheduleExactAlarm")
-    private void updateTaskToFirebase(String taskId, String title, String date, String time, String content,String phone) {
+    private void updateTaskToFirebase(String taskId, String title, String date, String time, String content,String phone,String reminderType) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             // User is not authenticated, handle accordingly
@@ -175,15 +175,17 @@ public class UpdateTaskFragment extends Fragment {
                 .child(taskId);
 
         HandleField( taskId,  title,  date,  time,  content);
+        String selectedReminderType = getSelectedReminderType();
 
         Calendar calendar = Calendar.getInstance();
         int requestCode=(int)(calendar.getTimeInMillis()% Integer.MAX_VALUE);
 
         // Create a Task object
-        Task task = new Task(title, date, time, content,getSelectedReminderType(),existingRequestCode);
+        Task task2 = new Task(title, date, time, content,selectedReminderType,requestCode);
         cancelExistingAlarm(taskId, userTasksRef);
 
-        updateTaskToFirebase(taskId,userTasksRef,task);
+
+        updateTaskToFirebase(taskId,userTasksRef,task2);
         reminder = new ReminderFactory().getReminder(getSelectedReminderType());
         reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,"01626052742",requestCode);
     }
@@ -211,6 +213,8 @@ public class UpdateTaskFragment extends Fragment {
             UpdateTaskFragment.this.hour = Integer.parseInt(timeparts[0]);
             UpdateTaskFragment.this.minute = Integer.parseInt(timeparts[1]);
         }
+
+
     }
     private void cancelExistingAlarm(String taskId, DatabaseReference taskRef) {
 
@@ -221,6 +225,12 @@ public class UpdateTaskFragment extends Fragment {
                      existingRequestCode = dataSnapshot.child("requestCode").getValue(Integer.class);
 
                     // Cancel the existing alarm
+                    AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(getContext(), ReminderBroadcastReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), existingRequestCode, intent,   PendingIntent.FLAG_IMMUTABLE);
+                    alarmManager.cancel(pendingIntent);
+
+                    pendingIntent.cancel();
 
                 }
             }
@@ -347,6 +357,17 @@ public class UpdateTaskFragment extends Fragment {
                 String time = timeTextView.getText().toString().trim();
                 String content = contentEditText.getText().toString().trim();
                 String phoneNumber = phoneNumberEditText.getText().toString().trim();
+                int selectedId = notificationTypeGroup.getCheckedRadioButtonId();
+                if (selectedId == R.id.callOption) {
+                    // Call option is selected
+                    reminderType = "call";
+                } else if (selectedId == R.id.smsOption) {
+                    // SMS option is selected
+                    reminderType = "sms";
+                } else {
+                    // Alarm option is selected
+                    reminderType = "alarm";
+                }
 
 
                 // Validate the input
@@ -392,7 +413,7 @@ public class UpdateTaskFragment extends Fragment {
                             Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
                         } else {
                             // update the task to Firebase
-                            updateTaskToFirebase(taskId, title, date, time, content,phone);
+                            updateTaskToFirebase(taskId, title, date, time, content,phone,reminderType);
                         }
 
 
@@ -530,7 +551,8 @@ public class UpdateTaskFragment extends Fragment {
 
     private void updateTaskToFirebase(String taskId,DatabaseReference userTasksRef, Task task) {
         if (isNetworkConnected()) {
-            userTasksRef.setValue(task)
+
+            userTasksRef.setValue(new Task("title", "28/05/2024", "14:20", "content","alarm",requestCode))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

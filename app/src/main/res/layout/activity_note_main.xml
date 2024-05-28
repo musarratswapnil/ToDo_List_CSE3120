@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/note_add"
-    tools:context=".Note.NoteMainActivity">
+    tools:context=".KeepNote.NoteMainActivity">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
