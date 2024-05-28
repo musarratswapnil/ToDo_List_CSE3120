@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-    app:cardBackgroundColor="@color/cardview_dark_background"
+    app:cardBackgroundColor="#60D9E8"
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
     android:layout_gravity="center"
@@ -18,12 +18,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--        <ImageView-->
-            <!--            android:layout_margin="15dp"-->
-            <!--            android:src="@drawable/"-->
-            <!--            android:layout_gravity="center"-->
-            <!--            android:layout_width="100dp"-->
-            <!--            android:layout_height="100dp" />-->
+
             <EditText
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
