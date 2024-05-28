@@ -1,10 +1,8 @@
 package com.example.todo_list.KeepNote;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,24 +11,20 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo_list.LoginSignup.LoginActivity;
+import com.example.todo_list.KeepNote.ProxyNote.NoteService;
+import com.example.todo_list.KeepNote.ProxyNote.NoteServiceProxy;
 import com.example.todo_list.KeepNote.Sort.SortByNameStrategy;
 import com.example.todo_list.KeepNote.Sort.SortingStrategy;
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +32,17 @@ import java.util.List;
 public class HomeScreen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Toolbar toolbar;
-//    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    List<Listdata>list =new ArrayList<>();
-    private  Context context;
+    private List<Listdata> list = new ArrayList<>();
     private SortingStrategy sortingStrategy;
     private Spinner sortSpinner;
     private FloatingActionButton fab;
-    FirebaseUser currentUser;
-    String userId;
+    private FirebaseUser currentUser;
+    private String userId;
+    private NoteServiceProxy noteServiceProxy;
 
-    //    private SortByDateStrategy sortByDateStrategy;
     private static final int MENU_ADD_NOTE = 1;
     private static final int MENU_ADD_CHECKLIST = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,19 +53,17 @@ public class HomeScreen extends AppCompatActivity {
         setupToolbar();
         setupRecyclerView();
         setupFabButton();
+
+        noteServiceProxy = new NoteServiceProxy();
         setupDatabaseListener();
-
-
     }
 
     private void initializeView() {
-         toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recyclerview);
-         fab = findViewById(R.id.fab);
-
-         sortingStrategy = new SortByNameStrategy();
-         sortSpinner = findViewById(R.id.sortSpinner);
-
+        fab = findViewById(R.id.fab);
+        sortingStrategy = new SortByNameStrategy();
+        sortSpinner = findViewById(R.id.sortSpinner);
     }
 
     private void setupSortingOptions() {
@@ -88,13 +78,13 @@ public class HomeScreen extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        setSortingStrategy(sortingStrategy = new SortByNameStrategy());
-                       break;
+                        setSortingStrategy(new SortByNameStrategy());
+                        break;
                     case 1:
-
+                        // setSortingStrategy(new SortByDateStrategy()); // Uncomment and implement SortByDateStrategy
                         break;
                     default:
-                        setSortingStrategy(sortingStrategy = new SortByNameStrategy());
+                        setSortingStrategy(new SortByNameStrategy());
                         break;
                 }
             }
@@ -102,7 +92,6 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 Toast.makeText(HomeScreen.this, "Selected Invalid option", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -110,7 +99,6 @@ public class HomeScreen extends AppCompatActivity {
     private void setupToolbar() {
         setSupportActionBar(toolbar);
     }
-
 
     private void setupRecyclerView() {
         recyclerView.setHasFixedSize(true);
@@ -125,43 +113,30 @@ public class HomeScreen extends AppCompatActivity {
                 showPopupMenu(view);
             }
         });
-
-
     }
 
     private void setupDatabaseListener() {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
-            // User is not authenticated, handle accordingly
             Toast.makeText(getApplicationContext(), "Not logged in!", Toast.LENGTH_SHORT).show();
-            // Redirect to login page
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             return;
         }
         userId = currentUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").child(userId).child("notes")
-        .addValueEventListener(new ValueEventListener() {
+
+        noteServiceProxy.getAllNotes(new NoteService.NotesCallback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                handleData(dataSnapshot);
+            public void onNotesReceived(List<Listdata> notes) {
+                list.clear();
+                list.addAll(notes);
+                sortList();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //will use Toast Later if have time
+            public void onError(Exception e) {
+                Toast.makeText(HomeScreen.this, "Error loading notes: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void handleData(DataSnapshot dataSnapshot) {
-        Log.d("HomeScreen", "DataSnapshot count: " + dataSnapshot.getChildrenCount());
-        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-            Listdata listdata = dataSnapshot1.getValue(Listdata.class);
-            Log.d("HomeScreen", "Listdata: " + listdata.toString());
-            list.add(0, listdata);
-        }
-        sortList();
     }
 
     private void updateRecyclerView() {
@@ -169,6 +144,7 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView.setAdapter(notesAdapter);
         notesAdapter.notifyDataSetChanged();
     }
+
     private void sortList() {
         if (sortingStrategy != null) {
             sortingStrategy.sort(list);
@@ -176,22 +152,12 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    //                Different Type of Sorting Type
-    //                Strategy Pattern Body
-    ///////////////////////////////////////////////////////////////////////////////////
-
     public void setSortingStrategy(SortingStrategy sortingStrategy) {
         this.sortingStrategy = sortingStrategy;
         sortList();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
-    //
-    //    Float Menu option
-    /////////////////////////////////////////////////////////////////////////////////////
     private void showPopupMenu(View view) {
-
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.getMenuInflater().inflate(R.menu.float_menu, popupMenu.getMenu());
 
@@ -200,7 +166,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
-                if (itemId==R.id.menu_add_note) {
+                if (itemId == R.id.menu_add_note) {
                     startActivity(new Intent(getApplicationContext(), NoteMainActivity.class));
                     return true;
                 } else if (itemId == R.id.menu_add_checklist) {
@@ -213,5 +179,4 @@ public class HomeScreen extends AppCompatActivity {
 
         popupMenu.show();
     }
-
 }
