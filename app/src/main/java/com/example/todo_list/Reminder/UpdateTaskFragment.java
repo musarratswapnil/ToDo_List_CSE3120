@@ -34,8 +34,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
-import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.KeepNote.FirebaseDatabaseSingleton;
+import com.example.todo_list.LoginSignup.FirebaseService;
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
@@ -48,7 +49,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -160,7 +160,11 @@ public class UpdateTaskFragment extends Fragment {
 
     @SuppressLint("ScheduleExactAlarm")
     private void updateTaskToFirebase(String taskId, String title, String date, String time, String content,String phone,String reminderType) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseService firebaseService = FirebaseService.getInstance();
+
+        // Get the current user
+        FirebaseUser currentUser = firebaseService.getCurrentUser();
+
         if (currentUser == null) {
             // User is not authenticated, handle accordingly
             Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
@@ -169,7 +173,7 @@ public class UpdateTaskFragment extends Fragment {
             return;
         }
         String userId = currentUser.getUid();
-        DatabaseReference userTasksRef = FirebaseDatabase.getInstance().getReference("users")
+        DatabaseReference userTasksRef = firebaseService.getDatabaseReference().child("users")
                 .child(userId)
                 .child("tasks")
                 .child(taskId);
@@ -225,12 +229,7 @@ public class UpdateTaskFragment extends Fragment {
                      existingRequestCode = dataSnapshot.child("requestCode").getValue(Integer.class);
 
                     // Cancel the existing alarm
-                    AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-                    Intent intent = new Intent(getContext(), ReminderBroadcastReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), existingRequestCode, intent,   PendingIntent.FLAG_IMMUTABLE);
-                    alarmManager.cancel(pendingIntent);
 
-                    pendingIntent.cancel();
 
                 }
             }
@@ -240,12 +239,12 @@ public class UpdateTaskFragment extends Fragment {
                 Log.e("Firebase Error", "Error retrieving the task: " + databaseError.getMessage());
             }
         });
-//        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(getContext(), ReminderBroadcastReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), existingRequestCode, intent,   PendingIntent.FLAG_IMMUTABLE);
-//        alarmManager.cancel(pendingIntent);
-//
-//        pendingIntent.cancel();
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), ReminderBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), existingRequestCode, intent,   PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.cancel(pendingIntent);
+
+        pendingIntent.cancel();
     }
     private void navigateToHomeFragment() {
 
@@ -552,7 +551,7 @@ public class UpdateTaskFragment extends Fragment {
     private void updateTaskToFirebase(String taskId,DatabaseReference userTasksRef, Task task) {
         if (isNetworkConnected()) {
 
-            userTasksRef.setValue(new Task("title", "28/05/2024", "14:20", "content","alarm",requestCode))
+            userTasksRef.setValue(task)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

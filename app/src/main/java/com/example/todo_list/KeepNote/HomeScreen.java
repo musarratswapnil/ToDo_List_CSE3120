@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo_list.KeepNote.ProxyNote.DataProxy;
 import com.example.todo_list.KeepNote.Sort.SortByNameStrategy;
 import com.example.todo_list.KeepNote.Sort.SortingStrategy;
+import com.example.todo_list.LoginSignup.FirebaseService;
 import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +124,8 @@ public class HomeScreen extends AppCompatActivity {
             return;
         }
         userId = currentUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("notes");
+        FirebaseService firebaseService = FirebaseService.getInstance();
+        databaseReference = firebaseService.getDatabaseReference().child("users").child(userId).child("notes");
 
         dataProxy = new DataProxy(databaseReference);
         dataProxy.startListening();
