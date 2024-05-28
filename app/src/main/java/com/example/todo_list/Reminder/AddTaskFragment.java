@@ -52,7 +52,7 @@ public class AddTaskFragment extends Fragment {
     private TextInputEditText contentEditText,phoneNumberEditText;
     private TextInputLayout phoneNumberInputLayout;
     private Button saveButton;
-    private String taskId;
+    private String taskId,phone;
     private ReminderInterface reminder;
     private RadioGroup notificationTypeGroup;
     private static final int SMS_PERMISSION_REQUEST_CODE = 100;

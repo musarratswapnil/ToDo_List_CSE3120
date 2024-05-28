@@ -18,6 +18,7 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <View
         android:id="@+id/divider10"
         android:layout_width="match_parent"
@@ -70,6 +71,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,6 +111,7 @@
                 android:minLines="2"
                 android:maxLines="3"
                 android:scrollbars="vertical" />
+
             <RadioGroup
                 android:id="@+id/notificationTypeGroup"
                 android:layout_width="match_parent"
@@ -99,10 +121,10 @@
                 android:padding="8dp">
 
                 <RadioButton
-                    android:id="@+id/emailOption"
+                    android:id="@+id/smsOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email"
+                    android:text="SMS"
                     android:textSize="16sp"/>
 
                 <RadioButton
@@ -114,13 +136,12 @@
                     android:textSize="16sp"/>
 
                 <RadioButton
-                    android:id="@+id/notificationOption"
+                    android:id="@+id/callOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notification"
+                    android:text="Call"
                     android:textSize="16sp"/>
             </RadioGroup>
-
         </com.google.android.material.textfield.TextInputLayout>
     </ScrollView>
 
