@@ -104,6 +104,8 @@ dependencies {
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0")
 
+   //Option fragment grid style
+    implementation ("androidx.gridlayout:gridlayout:1.0.0")
 
 }
 

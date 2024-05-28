@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:scrollbars="none"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context=".DashBoard_Option.DashboardActivity">
 
     <LinearLayout
@@ -18,9 +17,9 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/linear"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/linear">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/portallabel"
@@ -32,18 +31,17 @@
                     android:text="ToDo Tracker"
                     android:textColor="#000"
                     android:textSize="25sp" />
-
             </LinearLayout>
 
             <View
+                android:id="@+id/portalview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#a8a8a8"
+                android:layout_below="@+id/linear"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginTop="10dp"
-                android:id="@+id/portalview"
-                android:layout_below="@+id/linear" />
+                android:background="#a8a8a8" />
 
             <TextView
                 android:id="@+id/total"
@@ -58,28 +56,32 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:columnCount="2"
+            android:orientation="horizontal">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_columnWeight="1"
                 android:id="@+id/RemainderCard"
-                android:layout_marginTop="10dp"
                 app:strokeColor="#66788F"
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content"
-
-                >
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="match_parent"
                         android:id="@+id/Reminder"
+                        android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/reminder"
@@ -88,24 +90,22 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/RemainderCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_columnWeight="1"
                 android:id="@+id/NoteCard"
-                android:layout_marginTop="10dp"
                 app:strokeColor="#66788F"
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="match_parent"
                         android:id="@+id/Note"
+                        android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/note"
@@ -114,24 +114,22 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/NoteCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_columnWeight="1"
                 android:id="@+id/StopWatchCard"
-                android:layout_marginTop="10dp"
                 app:strokeColor="#66788F"
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="match_parent"
                         android:id="@+id/StopWatch"
+                        android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/stop_watch"
@@ -139,26 +137,23 @@
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/StopWatchCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_columnWeight="1"
                 android:id="@+id/AttendanceCalculatorCard"
-                android:layout_marginTop="10dp"
                 app:strokeColor="#66788F"
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="match_parent"
                         android:id="@+id/attendanceCalculator"
+                        android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/attendence_calculator"
@@ -166,33 +161,29 @@
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- New CGPA Calculator Card -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/AttendanceCalculatorCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_columnWeight="1"
                 android:id="@+id/CgpaCalculatorCard"
-                android:layout_marginTop="10dp"
                 app:strokeColor="#66788F"
                 android:elevation="2dp"
                 app:strokeWidth="2dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="match_parent"
                         android:id="@+id/CgpaCalculator"
+                        android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/cgpa_calculator"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
-
-        </RelativeLayout>
+        </GridLayout>
     </LinearLayout>
 </ScrollView>
