@@ -74,6 +74,7 @@ public class Edit extends AppCompatActivity {
     Button updates,delete;
     private CommandInvoker invoker ;
     private FirebaseUser currentUser;
+    private int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class Edit extends AppCompatActivity {
         Intent i=getIntent();
         String gettitle=i.getStringExtra("title");
         String getdesc=i.getStringExtra("desc");
+        int color = getIntent().getIntExtra("color",1);
         id=i.getStringExtra("id");
         title.setText(gettitle);
         desc.setText(getdesc);
@@ -104,6 +106,7 @@ public class Edit extends AppCompatActivity {
         String gettitle = intent.getStringExtra("title");
         String getdesc = intent.getStringExtra("desc");
         String id = intent.getStringExtra("id");
+        color = getIntent().getIntExtra("color",1);
         title.setText(gettitle);
         desc.setText(getdesc);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -125,7 +128,7 @@ public class Edit extends AppCompatActivity {
         String descsend = desc.getText().toString();
 //        userId = currentUser.getUid();
 
-        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend,user));
+        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend,user,color));
         invoker.executeCommand();
     }
     public void DeleteNotes(View view){

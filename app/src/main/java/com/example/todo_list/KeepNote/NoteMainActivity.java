@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,15 +61,20 @@ public class NoteMainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private String userId;
+    private RadioGroup colorGroup;
+    private int selectedColor = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_main);
         initializeViews();
+      // setupColorGroupListener();
+
     }
 
 
     public void AddNotes(View view) {
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             // User is not authenticated, handle accordingly
@@ -79,8 +86,11 @@ public class NoteMainActivity extends AppCompatActivity {
         userId = currentUser.getUid();
         String titlesend = title.getText().toString();
         String descsend = desc.getText().toString();
+//        int checkedId = colorGroup.getCheckedRadioButtonId();
 
-        invoker.setCommand(new AddNoteCommand(getApplicationContext(), mDatabase, titlesend, descsend,userId));
+
+
+        invoker.setCommand(new AddNoteCommand(getApplicationContext(), mDatabase, titlesend, descsend,userId,selectedColor));
         invoker.executeCommand();
     }
 
@@ -88,9 +98,34 @@ public class NoteMainActivity extends AppCompatActivity {
 
         title = findViewById(R.id.title);
         desc = findViewById(R.id.desc);
+        colorGroup=findViewById(R.id.colorGroup);
+
         mDatabase = FirebaseDatabaseSingleton.getInstance().getReference();
         invoker = new CommandInvoker();
 
     }
 
+        public void onColorSelected(View view) {
+            boolean checked = ((RadioButton) view).isChecked();
+            if (view.getId() == R.id.colorskyblue) {
+                selectedColor = 1;
+            } else if (view.getId() == R.id.colorGreen) {
+                selectedColor = 2;
+            } else if (view.getId() == R.id.colorPink) {
+                selectedColor = 3;
+            }
+        }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

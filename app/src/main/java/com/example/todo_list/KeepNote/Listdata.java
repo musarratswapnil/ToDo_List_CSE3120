@@ -1,20 +1,25 @@
 package com.example.todo_list.KeepNote;
 
+import com.example.todo_list.KeepNote.FlyWeightColor.ColorFlyweight;
+import com.example.todo_list.KeepNote.FlyWeightColor.ColorFlyweightFactory;
+
 //
 public class Listdata {
 
     public String id;
     public String title;
     public String desc;
+    private ColorFlyweight color;
 
     public Listdata() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Listdata(String id,String title, String desc) {
+    public Listdata(String id,String title, String desc,int color) {
         this.id=id;
         this.title = title;
         this.desc = desc;
+        this.color = ColorFlyweightFactory.getColor(color);
 
     }
 
@@ -39,6 +44,14 @@ public class Listdata {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getColor() {
+        return color.getColor();
+    }
+
+    public void setColor(int color) {
+        this.color = ColorFlyweightFactory.getColor(color);
     }
 }
 //public class Listdata {

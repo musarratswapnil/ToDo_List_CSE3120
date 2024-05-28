@@ -23,14 +23,17 @@ public class UpdateNoteCommand implements Command {
         private Context context;
         private String userID;
 
+        private int color;
 
-        public UpdateNoteCommand(Context context,DatabaseReference databaseReference, String id, String title, String description,String userID) {
+
+        public UpdateNoteCommand(Context context,DatabaseReference databaseReference, String id, String title, String description,String userID,int color) {
             this.databaseReference = databaseReference;
             this.id = id;
             this.title = title;
             this.description = description;
             this.context=context;
             this.userID=userID;
+            this.color=color;
         }
 
         @Override
@@ -42,7 +45,7 @@ public class UpdateNoteCommand implements Command {
             }
             Log.e("userID",userID);
 
-            Listdata listdata = new Listdata(id, title, description);
+            Listdata listdata = new Listdata(id, title, description,color);
             databaseReference.child("users").child(userID).child("notes").child(id).setValue(listdata)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

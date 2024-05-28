@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo_list.R;
@@ -41,6 +42,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
         Listdata data=noteslist.get(position);
         myHolder.title.setText(data.getTitle());
         myHolder.desc.setText(data.getDesc());
+        int backgroundColor = getColorFromCode(data.getColor());
+        myHolder.itemView.findViewById(R.id.note_bg).setBackgroundColor(backgroundColor);
 
     }
 
@@ -65,6 +68,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
                     i.putExtra("id",listdata.getId());
                     i.putExtra("title",listdata.getTitle());
                     i.putExtra("desc",listdata.getDesc());
+                    i.putExtra("color",listdata.getColor());
                     context.startActivity(i);
                 }
             });
@@ -73,4 +77,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
 
 
     }
+
+    private int getColorFromCode(int color) {
+        if (color==1) {
+            return ContextCompat.getColor(context, R.color.custom_blue);
+        } else if (color==2) {
+            return ContextCompat.getColor(context, R.color.custom_green);
+        } else if (color==3) {
+            return ContextCompat.getColor(context, R.color.custom_pink);
+        } else {
+            return ContextCompat.getColor(context, R.color.custom_blue);
+        }
+    }
+
 }
