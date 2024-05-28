@@ -20,8 +20,48 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#60D9E8"> <!-- Set a beautiful background color here -->
+            android:layout_height="match_parent">
+
+            <!-- Color options -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center">
+
+                <!-- Color Options -->
+
+                    <!-- Color Option 1 -->
+                    <Button
+                        android:id="@+id/color_option1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#ADD8E6"
+                        android:foreground="#ADD8E6"
+                        android:layout_margin="8dp"
+                        android:onClick="selectColor" />
+
+                    <!-- Color Option 2 -->
+                    <Button
+                        android:id="@+id/color_option2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#90EE90"
+                        android:foreground="#90EE90"
+                        android:layout_margin="8dp"
+                        android:onClick="selectColor" />
+
+                    <!-- Color Option 3 -->
+                    <Button
+                        android:id="@+id/color_option3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#FFF8C3D5"
+                        android:foreground="#F8C3D5"
+                        android:layout_margin="8dp"
+                        android:onClick="selectColor" />
+
+            </LinearLayout>
 
             <!-- Your content here -->
             <EditText

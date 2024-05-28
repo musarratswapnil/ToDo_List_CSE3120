@@ -146,22 +146,22 @@ public class OptionFragment extends Fragment {
 
         Glide.with(this)
                 .asGif()
-                .load(R.drawable.note) // replace with your GIF resource
+                .load(R.drawable.notebook) // replace with your GIF resource
                 .into(noteImageView);
 
         Glide.with(this)
                 .asGif()
-                .load(R.drawable.stop_watch) // replace with your GIF resource
+                .load(R.drawable.stopwatch) // replace with your GIF resource
                 .into(stopWatchImageView);
 
         Glide.with(this)
                 .asGif()
-                .load(R.drawable.attendence_calculator) // replace with your GIF resource
+                .load(R.drawable.lecture_room) // replace with your GIF resource
                 .into(attendanceCalculatorImageView);
 
         Glide.with(this)
                 .asGif()
-                .load(R.drawable.cgpa_calculator) // replace with your GIF resource
+                .load(R.drawable.passed) // replace with your GIF resource
                 .into(cgpaCalculatorImageView);
 
         /**
