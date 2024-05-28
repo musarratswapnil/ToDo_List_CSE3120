@@ -84,7 +84,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/reminder"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -108,7 +107,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/note"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -132,7 +130,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/stop_watch"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -156,7 +153,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/attendence_calculator"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -180,7 +176,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/cgpa_calculator"
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>

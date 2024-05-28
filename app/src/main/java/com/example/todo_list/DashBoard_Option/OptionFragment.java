@@ -4,20 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.bumptech.glide.Glide;
 import com.example.todo_list.AttendanceCalculator.AttendanceCalculator;
-import com.example.todo_list.Reminder.HomeFragment;
+import com.example.todo_list.CgpaCalculator.CgpaActivity;
 import com.example.todo_list.KeepNote.HomeScreen;
 import com.example.todo_list.R;
+import com.example.todo_list.Reminder.HomeFragment;
 import com.example.todo_list.StopWatch.StopWatchHomeActivity;
-import com.example.todo_list.CgpaCalculator.CgpaActivity;
 import com.google.android.material.card.MaterialCardView;
 
 /**
@@ -130,6 +131,39 @@ public class OptionFragment extends Fragment {
         // Create command invoker
 
         MaterialCardView cgpaCalculatorCard = view.findViewById(R.id.CgpaCalculatorCard);
+
+        // Get references to ImageViews
+        ImageView reminderImageView = view.findViewById(R.id.Reminder);
+        ImageView noteImageView = view.findViewById(R.id.Note);
+        ImageView stopWatchImageView = view.findViewById(R.id.StopWatch);
+        ImageView attendanceCalculatorImageView = view.findViewById(R.id.attendanceCalculator);
+        ImageView cgpaCalculatorImageView = view.findViewById(R.id.CgpaCalculator);
+        // Load GIFs using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.alarm) // replace with your GIF resource
+                .into(reminderImageView);
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.note) // replace with your GIF resource
+                .into(noteImageView);
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.stop_watch) // replace with your GIF resource
+                .into(stopWatchImageView);
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.attendence_calculator) // replace with your GIF resource
+                .into(attendanceCalculatorImageView);
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.cgpa_calculator) // replace with your GIF resource
+                .into(cgpaCalculatorImageView);
+
         /**
          * Create command invoker
          */
