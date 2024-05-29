@@ -1,9 +1,10 @@
 package com.example.todo_list.NoteSort;
 
+
 import static org.junit.Assert.assertEquals;
 
-import com.example.todo_list.Note.Listdata;
-import com.example.todo_list.Note.Sort.SortByNameStrategy;
+import com.example.todo_list.KeepNote.Listdata;
+import com.example.todo_list.KeepNote.Sort.SortByNameStrategy;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +23,9 @@ public class SortByNameStrategyTest {
     @Test
     public void SortName() {
         List<Listdata> list = new ArrayList<>();
-        list.add(new Listdata("1", "Banana", "A yellow fruit"));
-        list.add(new Listdata("2", "Apple", "A red or green fruit"));
-        list.add(new Listdata("3", "Grapes", "A small, round, purple or green fruit"));
+        list.add(new Listdata("1", "Banana", "A yellow fruit",1));
+        list.add(new Listdata("2", "Apple", "A red or green fruit",1));
+        list.add(new Listdata("3", "Grapes", "A small, round, purple or green fruit",1));
 
         sortByNameStrategy.sort(list);
 
@@ -45,7 +46,7 @@ public class SortByNameStrategyTest {
     @Test
     public void SortSingleList() {
         List<Listdata> list = new ArrayList<>();
-        list.add(new Listdata("1", "Banana", "A yellow fruit"));
+        list.add(new Listdata("1", "Banana", "A yellow fruit",2));
 
         sortByNameStrategy.sort(list);
 
@@ -56,9 +57,9 @@ public class SortByNameStrategyTest {
     @Test
     public void SortWithMixedCase() {
         List<Listdata> list = new ArrayList<>();
-        list.add(new Listdata("1", "banana", "A yellow fruit"));
-        list.add(new Listdata("2", "Apple", "A red or green fruit"));
-        list.add(new Listdata("3", "grapes", "A small, round, purple or green fruit"));
+        list.add(new Listdata("1", "banana", "A yellow fruit",2));
+        list.add(new Listdata("2", "Apple", "A red or green fruit",2));
+        list.add(new Listdata("3", "grapes", "A small, round, purple or green fruit",2));
 
         sortByNameStrategy.sort(list);
 

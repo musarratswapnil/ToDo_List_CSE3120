@@ -29,14 +29,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.todo_list.LoginSignup.FirebaseService;
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
@@ -123,19 +122,24 @@ public class AddTaskFragment extends Fragment {
 
     @SuppressLint("ScheduleExactAlarm")
     private void saveTaskToFirebase(String title, String date, String time, String content,String phone) {
-        // Get the current user ID (assuming you have implemented Firebase Authentication)
-         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-       if (currentUser == null) {
+        // Obtain the singleton instance of FirebaseService
+        FirebaseService firebaseService = FirebaseService.getInstance();
+
+        // Get the current user
+        FirebaseUser currentUser = firebaseService.getCurrentUser();
+
+        if (currentUser == null) {
             // User is not authenticated, handle accordingly
             Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
             // Redirect to login page
             startActivity(new Intent(getActivity(), LoginActivity.class));
             return;
-       }
+        }
+
            String userId = currentUser.getUid();
 
         // Create a reference to the user's tasks node
-        DatabaseReference userTasksRef = FirebaseDatabaseSingleton.getInstance().getReference("users")
+        DatabaseReference userTasksRef = firebaseService.getDatabaseReference().child("users")
                 .child(userId)
                 .child("tasks");
 
@@ -328,10 +332,16 @@ public class AddTaskFragment extends Fragment {
         });
 
     }
-
     private void saveTaskToFirebase(DatabaseReference userTasksRef, Task task) {
         taskId = userTasksRef.push().getKey();
         if (isNetworkConnected()) {
+            if (FirebaseService.getInstance().getCurrentUser() == null) {
+                // User is not authenticated, prompt to log in or handle authentication flow
+                Toast.makeText(getActivity(), "Please log in to save the task", Toast.LENGTH_SHORT).show();
+                // Optionally, you can redirect to the login page here
+                return;
+            }
+
             userTasksRef.child(taskId).setValue(task)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
@@ -344,6 +354,21 @@ public class AddTaskFragment extends Fragment {
             saveTaskLocally(taskId, task);
         }
     }
+//    private void saveTaskToFirebase(DatabaseReference userTasksRef, Task task) {
+//        taskId = userTasksRef.push().getKey();
+//        if (isNetworkConnected()) {
+//            userTasksRef.child(taskId).setValue(task)
+//                    .addOnSuccessListener(aVoid -> {
+//                        Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
+//                        navigateToHomeFragment();
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Toast.makeText(getActivity(), "Failed to save task: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    });
+//        } else {
+//            saveTaskLocally(taskId, task);
+//        }
+//    }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
