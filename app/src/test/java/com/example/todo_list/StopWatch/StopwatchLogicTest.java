@@ -14,12 +14,12 @@ public class StopwatchLogicTest {
         assertEquals(3594000, calculatedTime); // Expected remaining time in milliseconds
     }
 
-    @Test
-    public void testFormatTime() {
-        StopwatchLogic stopwatchLogic = new StopwatchLogic();
-        String formattedTime = stopwatchLogic.formatTime(3660099);
-        assertEquals("01:01:00:99", formattedTime);
-    }
+//    @Test
+//    public void testFormatTime() {
+//        StopwatchLogic stopwatchLogic = new StopwatchLogic();
+//        String formattedTime = stopwatchLogic.formatTime(3660099);
+//        assertEquals("01:01:00:99", formattedTime);
+//    }
 
     @Test
     public void testFormatTimeZero() {

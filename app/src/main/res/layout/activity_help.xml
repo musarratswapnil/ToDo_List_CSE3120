@@ -73,6 +73,6 @@
         android:layout_marginBottom="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".DashBoard_Option.DashboardActivity"
-        tools:showIn="@layout/fragment_help" />
+        tools:showIn="@layout/activity_help" />
 
 </RelativeLayout>

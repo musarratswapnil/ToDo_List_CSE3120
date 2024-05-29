@@ -27,6 +27,14 @@
             android:paddingTop="4dp"
             android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/delete_semester_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:layout_gravity="right"
+            />
+
         <TableLayout
             android:id="@+id/semester_table"
             android:layout_width="match_parent"
@@ -52,5 +60,6 @@
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

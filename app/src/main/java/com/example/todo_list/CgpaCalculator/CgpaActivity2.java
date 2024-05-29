@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo_list.R;
@@ -24,6 +24,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+/**
+ * Activity to display and manage semesters for CGPA calculation.
+ * Allows users to view, edit, delete semesters and calculate required GPA for desired CGPA.
+ */
 public class CgpaActivity2 extends AppCompatActivity {
     private RecyclerView semestersRecyclerView;
     private TextView cgpaResultTextView, requiredGpaResultTextView;
@@ -57,7 +61,6 @@ public class CgpaActivity2 extends AppCompatActivity {
 
         cgpaCalculator = GpaCalculatorFactory.createCalculator("cgpa");
 
-        // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
@@ -65,12 +68,10 @@ public class CgpaActivity2 extends AppCompatActivity {
             database = FirebaseDatabase.getInstance();
             semestersRef = database.getReference("users").child(userId).child("semesters");
 
-            // Set up the RecyclerView
-            adapter = new SemesterAdapter(semestersList);
+            adapter = new SemesterAdapter(semestersList, semestersRef);
             semestersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             semestersRecyclerView.setAdapter(adapter);
 
-            // Load semesters from Firebase
             loadSemesters();
 
             calculateRequiredGpaButton.setOnClickListener(new View.OnClickListener() {
@@ -80,14 +81,14 @@ public class CgpaActivity2 extends AppCompatActivity {
                 }
             });
         } else {
-            // Handle case where user is not authenticated
             Toast.makeText(this, "User not authenticated. Please log in.", Toast.LENGTH_SHORT).show();
-            // Redirect to login screen or close the activity
             finish();
         }
     }
+
     /**
-     * Loads the semesters from Firebase and calculates the CGPA.
+     * Loads the semesters from the Firebase database.
+     * Listens for changes and updates the RecyclerView and CGPA display accordingly.
      */
     private void loadSemesters() {
         semestersRef.addValueEventListener(new ValueEventListener() {
@@ -105,16 +106,12 @@ public class CgpaActivity2 extends AppCompatActivity {
                             totalSemesters++;
                             semestersList.add(semester);
                         } catch (NumberFormatException e) {
-                            // Handle parsing error
                             Toast.makeText(CgpaActivity2.this, "Error parsing GPA for " + semester.name, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
 
-
-                // Sort the semesters
                 sortSemesters();
-
                 adapter.notifyDataSetChanged();
                 if (totalSemesters > 0) {
                     double cgpa = totalGpa / totalSemesters;
@@ -126,13 +123,13 @@ public class CgpaActivity2 extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors.
                 Toast.makeText(CgpaActivity2.this, "Failed to load semesters.", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     /**
-     * Sorts the semesters in order based on predefined semester names.
+     * Sorts the list of semesters in the predefined order.
      */
     protected void sortSemesters() {
         HashMap<String, Integer> semesterOrder = new HashMap<>();
@@ -152,6 +149,7 @@ public class CgpaActivity2 extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Calculates the required GPA to achieve the expected CGPA for the remaining semesters.
      */
@@ -177,7 +175,6 @@ public class CgpaActivity2 extends AppCompatActivity {
             try {
                 currentTotalGpa += Double.parseDouble(semester.gpa);
             } catch (NumberFormatException e) {
-                // Handle parsing error
                 Toast.makeText(CgpaActivity2.this, "Error parsing GPA for " + semester.name, Toast.LENGTH_SHORT).show();
             }
         }
