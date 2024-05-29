@@ -1,6 +1,7 @@
 package com.example.todo_list.LoginSignup;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 /**
@@ -13,6 +14,8 @@ public class FirebaseService {
     private static FirebaseService instance;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private FirebaseUser currentUser;
+
     /**
      * Private constructor to initialize FirebaseAuth and DatabaseReference objects.
      * This prevents direct instantiation of the class from outside.
@@ -20,6 +23,8 @@ public class FirebaseService {
     private FirebaseService() {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
     }
     /**
      * Returns the singleton instance of FirebaseService. If the instance is null,
@@ -49,5 +54,9 @@ public class FirebaseService {
      */
     public DatabaseReference getDatabaseReference() {
         return databaseReference;
+    }
+
+    public  FirebaseUser getCurrentUser(){
+        return currentUser;
     }
 }

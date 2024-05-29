@@ -1,4 +1,4 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.todo_list.KeepNote.Operation.CommandInvoker;
+import com.example.todo_list.KeepNote.Operation.DeleteNoteCommand;
+import com.example.todo_list.KeepNote.Operation.UpdateNoteCommand;
+import com.example.todo_list.LoginSignup.FirebaseService;
 import com.example.todo_list.LoginSignup.LoginActivity;
-import com.example.todo_list.Note.Operation.CommandInvoker;
-import com.example.todo_list.Note.Operation.DeleteNoteCommand;
-import com.example.todo_list.Note.Operation.UpdateNoteCommand;
 import com.example.todo_list.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class Edit extends AppCompatActivity {
     EditText title,desc;
@@ -28,6 +28,8 @@ public class Edit extends AppCompatActivity {
     Button updates,delete;
     private CommandInvoker invoker ;
     private FirebaseUser currentUser;
+    FirebaseService firebaseService;
+    private int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,10 @@ public class Edit extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         initializeViews();
         Intent i=getIntent();
-         String gettitle=i.getStringExtra("title");
-         String getdesc=i.getStringExtra("desc");
-         id=i.getStringExtra("id");
+        String gettitle=i.getStringExtra("title");
+        String getdesc=i.getStringExtra("desc");
+        int color = getIntent().getIntExtra("color",1);
+        id=i.getStringExtra("id");
         title.setText(gettitle);
         desc.setText(getdesc);
         setupIntentData();
@@ -50,7 +53,10 @@ public class Edit extends AppCompatActivity {
         delete = findViewById(R.id.deletedbutton);
         title = findViewById(R.id.title);
         desc = findViewById(R.id.desc);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+         firebaseService = FirebaseService.getInstance();
+
+        // Get the current user
+        mDatabase = firebaseService.getDatabaseReference();
         invoker= new CommandInvoker();
     }
     private void setupIntentData() {
@@ -58,9 +64,10 @@ public class Edit extends AppCompatActivity {
         String gettitle = intent.getStringExtra("title");
         String getdesc = intent.getStringExtra("desc");
         String id = intent.getStringExtra("id");
+        color = getIntent().getIntExtra("color",1);
         title.setText(gettitle);
         desc.setText(getdesc);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = firebaseService.getCurrentUser();
 
         if (currentUser == null) {
             // User is not authenticated, handle accordingly
@@ -69,7 +76,7 @@ public class Edit extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             return;
         }
-         user = currentUser.getUid();
+        user = currentUser.getUid();
         Log.d("EditActivity", "User ID: " + user); // Add log to check user ID
 
     }
@@ -79,7 +86,7 @@ public class Edit extends AppCompatActivity {
         String descsend = desc.getText().toString();
 //        userId = currentUser.getUid();
 
-        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend,user));
+        invoker.setCommand( new UpdateNoteCommand(getApplicationContext(),mDatabase, id, titlesend, descsend,user,color));
         invoker.executeCommand();
     }
     public void DeleteNotes(View view){
@@ -88,14 +95,6 @@ public class Edit extends AppCompatActivity {
     }
 
 
-//    private void setupButton(Button button, Command command) {
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                command.executeNote();
-//            }
-//        });
-//    }
 
 
 }

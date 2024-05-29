@@ -1,11 +1,5 @@
-package com.example.todo_list.Note.Sort;
+package com.example.todo_list.KeepNote.Sort;
 
-
-import com.example.todo_list.Note.Listdata;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 //public class SortByDateStrategy implements SortingStrategy {
 //    @Override

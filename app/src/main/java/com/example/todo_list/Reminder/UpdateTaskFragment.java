@@ -1,5 +1,6 @@
 package com.example.todo_list.Reminder;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -7,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -26,21 +28,27 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.todo_list.Broadcast.ReminderBroadcastReceiver;
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
+import com.example.todo_list.KeepNote.FirebaseDatabaseSingleton;
+import com.example.todo_list.LoginSignup.FirebaseService;
+import com.example.todo_list.LoginSignup.LoginActivity;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.RemindMe.ReminderFactory;
 import com.example.todo_list.Reminder.RemindMe.ReminderInterface;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -48,16 +56,18 @@ import java.util.Locale;
 
 
 public class UpdateTaskFragment extends Fragment {
-    private String taskId;
     private TextInputEditText titleEditText ;
     private TextView dateTextView ;
     private ImageView calendarImageView ;
-    private TextView timeTextView ;
-    private ImageView clockImageView ;
-    private TextInputEditText contentEditText ;
-    private Button updateButton ;
+    private TextView timeTextView;
+    private ImageView clockImageView;
+    private TextInputEditText contentEditText,phoneNumberEditText;
+    private TextInputLayout phoneNumberInputLayout;
+    private Button updateButton;
+    private String taskId,phone;
     private ReminderInterface reminder;
     private RadioGroup notificationTypeGroup;
+
 
     //    // Declare the necessary views and Firebase variables
     public class Task {
@@ -65,16 +75,19 @@ public class UpdateTaskFragment extends Fragment {
         private String content;
         private String date;
         private String time;
-
+        private int requestCode;
+        private String reminderType;
 
         public Task() {
             // Default constructor required for Firebase
         }
-        public Task(String title, String date, String time,String content) {
+        public Task(String title, String date, String time,String content, String reminderType,int requestCode) {
             this.title = title;
             this.date = date;
             this.time = time;
             this.content = content;
+            this.requestCode = requestCode;
+            this.reminderType = reminderType;
         }
         public String getTitle() {
             return title;
@@ -93,17 +106,32 @@ public class UpdateTaskFragment extends Fragment {
     String timeText ;
     String dateText;
     String content;
+    String reminderType;
+    int existingRequestCode;
+    int requestCode;
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    String userId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle updatedInstanceState) {
         // Inflating the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_updatetask, container, false);
 
-
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser == null) {
+//            // User is not authenticated, handle accordingly
+//            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
+//            // Redirect to login page
+//            startActivity(new Intent(getActivity(), LoginActivity.class));
+//            return ;
+//        }
+         userId = currentUser.getUid();
+         Log.e("userIDAuth",userId);
         taskId = getArguments().getString("taskId");
+        Log.e("userIDAuth",userId);
 
         DatabaseReference rootRef = FirebaseDatabaseSingleton.getInstance().getReference();
-        DatabaseReference taskRef = rootRef.child("users").child("1").child("tasks").child(taskId);
+        DatabaseReference taskRef = rootRef.child("users").child(userId).child("tasks").child(taskId);
 
         loadDBparam(taskRef,view);
 
@@ -121,6 +149,7 @@ public class UpdateTaskFragment extends Fragment {
         super.onViewCreated(view, updatedInstanceState);
 
              initializeViews(view);
+             setupRadioGroupListener();
             setupDateClickListener();
             setupTimeClickListener();
             setupUpdateClickListener();
@@ -130,32 +159,39 @@ public class UpdateTaskFragment extends Fragment {
 
 
     @SuppressLint("ScheduleExactAlarm")
-    private void updateTaskToFirebase(String taskId, String title, String date, String time, String content) {
-        // Get the current user ID (assuming you have implemented Firebase Authentication)
-        // FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//       if (currentUser == null) {
-//            // User is not authenticated, handle accordingly
-//            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
-//            // Redirect to login page
-//            startActivity(new Intent(getActivity(), LoginActivity.class));
-//            return;
-//       }
-        //   String userId = currentUser.getUid();
+    private void updateTaskToFirebase(String taskId, String title, String date, String time, String content,String phone,String reminderType) {
+        FirebaseService firebaseService = FirebaseService.getInstance();
 
-        // Create a reference to the user's tasks node
-        DatabaseReference userTasksRef = FirebaseDatabase.getInstance().getReference("users")
-                .child("1")
+        // Get the current user
+        FirebaseUser currentUser = firebaseService.getCurrentUser();
+
+        if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        }
+        String userId = currentUser.getUid();
+        DatabaseReference userTasksRef = firebaseService.getDatabaseReference().child("users")
+                .child(userId)
                 .child("tasks")
                 .child(taskId);
 
         HandleField( taskId,  title,  date,  time,  content);
+        String selectedReminderType = getSelectedReminderType();
 
+        Calendar calendar = Calendar.getInstance();
+        int requestCode=(int)(calendar.getTimeInMillis()% Integer.MAX_VALUE);
 
         // Create a Task object
-        Task task = new Task(title, date, time, content);
-        updateTaskToFirebase(taskId,userTasksRef,task);
+        Task task2 = new Task(title, date, time, content,selectedReminderType,requestCode);
+        cancelExistingAlarm(taskId, userTasksRef);
+
+
+        updateTaskToFirebase(taskId,userTasksRef,task2);
         reminder = new ReminderFactory().getReminder(getSelectedReminderType());
-        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,"01626052742",0);
+        reminder.setReminder(getContext(), year, month, day, hour, minute, title, content,"01626052742",requestCode);
     }
 
     private void HandleField(String taskId, String title, String date, String time, String content) {
@@ -181,8 +217,35 @@ public class UpdateTaskFragment extends Fragment {
             UpdateTaskFragment.this.hour = Integer.parseInt(timeparts[0]);
             UpdateTaskFragment.this.minute = Integer.parseInt(timeparts[1]);
         }
-    }
 
+
+    }
+    private void cancelExistingAlarm(String taskId, DatabaseReference taskRef) {
+
+        taskRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                     existingRequestCode = dataSnapshot.child("requestCode").getValue(Integer.class);
+
+                    // Cancel the existing alarm
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase Error", "Error retrieving the task: " + databaseError.getMessage());
+            }
+        });
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), ReminderBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), existingRequestCode, intent,   PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.cancel(pendingIntent);
+
+        pendingIntent.cancel();
+    }
     private void navigateToHomeFragment() {
 
         HomeFragment homeFragment = new HomeFragment();
@@ -203,19 +266,32 @@ public class UpdateTaskFragment extends Fragment {
                     timeText = dataSnapshot.child("time").getValue(String.class);
                     dateText = dataSnapshot.child("date").getValue(String.class);
                     content = dataSnapshot.child("content").getValue(String.class);
-                    // Find the views
-                    TextInputEditText titleEditText = view.findViewById(R.id.titleEditText);
-                    TextView dateTextView = view.findViewById(R.id.dateTextView);
-                    ImageView calendarImageView = view.findViewById(R.id.calendarImageView);
-                    TextView timeTextView = view.findViewById(R.id.timeTextView);
-                    ImageView clockImageView = view.findViewById(R.id.clockImageView);
-                    TextInputEditText contentEditText = view.findViewById(R.id.contentEditText);
-
-                    //Retrived data show in textbox
+                     reminderType = dataSnapshot.child("reminderType").getValue(String.class);
+//                     requestCode = Integer.parseInt(dataSnapshot.child("requestCode").getValue(String.class));
+//                    // Find the views
+                    titleEditText = view.findViewById(R.id.titleEditText);
+                    dateTextView = view.findViewById(R.id.dateTextView);
+                    calendarImageView = view.findViewById(R.id.calendarImageView);
+                    timeTextView = view.findViewById(R.id.timeTextView);
+                    clockImageView = view.findViewById(R.id.clockImageView);
+                    contentEditText = view.findViewById(R.id.contentEditText);
+                    notificationTypeGroup = view.findViewById(R.id.notificationTypeGroup);
+                    phoneNumberInputLayout = view.findViewById(R.id.phoneNumberInputLayout);
+                    phoneNumberEditText = view.findViewById(R.id.phoneNumberEditText);
+//
+//                    //Retrived data show in textbox
                     titleEditText.setText(title);
                     timeTextView.setText(timeText);
                     dateTextView.setText(dateText);
                     contentEditText.setText(content);
+                    phoneNumberEditText.setText(phone);
+                    if (reminderType.equals("call")) {
+                        notificationTypeGroup.check(R.id.callOption);
+                    } else if (reminderType.equals("sms")) {
+                        notificationTypeGroup.check(R.id.smsOption);
+                    } else {
+                        notificationTypeGroup.check(R.id.alarmOption);
+                    }
 
 
                     Log.d("Task Title", title);
@@ -229,11 +305,35 @@ public class UpdateTaskFragment extends Fragment {
                 Log.e("Firebase Error", "Error retrieving the task: " + databaseError.getMessage());
             }
         });
+//        // Find the views
+//        titleEditText = view.findViewById(R.id.titleEditText);
+//        dateTextView = view.findViewById(R.id.dateTextView);
+//        calendarImageView = view.findViewById(R.id.calendarImageView);
+//        timeTextView = view.findViewById(R.id.timeTextView);
+//        clockImageView = view.findViewById(R.id.clockImageView);
+//        contentEditText = view.findViewById(R.id.contentEditText);
+//        notificationTypeGroup = view.findViewById(R.id.notificationTypeGroup);
+//        phoneNumberInputLayout = view.findViewById(R.id.phoneNumberInputLayout);
+//        phoneNumberEditText = view.findViewById(R.id.phoneNumberEditText);
+
+//        //Retrived data show in textbox
+//        titleEditText.setText(title);
+//        timeTextView.setText(timeText);
+//        dateTextView.setText(dateText);
+//        contentEditText.setText(content);
+//        phoneNumberEditText.setText(phone);
+//        if (reminderType.equals("call")) {
+//            notificationTypeGroup.check(R.id.callOption);
+//        } else if (reminderType.equals("sms")) {
+//            notificationTypeGroup.check(R.id.smsOption);
+//        } else {
+//            notificationTypeGroup.check(R.id.alarmOption);
+//        }
+
 
     }
 
     private void initializeViews(View view) {
-        // Find the views
         titleEditText = view.findViewById(R.id.titleEditText);
         dateTextView = view.findViewById(R.id.dateTextView);
         calendarImageView = view.findViewById(R.id.calendarImageView);
@@ -242,9 +342,9 @@ public class UpdateTaskFragment extends Fragment {
         contentEditText = view.findViewById(R.id.contentEditText);
         updateButton = view.findViewById(R.id.updateButton);
         notificationTypeGroup = view.findViewById(R.id.notificationTypeGroup);
-        if (notificationTypeGroup == null) {
-            Log.e("UpdateTaskFragment", "notificationTypeGroup is null");
-        }
+        phoneNumberInputLayout = view.findViewById(R.id.phoneNumberInputLayout); // Initialize phoneNumberInputLayout
+        phoneNumberEditText = view.findViewById(R.id.phoneNumberEditText);
+
     }
     private void setupUpdateClickListener() {
 
@@ -255,7 +355,25 @@ public class UpdateTaskFragment extends Fragment {
                 String date = dateTextView.getText().toString().trim();
                 String time = timeTextView.getText().toString().trim();
                 String content = contentEditText.getText().toString().trim();
+                String phoneNumber = phoneNumberEditText.getText().toString().trim();
+                int selectedId = notificationTypeGroup.getCheckedRadioButtonId();
+                if (selectedId == R.id.callOption) {
+                    // Call option is selected
+                    reminderType = "call";
+                } else if (selectedId == R.id.smsOption) {
+                    // SMS option is selected
+                    reminderType = "sms";
+                } else {
+                    // Alarm option is selected
+                    reminderType = "alarm";
+                }
 
+
+                // Validate the input
+                if (phoneNumberInputLayout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(phoneNumber)) {
+                    Toast.makeText(getActivity(), "Phone number is required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Validate the input
                 if (TextUtils.isEmpty(title) || TextUtils.isEmpty(date) || TextUtils.isEmpty(time)) {
                     // Show error message if title, date, or time is empty
@@ -294,7 +412,7 @@ public class UpdateTaskFragment extends Fragment {
                             Toast.makeText(getActivity(), "Please select a time at least two minutes later", Toast.LENGTH_SHORT).show();
                         } else {
                             // update the task to Firebase
-                            updateTaskToFirebase(taskId, title, date, time, content);
+                            updateTaskToFirebase(taskId, title, date, time, content,phone,reminderType);
                         }
 
 
@@ -432,6 +550,7 @@ public class UpdateTaskFragment extends Fragment {
 
     private void updateTaskToFirebase(String taskId,DatabaseReference userTasksRef, Task task) {
         if (isNetworkConnected()) {
+
             userTasksRef.setValue(task)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -490,15 +609,44 @@ public class UpdateTaskFragment extends Fragment {
     private String getSelectedReminderType() {
         int selectedId = notificationTypeGroup.getCheckedRadioButtonId();
 
-        if (selectedId == R.id.emailOption) {
-            return "email";
+        if (selectedId == R.id.callOption) {
+
+            return "call";
         } else if (selectedId == R.id.alarmOption) {
+
             return "alarm";
-        } else if (selectedId == R.id.notificationOption) {
-            return "notification";
+        } else if (selectedId == R.id.smsOption) {
+            return "sms";
         } else {
-            return "notification"; // Default case if no button is selected
+            return "alarm";
         }
+    }
+
+    private void setupRadioGroupListener() {
+        notificationTypeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Phone number input is only visible when the SMS option is selected
+                if (checkedId == R.id.smsOption) {
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                        // Request SMS sending permission
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, 1);
+                    }
+
+                    phoneNumberInputLayout.setVisibility(View.VISIBLE);
+                }
+                else  if (checkedId == R.id.callOption) {
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    }
+
+                    phoneNumberInputLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    phoneNumberInputLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 }

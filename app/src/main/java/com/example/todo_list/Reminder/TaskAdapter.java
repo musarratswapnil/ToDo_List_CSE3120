@@ -162,14 +162,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         refreshList();
     }
 
-//    private void cancelAlarm(Task task) {
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, task.getKey().hashCode(), intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE);
-//        if (pendingIntent != null && alarmManager != null) {
-//            alarmManager.cancel(pendingIntent);
-//        }
-//    }
+
 
     private void refreshList() {
         if (sortingStrategy != null) {
