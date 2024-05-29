@@ -2,7 +2,9 @@ package com.example.todo_list.KeepNote.FlyWeightColor;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Concrete implementation of the ColorFlyweight interface.
+ */
 public class ColorFlyweightFactory {
     private static final Map<Integer, ColorFlyweight> colors = new HashMap<>();
 
