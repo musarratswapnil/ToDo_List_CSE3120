@@ -52,6 +52,7 @@ public class HomeScreen extends AppCompatActivity {
         setupToolbar();
         setupRecyclerView();
         setupFabButton();
+//        setupDatabaseListener();
         setupDatabaseProxy();
     }
 
@@ -126,7 +127,7 @@ public class HomeScreen extends AppCompatActivity {
         userId = currentUser.getUid();
         FirebaseService firebaseService = FirebaseService.getInstance();
         databaseReference = firebaseService.getDatabaseReference().child("users").child(userId).child("notes");
-
+//
         dataProxy = new DataProxy(databaseReference);
         dataProxy.startListening();
         dataProxy.setOnDataChangedListener(new DataProxy.OnDataChangedListener() {
@@ -143,25 +144,49 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
     }
+    private void setupDatabaseListener() {
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getApplicationContext(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            return;
+        }
 
+    }
+    /**
+     * Sets the sorting strategy for the note list.
+     *
+     * @param sortingStrategy The sorting strategy to be applied.
+     */
     private void setSortingStrategy(SortingStrategy sortingStrategy) {
         this.sortingStrategy = sortingStrategy;
+        updateRecyclerView();
         sortList();
     }
-
+    /**
+     * Sorts the note list according to the selected strategy.
+     */
     private void sortList() {
         if (sortingStrategy != null) {
             sortingStrategy.sort(list);
             updateRecyclerView();
         }
     }
-
+    /**
+     * Updates the RecyclerView with the latest note list.
+     */
     private void updateRecyclerView() {
         NotesAdapter notesAdapter = new NotesAdapter(list, this);
         recyclerView.setAdapter(notesAdapter);
         notesAdapter.notifyDataSetChanged();
     }
-
+    /**
+     * Shows the popup menu when the FloatingActionButton is clicked.
+     *
+     * @param view The view that was clicked.
+     */
     private void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.getMenuInflater().inflate(R.menu.float_menu, popupMenu.getMenu());

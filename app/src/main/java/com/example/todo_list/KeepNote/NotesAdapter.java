@@ -15,12 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo_list.R;
 
 import java.util.List;
+/**
+ * Adapter class for the RecyclerView in the home screen displaying notes.
+ */
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
 {
 
     List<Listdata> noteslist;
     private Context context;
+    /**
+     * Constructor for the NotesAdapter.
+     *
+     * @param noteslist The list of notes to be displayed.
+     * @param context   The context of the calling activity.
+     */
     public  NotesAdapter(List<Listdata> noteslist,Context context)
     {
         this.context=context;
@@ -46,7 +55,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
         myHolder.itemView.findViewById(R.id.note_bg).setBackgroundColor(backgroundColor);
 
     }
-
+    /**
+     * ViewHolder class for the NotesAdapter.
+     */
     @Override
     public int getItemCount() {
         return noteslist.size();
@@ -77,7 +88,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyHolder>
 
 
     }
-
+    /**
+     * Returns the corresponding color for the given color code.
+     *
+     * @param color The color code.
+     * @return The color integer value.
+     */
     private int getColorFromCode(int color) {
         if (color==1) {
             return ContextCompat.getColor(context, R.color.custom_blue);
