@@ -332,10 +332,16 @@ public class AddTaskFragment extends Fragment {
         });
 
     }
-
     private void saveTaskToFirebase(DatabaseReference userTasksRef, Task task) {
         taskId = userTasksRef.push().getKey();
         if (isNetworkConnected()) {
+            if (FirebaseService.getInstance().getCurrentUser() == null) {
+                // User is not authenticated, prompt to log in or handle authentication flow
+                Toast.makeText(getActivity(), "Please log in to save the task", Toast.LENGTH_SHORT).show();
+                // Optionally, you can redirect to the login page here
+                return;
+            }
+
             userTasksRef.child(taskId).setValue(task)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
@@ -348,6 +354,21 @@ public class AddTaskFragment extends Fragment {
             saveTaskLocally(taskId, task);
         }
     }
+//    private void saveTaskToFirebase(DatabaseReference userTasksRef, Task task) {
+//        taskId = userTasksRef.push().getKey();
+//        if (isNetworkConnected()) {
+//            userTasksRef.child(taskId).setValue(task)
+//                    .addOnSuccessListener(aVoid -> {
+//                        Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
+//                        navigateToHomeFragment();
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Toast.makeText(getActivity(), "Failed to save task: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    });
+//        } else {
+//            saveTaskLocally(taskId, task);
+//        }
+//    }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
