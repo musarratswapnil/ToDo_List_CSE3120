@@ -8,7 +8,7 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import com.example.todo_list.Note.Operation.AddNoteCommand;
+import com.example.todo_list.KeepNote.Operation.AddNoteCommand;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,7 @@ public class AddNoteCommandIntegrationTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         // Create AddNoteCommand instance
-        AddNoteCommand addNoteCommand = new AddNoteCommand(context, databaseReference, title, description);
+        AddNoteCommand addNoteCommand = new AddNoteCommand(context, databaseReference, title, description,"01222",1);
 
         // Act
         addNoteCommand.executeNote();
@@ -85,7 +85,7 @@ public class AddNoteCommandIntegrationTest {
     @Test
     public void executeNote_withEmptyFields_shouldShowToast() {
         // Arrange
-        AddNoteCommand addNoteCommand = new AddNoteCommand(context, databaseReference, "", "");
+        AddNoteCommand addNoteCommand = new AddNoteCommand(context, databaseReference, "hello", "kkk","1122",1);
 
         // Act
         addNoteCommand.executeNote();

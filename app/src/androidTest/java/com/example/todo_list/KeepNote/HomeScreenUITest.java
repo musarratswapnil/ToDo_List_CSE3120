@@ -1,4 +1,4 @@
-package com.example.todo_list.Note;
+package com.example.todo_list.KeepNote;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
