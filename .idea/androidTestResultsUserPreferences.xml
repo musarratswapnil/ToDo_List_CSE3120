@@ -3,28 +3,7 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
-
-        <entry key="1770370460">
-
-        <entry key="-2096152304">
-
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-
-                  <entry key="Google Pixel 8" value="120" />
-                  <entry key="Tests" value="360" />
-
-                  <entry key="Tests" value="360" />
-                  <entry key="samsung SM-M215F" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="-1618503408">
+        <entry key="-1136495197">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -32,46 +11,6 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung SM-M215F" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="-1370556014">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Tests" value="360" />
-                  <entry key="samsung SM-M215F" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="-487321911">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Tests" value="360" />
-                  <entry key="samsung SM-M215F" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-        <entry key="2022197297">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="Duration" value="90" />
-                  <entry key="Tests" value="360" />
-                  <entry key="samsung SM-M215F" value="120" />
-
                 </map>
               </option>
             </AndroidTestResultsTableState>
