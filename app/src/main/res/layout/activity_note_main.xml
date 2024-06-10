@@ -11,49 +11,142 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/note_add"
-    tools:context=".Note.NoteMainActivity">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
+    tools:context=".KeepNote.NoteMainActivity">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<!--        <ImageView-->
-<!--            android:layout_margin="15dp"-->
-<!--            android:src="@drawable/"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp" />-->
-        <EditText
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:hint="Title"
-            android:layout_margin="5dp"
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
+        android:layout_height="wrap_content">
 
-            android:layout_margin="5dp"
-            android:hint="Description"
-            android:id="@+id/desc"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:background="@color/purple"
-            android:layout_margin="15dp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:onClick="AddNotes"
-            android:id="@+id/addnotes"
-            android:text="Save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <!-- Color options -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center">
 
-    </LinearLayout>
-</ScrollView>
+                <!-- Color Options -->
+
+
+
+                <RadioGroup
+                    android:id="@+id/colorGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                  >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <View
+                            android:id="@+id/colorIndicatorSkyBlue"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="#ADD8E6"
+                            android:layout_gravity="center_vertical"/>
+
+                        <RadioButton
+                            android:id="@+id/colorskyblue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:padding="10dp"
+                            android:onClick="onColorSelected"
+                            android:checked="true"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <View
+                            android:id="@+id/colorIndicatorGreen"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="#90EE90"
+                            android:layout_gravity="center_vertical"/>
+
+                        <RadioButton
+                            android:id="@+id/colorGreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:padding="10dp"
+                            android:onClick="onColorSelected"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <View
+                            android:id="@+id/colorIndicatorPink"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="#FFF8C3D5"
+                            android:layout_gravity="center_vertical"/>
+
+                        <RadioButton
+                            android:id="@+id/colorPink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:padding="10dp"
+                            android:onClick="onColorSelected"
+                            />
+
+                    </LinearLayout>
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <!-- Your content here -->
+            <EditText
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:hint="Title"
+                android:layout_margin="5dp"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:layout_margin="5dp"
+                android:hint="Description"
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:background="@color/purple"
+                android:layout_margin="15dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:onClick="AddNotes"
+                android:id="@+id/addnotes"
+                android:text="Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.cardview.widget.CardView>

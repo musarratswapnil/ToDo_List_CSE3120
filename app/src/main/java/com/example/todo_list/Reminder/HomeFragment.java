@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo_list.Note.FirebaseDatabaseSingleton;
+import com.example.todo_list.KeepNote.FirebaseDatabaseSingleton;
 import com.example.todo_list.R;
 import com.example.todo_list.Reminder.Sort.SortByDateStrategy;
 import com.example.todo_list.Reminder.Sort.SortByNameStrategy;

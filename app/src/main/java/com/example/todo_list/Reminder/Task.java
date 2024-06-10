@@ -14,13 +14,15 @@ public class Task {
     private String title;
     private String content;
     private String time;
+    private int requestCode;
 
-    public Task(String key, String date, String title, String content, String time) {
+    public Task(String key, String date, String title, String content, String time,int requestCode) {
         this.key = key;
         this.date = date;
         this.title = title;
         this.content = content;
         this.time = time;
+        this.requestCode=requestCode;
     }
 
     // Add the no-argument constructor
@@ -74,7 +76,9 @@ public class Task {
 
         return calendar;
     }
-
+    public int getRequestCode(){
+        return requestCode;
+    }
     public String getTitle() {
         return title;
     }
@@ -96,6 +100,8 @@ public class Task {
             return false;
         }
     }
+
+
 
 
 }

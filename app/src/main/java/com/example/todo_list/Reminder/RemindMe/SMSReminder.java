@@ -20,7 +20,7 @@ public class SMSReminder implements ReminderInterface{
     public static final int SMS_PERMISSION_REQUEST_CODE = 100;
     int requestCode;
     @Override
-    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone) {
+    public void setReminder(Context context,  int year, int month, int day, int hour, int minute, String title, String content,String Phone,int requestCode) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("title", title);
         reminderIntent.putExtra("content", content);
@@ -28,9 +28,9 @@ public class SMSReminder implements ReminderInterface{
         reminderIntent.putExtra("isSMS", true);
         reminderIntent.putExtra("isCall", false);
             // Permission already granted, schedule the reminder
-            scheduleReminder(context, title, content, year, month, day, hour, minute,Phone);
+            scheduleReminder(context, title, content, year, month, day, hour, minute,Phone,requestCode);
            }
-    private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute,String Phone) {
+    private void scheduleReminder(Context context,String title, String content,int year, int month, int day, int hour, int minute,String Phone,int requestCode) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute);
         calendar.set(Calendar.SECOND, 0);
@@ -41,7 +41,7 @@ public class SMSReminder implements ReminderInterface{
                 // Request permission
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_REQUEST_CODE);
             } else {
-                setSMS(context, Phone,content, calendar.getTimeInMillis());
+                setSMS(context, Phone,content, calendar.getTimeInMillis(),requestCode);
             }
         } else {
             throw new IllegalArgumentException("Alarm time must be in the future.");
@@ -49,12 +49,12 @@ public class SMSReminder implements ReminderInterface{
     }
 
     @SuppressLint("ScheduleExactAlarm")
-    private void setSMS(Context context, String phoneNumber, String message, long triggerAtMillis) {
+    private void setSMS(Context context, String phoneNumber, String message, long triggerAtMillis,int requestCode) {
         Intent reminderIntent = new Intent(context, ReminderBroadcastReceiver.class);
         reminderIntent.putExtra("phoneNumber", phoneNumber);
         reminderIntent.putExtra("message", message);
         reminderIntent.putExtra("isSMS", true);
-         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
+//         requestCode = (int) (triggerAtMillis % Integer.MAX_VALUE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);

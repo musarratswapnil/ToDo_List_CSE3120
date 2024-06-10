@@ -3,19 +3,29 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+<<<<<<< HEAD
         <entry key="-1991512058">
+=======
+        <entry key="-1136495197">
+>>>>>>> 6247e0846a91c0dfea27471d1e47d8d0fdb42f6d
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+<<<<<<< HEAD
                   <entry key="Google Pixel 8" value="120" />
                   <entry key="Tests" value="360" />
+=======
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M215F" value="120" />
+>>>>>>> 6247e0846a91c0dfea27471d1e47d8d0fdb42f6d
                 </map>
               </option>
             </AndroidTestResultsTableState>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="-1128829755">
           <value>
             <AndroidTestResultsTableState>
@@ -300,6 +310,8 @@
         </entry>
 
 >>>>>>> c5be787adfe86203adb6f6df2fbf620e58fbf3dd
+=======
+>>>>>>> 6247e0846a91c0dfea27471d1e47d8d0fdb42f6d
       </map>
     </option>
   </component>

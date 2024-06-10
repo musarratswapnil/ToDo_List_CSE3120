@@ -68,7 +68,7 @@
             android:name=".App_Options.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".Note.NoteMainActivity"
+            android:name=".KeepNote.NoteMainActivity"
             android:exported="false" />
         <activity
             android:name=".LoginSignup.SignupActivity"
@@ -89,10 +89,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Note.Edit"
+            android:name=".KeepNote.Edit"
             android:exported="false" />
         <activity
-            android:name=".Note.HomeScreen"
+            android:name=".KeepNote.HomeScreen"
             android:exported="false" />
 
         <meta-data

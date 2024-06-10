@@ -1,6 +1,4 @@
-package com.example.todo_list.Note.Operation;
-
-import com.example.todo_list.Note.Operation.Command;
+package com.example.todo_list.KeepNote.Operation;
 
 public class CommandInvoker {
     private Command command;
