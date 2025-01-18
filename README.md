@@ -20,35 +20,43 @@
 
 ### Splash and Login-SignUp Screen
 <img src="screenshots/1.jpg" alt="Splash Screenshot" height="300" width="150"/>  <img src="screenshots/2.jpg" alt="login-signup Screenshot" height="300" width="150"/>  <img src="screenshots/4.jpg" alt="SignUp Screenshot" height="300" width="150"/>  <img src="screenshots/1.jpg" alt="Login Screenshot" height="300" width="150"/>  <img src="screenshots/5.png" alt="Login using google Screenshot" height="300" width="150"/>
+
 Screen appears while entering the app. Allows new users to create an account with email, username, and secure password features. Enables returning users to access their accounts securely.
 
 ### Home Screen
 <img src="screenshots/6.jpg" alt="Home Screen Screenshot" height="300" width="150"/>
+
 The central hub to navigate through tasks, notes, reminders, stop watch & timer, cgpa calculator, attendance calculator.
 
 ### Reminders Screen
 <img src="screenshots/7.jpg" alt="Reminders Screenshot" height="300" width="150"/>  <img src="screenshots/8.jpg" alt="Sort Reminders Screenshot" height="300" width="150"/>  <img src="screenshots/9.jpg" alt="Add Reminders Screenshot" height="300" width="150"/>  <img src="screenshots/10.jpg" alt="Modify Reminders Screenshot" height="300" width="150"/>
+
 Displays upcoming reminders with options for easy management. Users can add remiders ot todo list, update or delete that, and also can sort them by date and time.
 
 ### Notes Screen
 <img src="screenshots/11.jpg" alt="Notes Screenshot" height="300" width="150"/>  <img src="screenshots/12.jpg" alt="Add notes Screenshot" height="300" width="150"/>  <img src="screenshots/13.jpg" alt="Update Notes Screenshot" height="300" width="150"/>
+
 Organize notes with options to categorize, sort, and secure data, updates and deletes them.
 
 ### CGPA Calculator Screen
 <img src="screenshots/21.jpg" alt="CGPA Calculator Screenshot" height="300" width="150"/>  <img src="screenshots/1.jpg" alt="All CGPA Screenshot" height="300" width="150"/>
+
 Input grades and credits to calculate cumulative performance effortlessly and save previous semester data.
 
 ### Attendance Tracker Screen
 <img src="screenshots/18.png" alt="Attendance Tracker Screenshot" height="300" width="150"/>  <img src="screenshots/19.jpg" alt="Attendance Calculate Screenshot" height="300" width="150"/>  <img src="screenshots/20.png" alt="Percentage Screenshot" height="300" width="150"/>
+
 Set goals and monitor attendance percentages effectively.
 
 ### Timer and Stopwatch Screen
 <img src="screenshots/14.png" alt="Stopwatch setup Screenshot" height="300" width="150"/>  <img src="screenshots/15.jpg" alt="Stopwatch Screenshot" height="300" width="150"/>  <img src="screenshots/16.png" alt="Stopwatch end Screenshot" height="300" width="150"/>  <img src="screenshots/17.jpg" alt="SignUp Screenshot" height="300" width="150"/>
+
 Manage time with precise countdowns and tracking.
 
 ### App Other Options and Navbar
 <img src="screenshots/23.jpg" alt="Navbar Screenshot" height="300" width="150"/>  <img src="screenshots/24.jpg" alt="Share Screenshot" height="300" width="150"/>  <img src="screenshots/25.png" alt="Privacy Screenshot" height="300" width="150"/>  <img src="screenshots/26.png" alt="Contact Screenshot" height="300" width="150"/>
 <img src="screenshots/27.png" alt="Account Screenshot" height="300" width="150"/>  <img src="screenshots/28.png" alt="Help Screenshot" height="300" width="150"/>  <img src="screenshots/29.png" alt="About Screenshot" height="300" width="150"/>
+
 App includes other features in navbar
 
 ---
