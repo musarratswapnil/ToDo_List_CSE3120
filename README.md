@@ -13,7 +13,7 @@
 - **Stopwatch & Timer**: Tools for tracking and managing time efficiently.
 - **Attendance Tracker**: Record, calculate, and monitor attendance with customizable goals.
 - **CGPA & GPA Calculators**: Academic tools to calculate and track grade performance.
-<img src="screenshots/30.png" alt="Key Features" height="400" width="600"/>
+
 ---
 
 ## Screenshots and Overview:
@@ -62,6 +62,8 @@ App includes other features in navbar
 ---
 
 ## How App Works
+
+<img src="screenshots/30.png" alt="Key Features" height="400" width="800"/>
 
 ### **Sign-Up**
 1. User enters their email and password or signs up with Google.
