@@ -13,13 +13,13 @@
 - **Stopwatch & Timer**: Tools for tracking and managing time efficiently.
 - **Attendance Tracker**: Record, calculate, and monitor attendance with customizable goals.
 - **CGPA & GPA Calculators**: Academic tools to calculate and track grade performance.
-<img src="screenshots/30.png" alt="Key Features" height="200" width="300"/>
+<img src="screenshots/30.png" alt="Key Features" height="500" width="400"/>
 ---
 
 ## Screenshots and Overview:
 
 ### Splash and Login-SignUp Screen
-<img src="screenshots/1.jpg" alt="Splash Screenshot" height="300" width="150"/><img src="screenshots/2.jpg" alt="login-signup Screenshot" height="300" width="150"/><img src="screenshots/4.jpg" alt="SignUp Screenshot" height="300" width="150"/><img src="screenshots/1.jpg" alt="Login Screenshot" height="300" width="150"/><img src="screenshots/5.jpg" alt="Login using google Screenshot" height="300" width="150"/>
+<img src="screenshots/1.jpg" alt="Splash Screenshot" height="300" width="150"/> <img src="screenshots/2.jpg" alt="login-signup Screenshot" height="300" width="150"/> <img src="screenshots/4.jpg" alt="SignUp Screenshot" height="300" width="150"/> <img src="screenshots/1.jpg" alt="Login Screenshot" height="300" width="150"/> <img src="screenshots/5.jpg" alt="Login using google Screenshot" height="300" width="150"/>
 Screen appears while entering the app. Allows new users to create an account with email, username, and secure password features. Enables returning users to access their accounts securely.
 
 ### Home Screen
