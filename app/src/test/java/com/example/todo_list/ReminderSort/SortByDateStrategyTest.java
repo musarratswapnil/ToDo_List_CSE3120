@@ -129,6 +129,26 @@ public class SortByDateStrategyTest {
         assertTrue(tasks.isEmpty());
     }
 
+<<<<<<< HEAD
+//    @Test
+//    public void SortwithNullDate(){
+////        Task task1=new Task("1",null,"t1","abcd","15:16");
+//        Task task2=new Task("2","10/05/2024","t2","abcd","15:16");
+//        Task task3=new Task("3","10/05/2024","t3","abcd","15:16");
+//
+//        List<Task> tasks=new ArrayList<>();
+////        tasks.add(task1);
+//        tasks.add(task2);
+//        tasks.add(task3);
+//
+//        SortByDateStrategy sorting=new SortByDateStrategy();
+//        sorting.sort(tasks);
+//
+////        assertEquals("t2",tasks.get(0).getTitle());
+//        assertEquals("t1",tasks.get(2).getTitle());
+//        assertEquals("t3",tasks.get(1).getTitle());
+//    }
+=======
     /*@Test
     public void SortwithNullDate(){
         Task task1=new Task("1",null,"t1","abcd","15:16");
@@ -147,6 +167,7 @@ public class SortByDateStrategyTest {
         assertEquals("t1",tasks.get(2).getTitle());
         assertEquals("t3",tasks.get(1).getTitle());
     }*/
+>>>>>>> c5be787adfe86203adb6f6df2fbf620e58fbf3dd
 
     @Test
     public void sortLargeNumberOfTasks() {

@@ -29,7 +29,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="TaskPro"
+        android:text="WhatToDo?"
         android:textColor="@color/purple"
         android:textSize="32sp"
         android:textStyle="bold" />
@@ -59,7 +59,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="&#169; 2023"
+        android:text="&#169; 2024"
         android:textColor="@color/purple"
         android:textSize="32sp"
         android:textStyle="bold" />

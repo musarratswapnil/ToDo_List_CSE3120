@@ -155,6 +155,6 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.Semest
                     Toast.makeText(context, "Failed to delete semester. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             }
-   });
-}
+        });
+    }
 }

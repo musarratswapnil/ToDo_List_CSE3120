@@ -1,17 +1,21 @@
 package com.example.todo_list.StopWatch;
 
 /**
- * Factory class for creating instances of logic classes.
+ * A factory interface for creating timer and stopwatch logic instances.
  */
-public class LogicFactory {
+public interface LogicFactory {
 
-    // Method to get TimerLogic instance
-    public static TimerLogic getTimerLogic() {
-        return TimerLogic.getInstance();
-    }
+    /**
+     * Creates a new instance of TimerLogic.
+     *
+     * @return A new instance of TimerLogic.
+     */
+    TimerLogic createTimerLogic();
 
-    // Method to get StopwatchLogic instance
-    public static StopwatchLogic getStopwatchLogic() {
-        return StopwatchLogic.getInstance();
-    }
+    /**
+     * Creates a new instance of StopwatchLogic.
+     *
+     * @return A new instance of StopwatchLogic.
+     */
+    StopwatchLogic createStopwatchLogic();
 }
