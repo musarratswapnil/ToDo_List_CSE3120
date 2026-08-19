@@ -1,3 +1,6 @@
+/**
+ * The PrivacyActivity class represents the activity for displaying privacy-related information with expandable sections.
+ */
 package com.example.todo_list.App_Options;
 
 import android.os.Bundle;
@@ -7,11 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.todo_list.R;
 
 public class PrivacyActivity extends AppCompatActivity {
 
+    /**
+     * Called when the activity is starting. Initializes the activity and sets its content view, and sets up expandable sections.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     *                           Otherwise, it is null.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +33,13 @@ public class PrivacyActivity extends AppCompatActivity {
         setupSection(R.id.section5, R.id.expandButton5, R.id.answer5);
     }
 
+    /**
+     * Sets up an expandable section by associating click listeners with the expand button and toggling visibility of the answer text.
+     *
+     * @param sectionId The resource ID of the section layout.
+     * @param buttonId  The resource ID of the expand button.
+     * @param answerId  The resource ID of the answer text.
+     */
     private void setupSection(int sectionId, int buttonId, int answerId) {
         LinearLayout section = findViewById(sectionId);
         final ImageView expandButton = findViewById(buttonId);

@@ -1,3 +1,6 @@
+/**
+ * The AttendancePercentage class manages the calculation and display of attendance percentage.
+ */
 package com.example.todo_list.AttendanceCalculator;
 
 import android.os.Bundle;
@@ -16,6 +19,9 @@ public class AttendancePercentage extends AppCompatActivity {
     private AttendancePercentageLogic percentageLogic;
     private AttendanceAdapter attendanceAdapter;
 
+    /**
+     * Initializes the activity, sets up the UI elements, and defines button click listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +44,9 @@ public class AttendancePercentage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Calculates the attendance percentage based on user input and displays the result.
+     */
     private void calculateAttendance() {
         String totalCreditStr = editTextTotalCredit.getText().toString();
         String totalWeeksStr = editTextTotalWeeks.getText().toString();

@@ -3,8 +3,8 @@ package com.example.todo_list.App_Options;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +47,16 @@ public class HelpActivity extends AppCompatActivity {
                 filteredList.clear();
                 filteredList.addAll(helpItems);
                 helpAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void DataIsInserted() {
+                Toast.makeText(HelpActivity.this, "Help item added successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void DataInsertFailed(Exception e) {
+                Toast.makeText(HelpActivity.this, "Failed to add help item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

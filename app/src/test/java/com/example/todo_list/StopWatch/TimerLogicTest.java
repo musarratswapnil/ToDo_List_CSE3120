@@ -1,44 +1,32 @@
 package com.example.todo_list.StopWatch;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class TimerLogicTest {
 
-    private TimerLogic timerLogic;
-
-    @Before
-    public void setUp() {
-        timerLogic = TimerLogic.getInstance();
-    }
-
     @Test
     public void testCalculateTimerDuration() {
-        long hours = 1;
-        long minutes = 1;
-        long seconds = 1;
-        long expectedDuration = (hours * 3600 + minutes * 60 + seconds) * 1000;
-        assertEquals(expectedDuration, timerLogic.calculateTimerDuration(hours, minutes, seconds));
+        TimerLogic timerLogic = new TimerLogic();
+        long duration = timerLogic.calculateTimerDuration(1, 30, 45);
+        assertEquals(5445000, duration); // 1 hour, 30 minutes, 45 seconds in milliseconds
     }
 
     @Test
     public void testFormatTime() {
-        long millis = 3661000; // 1 hour, 1 minute, 1 second
-        String[] expectedTime = {"01:", "01:", "01"};
-        assertArrayEquals(expectedTime, timerLogic.formatTime(millis));
+        TimerLogic timerLogic = new TimerLogic();
+        String[] formattedTime = timerLogic.formatTime(5445000);
+        assertEquals("01:", formattedTime[0]);
+        assertEquals("30:", formattedTime[1]);
+        assertEquals("45", formattedTime[2]);
     }
 
     @Test
     public void testGetColorForTime() {
-        long millis = 5000;
-        long threshold = 10000;
+        TimerLogic timerLogic = new TimerLogic();
         int colorRed = 0xFF0000;
         int colorGray = 0x808080;
-
-        assertEquals(colorRed, timerLogic.getColorForTime(millis, threshold, colorRed, colorGray));
-        assertEquals(colorGray, timerLogic.getColorForTime(threshold + 1, threshold, colorRed, colorGray));
+        assertEquals(colorRed, timerLogic.getColorForTime(5000, 10000, colorRed, colorGray));
+        assertEquals(colorGray, timerLogic.getColorForTime(15000, 10000, colorRed, colorGray));
     }
 }

@@ -6,32 +6,37 @@ package com.example.todo_list.StopWatch;
  */
 public class StopwatchLogic {
 
-    // Single instance of StopwatchLogic
-    private static StopwatchLogic instance;
+    // Constructor can be public or package-private
+    public StopwatchLogic() {}
 
-    // Private constructor to prevent instantiation
-    private StopwatchLogic() {}
-
-    // Method to get the single instance of StopwatchLogic
-    public static StopwatchLogic getInstance() {
-        if (instance == null) {
-            synchronized (StopwatchLogic.class) {
-                if (instance == null) {
-                    instance = new StopwatchLogic();
-                }
-            }
-        }
-        return instance;
-    }
-
-    // Existing methods...
+    // Constants
+    /**
+     * Constant representing that the timer has not started yet.
+     */
     public static final long TIMER_HAS_NOT_STARTED_YET = -1;
-    public static final long LONG_DURATION_FOR_TIMER = 3_660_099; // milliseconds equal to 1 hour, 1 minute, 0.99 seconds
 
+    /**
+     * Long duration for the timer (1 hour, 1 minute, 0.99 seconds) in milliseconds.
+     */
+    public static final long LONG_DURATION_FOR_TIMER = 3_660_099;
+
+    /**
+     * Calculates the remaining time for the stopwatch.
+     *
+     * @param duration      The total duration of the stopwatch.
+     * @param remainingTime The remaining time of the stopwatch.
+     * @return The calculated remaining time in milliseconds.
+     */
     public long calculateRemainingTime(long duration, long remainingTime) {
         return duration - remainingTime;
     }
 
+    /**
+     * Formats the time for display.
+     *
+     * @param mSeconds The time in milliseconds to be formatted.
+     * @return The formatted time string in the format "HH:MM:SS:SS".
+     */
     public String formatTime(long mSeconds) {
         long totalSeconds = mSeconds / 1000;
         long hours = totalSeconds / 3600;

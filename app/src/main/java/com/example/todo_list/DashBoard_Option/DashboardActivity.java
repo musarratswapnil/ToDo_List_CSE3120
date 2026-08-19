@@ -134,10 +134,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         if (itemId == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OptionFragment()).commit();
-        } else if (itemId == R.id.nav_settings) {
-           Intent intent=new Intent(DashboardActivity.this, SettingsActivity.class);
-              startActivity(intent);
-        } else if (itemId == R.id.nav_share) {
+        }
+//        else if (itemId == R.id.nav_settings) {
+//           Intent intent=new Intent(DashboardActivity.this, SettingsActivity.class);
+//              startActivity(intent);
+//        }
+        else if (itemId == R.id.nav_share) {
             // Show sharing options
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
